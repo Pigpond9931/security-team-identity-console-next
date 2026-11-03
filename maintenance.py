@@ -74,12 +74,17 @@ def main():
     p=commands.add_parser('activate-account');p.add_argument('username')
     p=commands.add_parser('recover-account');p.add_argument('username')
     p=commands.add_parser('assign-system-admin');p.add_argument('username')
+    p=commands.add_parser('project-access-four');p.add_argument('usernames',nargs=4)
     p=commands.add_parser('audit');p.add_argument('url')
     commands.add_parser('audit-status')
     args=parser.parse_args()
     with store.file_lock(server.DATA/'.server.lock'):
         server.initialize()
-        if args.action=='rotate-key':server.secure.rotate_key();print('Clave rotada; autenticadores conservados.')
+        if args.action=='project-access-four':
+            import four_person_access
+            with server.secure.write_transaction() as c:result=four_person_access.configure(c,args.usernames)
+            print('Centro de datos: cuatro identidades autorizadas; otras áreas conservadas.')
+        elif args.action=='rotate-key':server.secure.rotate_key();print('Clave rotada; autenticadores conservados.')
         elif args.action=='backup':backup(args.destination)
         elif args.action=='activate-account':activate_account(args.username)
         elif args.action=='recover-account':recover(args.username)

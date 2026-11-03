@@ -164,6 +164,8 @@ def access(c,u,body):
             data=verify(ref,'BADGE');kind=data['tipo'];sid=data['ref']
         subject=valid_subject(c,data)
         name=subject['full_name'];role='VISITOR' if kind=='VISITOR' else subject['role'];area=subject['organization'] if kind=='VISITOR' else subject['area'] or 'Administración global'
+        if zone=='DATA_CENTER_VAULT' and kind!='USER' and c.execute("SELECT 1 FROM access_settings WHERE key='restricted_four_enabled' AND value='1'").fetchone():
+            raise ValueError('Centro de datos reservado a las cuatro identidades autorizadas; no admite pases de invitado.')
         if kind=='USER':
             if not accepted(subject):raise ValueError('MFA o términos pendientes.')
             if zone not in zones(subject):raise ValueError('Sin permiso para esta zona.')
@@ -265,6 +267,7 @@ def dispatch(session,method,path,q,body):
             required_zone=next((zone for zone,license_id in ZONE_LICENSE.items() if license_id==lic),None)
             if not global_admin(u) and required_zone and required_zone not in zones(u):raise PermissionError('Licencia fuera de las zonas que administras.')
             if 'assign' in path:
+                if lic in ('LIC-CCTV-ADMIN','LIC-DC-VAULT','LIC-SRV-CRIT') and not target['ever_enrolled'] and c.execute('SELECT 1 FROM initial_password_grants WHERE user_id=? AND shared=1',(target['id'],)).fetchone():raise ValueError('Emite primero una contraseña temporal individual para esta cuenta antes de darle acceso privilegiado.')
                 if not target['is_active']:raise ValueError('Cuenta inactiva.')
                 if c.execute('SELECT 1 FROM user_licenses WHERE matricula=? AND license_id=?',(username,lic)).fetchone():return {'ok':True}
                 if c.execute('SELECT COUNT(*) FROM user_licenses WHERE license_id=?',(lic,)).fetchone()[0]>=catalogue['seats']:raise Conflict('Cupo de licencia agotado.')
@@ -288,6 +291,7 @@ def dispatch(session,method,path,q,body):
             if method=='POST':
                 capacity=body.get('rfid_capacity')
                 if type(capacity)!=int or not 1<=capacity<=40:raise ValueError('Cupo entre 1 y 40.')
+                if capacity!=4 and c.execute("SELECT 1 FROM access_settings WHERE key='restricted_four_enabled' AND value='1'").fetchone():raise ValueError('La prueba del proyecto limita el centro de datos a cuatro identidades autorizadas.')
                 if c.execute("SELECT COUNT(*) FROM user_licenses WHERE license_id='LIC-DC-VAULT'").fetchone()[0]>capacity:raise Conflict('Revoca primero las licencias que excedan el nuevo cupo.')
                 c.execute("UPDATE access_settings SET value=? WHERE key='rfid_capacity'",(str(capacity),));c.execute("UPDATE licenses_catalog SET seats=? WHERE license_id='LIC-DC-VAULT'",(capacity,));audit(c,u,'RFID_CAPACITY_UPDATED',details=str(capacity))
             return {'capacity':int(c.execute("SELECT value FROM access_settings WHERE key='rfid_capacity'").fetchone()[0]),'used':c.execute('SELECT COUNT(*) FROM users WHERE is_active=1 AND rfid_uid IS NOT NULL').fetchone()[0]}
@@ -334,6 +338,11 @@ def dispatch(session,method,path,q,body):
                 c.execute("UPDATE visitors SET status='REVOKED' WHERE visitor_id=?",(v['visitor_id'],));audit(c,u,'VISITOR_REVOKED',v['visitor_id']);return {'ok':True}
             return {'visitors':[dict(v) for v in c.execute('SELECT * FROM visitors ORDER BY created_at DESC LIMIT 250') if global_admin(u) or v['host_matricula']==u['username']], 'pending_devices':[dict(r) for r in c.execute("SELECT r.id,r.confirmation,r.subject_id,v.full_name,v.host_matricula FROM pass_receipts r JOIN visitors v ON v.visitor_id=r.subject_id WHERE r.subject_type='VISITOR' AND r.status='pending' AND r.expires>?",(time.time(),)) if global_admin(u) or r['host_matricula']==u['username']]}
         if path=='/api/threats':return {'findings':threats(c,u),'window_hours':24,'generated_at':now()}
+        if path=='/api/users/initial-password-group':
+            if not global_admin(u):raise PermissionError('Solo administración global habilita el ingreso grupal.')
+            if body.get('acknowledged') is not True:raise ValueError('Confirma el uso temporal de una contraseña común.')
+            import initial_passwords
+            return initial_passwords.issue_group(c,u['username'])
         if path=='/api/users/initial-password':
             if not global_admin(u):raise PermissionError('Solo administración global habilita el primer ingreso.')
             target=manager(c,u,username)
@@ -400,7 +409,7 @@ def dispatch(session,method,path,q,body):
 
 ROUTES={
  'GET':set('/api/access/terminal /api/cctv/destinations /api/users/qr-badge /api/users/qr-badge.png /api/licenses /api/users/licenses /api/users/zones /api/access/settings /api/access/latest /api/access/events /api/access/presence /api/visitors /api/threats /api/cctv/channels /api/cctv/network'.split()),
- 'POST':set('/api/users/initial-password /api/cctv/remove /api/access/terminal-settings /api/cctv/destinations /api/users/activation /api/visitors/approve-device /api/visitors/delivery /api/auth/accept-terms /api/users/mobile-pass /api/mobile-passes/renew /api/users/assign-license /api/users/revoke-license /api/users/zones /api/access/settings /api/access/verify /api/access/checkout /api/visitors/create /api/visitors/revoke /api/cctv/channels /api/cctv/test'.split())}
+ 'POST':set('/api/users/initial-password-group /api/users/initial-password /api/cctv/remove /api/access/terminal-settings /api/cctv/destinations /api/users/activation /api/visitors/approve-device /api/visitors/delivery /api/auth/accept-terms /api/users/mobile-pass /api/mobile-passes/renew /api/users/assign-license /api/users/revoke-license /api/users/zones /api/access/settings /api/access/verify /api/access/checkout /api/visitors/create /api/visitors/revoke /api/cctv/channels /api/cctv/test'.split())}
 
 def _qr_png(data: str, box=8) -> bytes:
     import qrcode  # dependencia ya presente en el proyecto

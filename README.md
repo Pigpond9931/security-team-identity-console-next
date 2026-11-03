@@ -1,6 +1,6 @@
 # SECURITY TEAM Identity Console
 
-Código completo de la aplicación académica para Windows: React, Python y SQLite. Versión funcional 1.5.3. Reúne Identity Management, IAM, terminal RFID/QR, invitados, licencias internas, auditoría y vigilancia con teléfonos.
+Código completo de la aplicación académica para Windows: React, Python y SQLite. Versión funcional 1.5.4. Reúne Identity Management, IAM, terminal RFID/QR, invitados, licencias internas, auditoría y vigilancia con teléfonos.
 
 Este repositorio es independiente del Portal de cumplimiento. No incluye las cuentas, contraseñas, secretos MFA, tarjetas reales, sesiones, bases de datos ni copias privadas de la laptop. Las 33 identidades del seed son ficticias y solo se cargan en pruebas o al solicitar una demo. No hay contraseña compartida utilizable por defecto en una nueva instalación.
 
@@ -36,10 +36,10 @@ El enlace es temporal. La laptop debe permanecer encendida, sin suspenderse y co
 ## Funciones
 
 - Cuentas, roles globales y administradores de área con alcance controlado.
-- Contraseña temporal individual, un uso, 24 horas; configuración inicial limitada a cinco minutos.
+- Contraseña temporal individual y modo grupal temporal para pendientes sin privilegios; un uso por cuenta, 24 horas, cambio de contraseña y MFA obligatorios. [Procedimiento grupal y desbloqueo](PRIMER_INGRESO_GRUPAL.md).
 - Contraseña privada, autenticador TOTP, bloqueo por fallos y recuperación privada.
 - Separación entre rol, área, permiso de zona y licencia académica interna.
-- Terminal RFID/QR con F1-F4, resultado permitido/denegado, entrada/salida, aforo e historial.
+- Terminal RFID/QR con F1-F4, resultado permitido/denegado, entrada/salida, aforo e historial. [Perfil de cuatro personas en F1](PRUEBA_CUATRO_PERSONAS.md).
 - Invitados, entrega móvil limitada y confirmación del anfitrión.
 - Centro de vigilancia, vinculación de teléfonos, cámaras IP aprobadas y eliminación de canales.
 - Hasta ocho canales combinados; sesiones CCTV de hasta cuatro horas, QR de enlace de cinco minutos y límites de espectadores. Consulta [CCTV_SESIONES_4H.md](CCTV_SESIONES_4H.md).

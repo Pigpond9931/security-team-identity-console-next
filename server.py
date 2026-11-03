@@ -210,7 +210,7 @@ class Handler(BaseHTTPRequestHandler):
         if not self.allowed_host(): return self.response(403,{'error':'Origen no autorizado.'})
         if self.redirect_https():return
         path=urlsplit(self.path).path
-        if path=='/api/health': return self.response(200,{'ok':True,'application':'SECURITY_TEAM_Studio','version':'1.5.3','mode':'shared' if PUBLIC_ORIGIN else 'local'})
+        if path=='/api/health': return self.response(200,{'ok':True,'application':'SECURITY_TEAM_Studio','version':'1.5.4','mode':'shared' if PUBLIC_ORIGIN else 'local'})
         q={k:v[0] for k,v in parse_qs(urlsplit(self.path).query).items()}
         if path in ('/api/terms','/api/public-pass'):
             sid,state=self.session()

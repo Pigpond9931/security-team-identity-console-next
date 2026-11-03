@@ -1,11 +1,15 @@
 # Validación de la copia para GitHub
 
-Actualización del 2 de noviembre de 2026: versión 1.5.3.
+3 de noviembre de 2026. Versión 1.5.4.
 
-La revisión anterior pasó 124 pruebas y la compilación en GitHub Actions (ejecución 41564834808). Para esta actualización pasaron 70 pruebas de los grupos afectados: backend (35), duración CCTV (6), cámaras del navegador (5), vigilancia (7), escáner móvil (8) y eliminación de cámaras (9), cada grupo en un proceso separado con SQLite temporal. Las seis nuevas también pasaron en la copia saneada para distribución. Se compiló React en ambas copias.
+Pasaron las 142 pruebas Python de los 17 grupos en la copia saneada, cada grupo en un proceso separado con SQLite temporal e identidades ficticias. El runner cubre autenticación, roles, permisos, endurecimiento, contraseña inicial individual y grupal, RFID, cuatro personas autorizadas, visitantes, cámaras, CCTV de cuatro horas, supervisor e instalación nueva. React se compiló correctamente en la instalación y en la copia de distribución.
 
-El reloj simulado comprueba continuidad después de treinta minutos y antes de cuatro horas, vencimiento al llegar al límite absoluto, limpieza de sesiones, QR de cinco minutos y uso único, cierre de sesión, retirada de permisos y cookies de publicación. Los escáneres de acceso y las cuentas sin CCTV conservan treinta minutos.
+Las ocho pruebas nuevas del registro grupal comprueban hashes diferentes para una clave común, conservación de cuentas configuradas o privilegiadas, consumo por cuenta, reemisión, caducidad, permisos del emisor, cambio personal/MFA/términos en HTTP y desbloqueo con conservación de factores y auditoría. La concesión de privilegios durante un alta grupal pendiente exige emisión individual.
 
-Se respaldó la instalación local y se activó la versión 1.5.3, verificando su health público y la pantalla de inicio de sesión. No se ensayó una transmisión física de cuatro horas con teléfonos. La cobertura real depende de Wi-Fi, batería y suspensión de los dispositivos.
+Las cuatro pruebas del perfil F1 comprueban cuatro tarjetas permitidas, quinta y desconocida denegadas, salida, conservación de otras áreas y credenciales, límite de cuatro licencias, selección válida y rechazo de invitados como quinta identidad.
 
-El workflow incluye ahora 15 grupos (130 pruebas previstas). Su resultado para esta revisión debe consultarse en GitHub Actions. Los guiones históricos de navegador se conservan como fuentes y no se presentan como ejecuciones actuales. No se publican datos reales, claves, credenciales ni capturas de usuarios.
+Se corrigió un fixture de la prueba de capacidad de sesiones: ahora incluye issued_at, como las sesiones reales. La ejecución anterior de GitHub falló porque sus sesiones sintéticas no tenían fecha de emisión y se limpiaban como vencidas; no se debilitó la limpieza real.
+
+Se revisaron visualmente el panel grupal y el botón destacado Desbloquear cuenta en localhost con identidades ficticias, sin ejecutar esos cambios desde el navegador. La instalación activa se respaldó, conserva sus 33 personas y MFA existentes, y sirve la versión 1.5.4. La emisión real se guarda cifrada con DPAPI y no forma parte del repositorio. El perfil real de F1 tiene cuatro titulares preparados; las demás áreas mantienen sus permisos.
+
+Los plazos CCTV se prueban con reloj simulado. No se presenta una transmisión física de cuatro horas ni una lectura real nueva como realizadas en esta actualización. Los guiones históricos de navegador se conservan como fuentes. El resultado remoto de esta revisión debe consultarse en GitHub Actions.

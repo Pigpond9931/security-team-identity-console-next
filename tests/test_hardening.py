@@ -82,7 +82,7 @@ class Hardening(unittest.TestCase):
         request.public_request=lambda:True;request.client_address=('192.168.1.3',10);self.assertEqual(h.client_key(request),'192.168.1.3')
         request.client_address=('127.0.0.1',10);request.headers={'CF-Connecting-IP':'spoofed'};self.assertEqual(h.client_key(request),'127.0.0.1')
     def test_session_capacity_preserves_existing_sessions(self):
-        server.SESSIONS.update({str(i):{'created':time.time(),'auth':{'user_id':i}} for i in range(4096)})
+        server.SESSIONS.update({str(i):{'created':time.time(),'auth':{'user_id':i,'issued_at':time.time()}} for i in range(4096)})
         before=dict(server.SESSIONS)
         with self.assertRaises(server.SessionCapacity):server.make_session()
         self.assertEqual(server.SESSIONS,before)

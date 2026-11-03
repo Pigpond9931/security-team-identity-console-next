@@ -372,6 +372,8 @@ def update_user(session, target_id, **changes):
                      (*changes.values(), db._now(), target_id))
         db.write_audit(conn, actor['username'], 'USER_UPDATED',
                        'Campos: '+','.join(changes), target['username'])
+        if target['is_locked'] and changes.get('is_locked')==0:
+            db.write_audit(conn,actor['username'],'ACCOUNT_UNLOCKED','Intentos fallidos reiniciados; contraseña y MFA conservados.',target['username'])
 
 def reset_mfa(session, target_id):
     with write_transaction() as conn:

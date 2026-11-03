@@ -1,6 +1,6 @@
 {
-  "version": "1.5.3",
-  "prepared": "2026-11-02",
+  "version": "1.5.4",
+  "prepared": "2026-11-03",
   "files": [
     {
       "path": ".gitattributes",
@@ -261,16 +261,28 @@
       "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
     },
     {
+      "path": "PRIMER_INGRESO_GRUPAL.md",
+      "bytes": 1884,
+      "sha256": "7124f31390abff6074482a4913b08efe259a429287d46cb5edbe79c3aae700d4",
+      "git_blob": "77bcfc7356f08a06f68616eb1039790d417b80f7"
+    },
+    {
       "path": "PRIMER_INGRESO_INDIVIDUAL.md",
-      "bytes": 2748,
-      "sha256": "42b97c67a3b01faed4ec57b21576a2f2bb496aa45f304d2ef28acac9e51792a5",
-      "git_blob": "257609682049b8252aa776d998e42a346b37d0c7"
+      "bytes": 3096,
+      "sha256": "bc3a9e2a97639488cfa719d077d9c0ad940f670010afa38e925a093b278a07d2",
+      "git_blob": "1800bce6ef4b3ec30cb8c8affb84b1b38c5f5317"
+    },
+    {
+      "path": "PRUEBA_CUATRO_PERSONAS.md",
+      "bytes": 1483,
+      "sha256": "370747723257f347d76532e3eaf6079244d8efc05176d866082b18d0db05ad89",
+      "git_blob": "d739ff2ddd0573e8150ed89e8eb4c6783f4dbd7c"
     },
     {
       "path": "README.md",
-      "bytes": 7175,
-      "sha256": "ddc883e0b16ec673bda0d6f4117f31b004a8f5ae9790ec56574c2afc75e7fa02",
-      "git_blob": "b729a30c5d374831f2da0506ff27e7e8af0c74c1"
+      "bytes": 7359,
+      "sha256": "e232857f8d2d12382965cc05f0d43aae4331e7a47612f3d82ae8806684de9bc3",
+      "git_blob": "a018eac71817541f6b71c679b906e7cccf2abc5e"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
@@ -292,9 +304,9 @@
     },
     {
       "path": "VALIDACION_REPOSITORIO.md",
-      "bytes": 1509,
-      "sha256": "9b7f7b8633a3edd47d3a33ab115742cec67653213426363befb126409515fb99",
-      "git_blob": "6c3624152c0a8428d3ce45870beb5701d1afc3a1"
+      "bytes": 2238,
+      "sha256": "6fa991499aca2dc80cef55a76d8610d5612a347cdf9fcd644a3a1386022fdfb9",
+      "git_blob": "97b9345a5d87e13a962255cfdbee9c6fd82ada09"
     },
     {
       "path": "access_terminal.py",
@@ -340,9 +352,15 @@
     },
     {
       "path": "features.py",
-      "bytes": 38223,
-      "sha256": "c251e4ce76be14b5509cf0c5837a3ec39355b2305ba391598506d32c61c66407",
-      "git_blob": "6858cd4b18c5c4b26bffa3b7a681fa3574eeee8a"
+      "bytes": 40031,
+      "sha256": "a48467b75eac1b4468c501a8074bb9833df7a2a1996147c9c842a21ec6eb2a0c",
+      "git_blob": "dad3332978c2c484bd8f32ae331e622aa11e0373"
+    },
+    {
+      "path": "four_person_access.py",
+      "bytes": 2626,
+      "sha256": "8a6db0f5030e29cf42104a77268aa72a430d1bbad729df24f221dc5022b5f2eb",
+      "git_blob": "e74b0fd58cff379daa595bee7ff1ff2ee4d85192"
     },
     {
       "path": "frontend/access-feedback.jsx",
@@ -352,9 +370,9 @@
     },
     {
       "path": "frontend/app.jsx",
-      "bytes": 47499,
-      "sha256": "24e4952c9759fbd99bd55ce82041adbc5d35afa2fa5961e0d9d0f480aa831e11",
-      "git_blob": "6e07ab85f89af1f9b4548eb6ea7c612c7e3b8724"
+      "bytes": 47971,
+      "sha256": "b4e533797112535640e989873b35f4702a306647b4b67b129fc561bd1a96a2e6",
+      "git_blob": "ad8059b35fb3a5157532ffd9f7befd83d66a72de"
     },
     {
       "path": "frontend/browser-cameras.jsx",
@@ -382,9 +400,9 @@
     },
     {
       "path": "frontend/features.jsx",
-      "bytes": 51896,
-      "sha256": "420976f6fdd543732d6168447a679fc2088e2b6d4e7312c19690406946134f34",
-      "git_blob": "6f14158d0b4b2572bf792aa3ea7c89653e6c1cd9"
+      "bytes": 51942,
+      "sha256": "5cb7857dfea91d0bacf20060745704e84fcb7e19262131450ca36e15b5dd669f",
+      "git_blob": "ab36ff1e59cbe427b34acb4a6773d5569633081e"
     },
     {
       "path": "frontend/index.html",
@@ -400,9 +418,9 @@
     },
     {
       "path": "frontend/security-workflows.jsx",
-      "bytes": 5177,
-      "sha256": "00985a20c0ebd501d5f2822dacf30c580de91e82b1aa7c5bafd6493a95ca20df",
-      "git_blob": "4e6271b480ac978c53b9f77ef9941a848cbf04db"
+      "bytes": 7708,
+      "sha256": "bdfe83fd98548c8803d12ba3ced9dc742308c0ba4ca6fab112030d3321852f71",
+      "git_blob": "508e0746147792ae72e219d37774c8679ada1bd0"
     },
     {
       "path": "frontend/styles.css",
@@ -454,27 +472,27 @@
     },
     {
       "path": "initial_passwords.py",
-      "bytes": 3465,
-      "sha256": "30af9618499c8398637810cc212fc0b7a715978fec2bcd3b7e9e8159a01cfd2d",
-      "git_blob": "f0a8ca41cfb8555fbcd3bd531bd62860f9c41df7"
+      "bytes": 6215,
+      "sha256": "13f0b5f6f701a3f7328457047d34d22de37e60f43d35c963e0e146f017e50ae6",
+      "git_blob": "da3ccea4679cdee750390b8162a912068643eb71"
     },
     {
       "path": "maintenance.py",
-      "bytes": 5941,
-      "sha256": "8d151547acda8598e0ab38dd34c6947455e4e64603335cd303a4d3865a759c4b",
-      "git_blob": "4d3c847546c0f138df19e0535aeca2aeb5850126"
+      "bytes": 6420,
+      "sha256": "95dd36ee4a5bc5203d3075530a7a1a1373787db5b1deb498bf1edb8e0698623e",
+      "git_blob": "25c5bf543e3fee255d2772e96b8dd33e61cf33db"
     },
     {
       "path": "package-lock.json",
       "bytes": 16823,
-      "sha256": "68f00bc1aed1d521d0a103117a4a982aea3ad56e9eb11c56f03e924606234a1c",
-      "git_blob": "74498b9aee79bca68b699d04f1c4f535354ef5d8"
+      "sha256": "0dcb32c1b104a56402df22c172cf327c0f54a26469e5aea32d3146d03cf6c740",
+      "git_blob": "d01baf8a7ebcab075958dca3c4d5e776722257d4"
     },
     {
       "path": "package.json",
       "bytes": 381,
-      "sha256": "b2f56b0e1ebdc7ae5650aae8b23c24e25f90881d6f56bfb3c444a65964efae17",
-      "git_blob": "02f25d3cf3cd1417f9ac615e1e9d5bc58aa63842"
+      "sha256": "93c99a21b15bcdea968a66dae3bb1adc98f5e88dc68c017e612ec9b28f5da5e0",
+      "git_blob": "86be39961dd2fb09371c634bff76a4cf030395fe"
     },
     {
       "path": "pass_exchange.py",
@@ -508,15 +526,15 @@
     },
     {
       "path": "security.py",
-      "bytes": 28132,
-      "sha256": "7383a074c6f1b43f228bf8f456226612887a37676f87b6790571f6b0f8fe98aa",
-      "git_blob": "7c21d5c4862da026a827bfaf7910effa2629efcf"
+      "bytes": 28349,
+      "sha256": "7561074da0fb2f38787d81b76d07c3a3778b10017bd5d40cef8827807c0f7195",
+      "git_blob": "b402d8835865ae0d1e4217d543f7be9a935def7a"
     },
     {
       "path": "server.py",
       "bytes": 36677,
-      "sha256": "22463db8f26ebbb01929699073637f6961f2176d69daf9c58a929fc4d467eae7",
-      "git_blob": "5814c8ad192c8dcd9e5d39ab58af2f2c7fa373db"
+      "sha256": "78e8de10a4c2d0ff1e13213a4ee0db40e297f08886c2b826b15bd0b1cac15c34",
+      "git_blob": "0964d1168af3c727f87ef95b2aac46f8e1285613"
     },
     {
       "path": "share_cloudflare.py",
@@ -610,9 +628,9 @@
     },
     {
       "path": "tests/run_regression.py",
-      "bytes": 846,
-      "sha256": "a31b317c40c2c31206766b08e6993521167ba14cfabbc7206443d9fafe863f43",
-      "git_blob": "da5993ae2ccf3a001069ce78c60d1e15e0d31b86"
+      "bytes": 896,
+      "sha256": "176a867310149f4387b960edd73855dfff50b64f33d8586c416944876a8abdd6",
+      "git_blob": "25ef42bd2d298ed5d37b63b04e6ee023faa6b0cd"
     },
     {
       "path": "tests/test_backend.py",
@@ -675,10 +693,22 @@
       "git_blob": "4b18c5432f8e6964e2af99f74b13be27cd17a622"
     },
     {
+      "path": "tests/test_four_person_access.py",
+      "bytes": 3915,
+      "sha256": "4b1f7f65f62e4c2b65c0a877db59007b5ec45ea34d8228fd6b6088f6f90128a1",
+      "git_blob": "12b8275b20a87f164f67310e653d9f7d60934415"
+    },
+    {
+      "path": "tests/test_group_onboarding.py",
+      "bytes": 6102,
+      "sha256": "c87d7cd29715dfa342953d3005746b3c566dec664c74a750b581b4c05438cc0a",
+      "git_blob": "d90871cf607ca64a3b81e592a4b439bbc4170b20"
+    },
+    {
       "path": "tests/test_hardening.py",
-      "bytes": 9702,
-      "sha256": "2e7ef9843fda39329608c231a44247227ef2ae5077d9a8a6c955d796b6318d51",
-      "git_blob": "d07be3b623d3224eb6fa2e4a486d00c9c15461ba"
+      "bytes": 9850,
+      "sha256": "9ec2267d303c7a250b9a88a1fd22e55f0eaa678c11bb73992ffc5c0637dc2ca7",
+      "git_blob": "e373db901a79b45da6974d520f0586844b69317e"
     },
     {
       "path": "tests/test_initial_passwords.py",
@@ -730,9 +760,9 @@
     },
     {
       "path": "validation.json",
-      "bytes": 461,
-      "sha256": "7388d3d7195824ed95547fe14d0f556cbf6e02570dc46db44345a7f76004a68f",
-      "git_blob": "c00e1ea04e2312f02b12d8480620088fa5193c01"
+      "bytes": 535,
+      "sha256": "d8311afeceaa7531074d3fc019aecefacbecb4a18bfc4186bd7d8a225865be95",
+      "git_blob": "cd1e2c68a669c1de0e6bad90ee15983f3f9c8dac"
     },
     {
       "path": "web/assets/app.css",
@@ -742,9 +772,9 @@
     },
     {
       "path": "web/assets/app.js",
-      "bytes": 500529,
-      "sha256": "1df53a0cfb9daf314c44124bf448478810e75dbf3e871778a9d68cea9f12356c",
-      "git_blob": "04e7c0dc1276903b7d8818180813a5b4d5365f85"
+      "bytes": 504033,
+      "sha256": "c75d755cd52f9604e3a2cb2cd7153ccb1298b40ba21b09a8718e571ee483bec1",
+      "git_blob": "9f099c4144738e96de87b2b73867d28d7b189f24"
     },
     {
       "path": "web/assets/manrope-cyrillic-ext-wght-normal-2GMQGZDT.woff2",

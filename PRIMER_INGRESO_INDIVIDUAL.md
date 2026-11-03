@@ -47,3 +47,7 @@ MFA, términos y ausencia de contraseñas en auditoría. La validación de Chrom
 usa una base temporal, comprueba escritorio y móvil y oculta las contraseñas
 antes de las capturas. La migración agrega una tabla de autorizaciones sin
 restablecer usuarios, tarjetas, roles, licencias, factores ni códigos existentes.
+
+## Alternativa de registro grupal
+
+Desde 1.5.4 existe una emisión común temporal para cuentas pendientes sin privilegios, habilitada expresamente por administración global. Consulta PRIMER_INGRESO_GRUPAL.md; la contraseña individual sigue siendo obligatoria para identidades privilegiadas.
