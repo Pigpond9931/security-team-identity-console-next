@@ -1,5 +1,5 @@
 {
-  "version": "1.5.2",
+  "version": "1.5.3",
   "prepared": "2026-11-02",
   "files": [
     {
@@ -33,12 +33,6 @@
       "git_blob": "1f239e32ce019c083e08b775f64ec25b2d382449"
     },
     {
-      "path": "access_terminal.py",
-      "bytes": 2326,
-      "sha256": "669dba5529e4987e564077ac83ba5265b22c726bb3ad2e48d7e4b476d2ab1115",
-      "git_blob": "0f65e84a7bd21f03a5d2008e41716152614e5ed6"
-    },
-    {
       "path": "ADMINISTRACION.md",
       "bytes": 2748,
       "sha256": "ac6fefae2ba2b5653c64469f559d3169fe351502e4d71120724a00dbc7ac478a",
@@ -49,12 +43,6 @@
       "bytes": 2212,
       "sha256": "b47d11b3682a26fe62f2d70ee33df8b7a12a89cd9a39629919f436ce197a3d9c",
       "git_blob": "2b318b9284a7d564ecf176cc46b3f34e8ab6c8b8"
-    },
-    {
-      "path": "audit_delivery.py",
-      "bytes": 3182,
-      "sha256": "0d78ad7f7f9b6d43d37b732ba1b45728a1328494dc4f55fe743d6eed07ebda40",
-      "git_blob": "e1ad58a0bd69d28b26042798b0a4277794e3d435"
     },
     {
       "path": "AUTORIZAR_CLOUDFLARE.cmd",
@@ -75,28 +63,10 @@
       "git_blob": "fce391f013e5556c69d645f3bfbeb7b63266ceac"
     },
     {
-      "path": "bootstrap_admin.py",
-      "bytes": 1981,
-      "sha256": "e0596e0149111dcada4af2a367ad1103cf93a54921d11ee25a907986046f577f",
-      "git_blob": "69da578e3395fe91b8126a215ddbecf2f9b19e1e"
-    },
-    {
-      "path": "browser_cameras.py",
-      "bytes": 11826,
-      "sha256": "0f0e6c49992dfce94156490d2edf371a0d0d231cefe29aca46c2f1eb647460be",
-      "git_blob": "0c3a44a2bc4d6237bd084cc05170f48024816892"
-    },
-    {
-      "path": "build.mjs",
-      "bytes": 495,
-      "sha256": "d84ecade6ffd038c60affb5f0548613a6b0ffdfc13fe36f3bc9127a45c24fdb7",
-      "git_blob": "457286024975c726173e0d776aae6641995d0bfe"
-    },
-    {
-      "path": "camera_hub.py",
-      "bytes": 7506,
-      "sha256": "33d007f38d1c9c8185cfb62ce67d9f9134341dc296905777c33eac572b7dc889",
-      "git_blob": "2209a27402e74afd4bdb750bb9e8d2cc7bf2f12b"
+      "path": "CCTV_SESIONES_4H.md",
+      "bytes": 2566,
+      "sha256": "2055950fa913526cadca52bdd43f91bd4b50fd093382cfc2dc9fbd23496453eb",
+      "git_blob": "65397a35850ded8ee5048fbe8f454628d4615d41"
     },
     {
       "path": "CENTRO_VIGILANCIA_2026-10-27.md",
@@ -147,12 +117,6 @@
       "git_blob": "8cae9f7e5adac5e5424d62f7fab097ffc9cd620d"
     },
     {
-      "path": "db_manager.py",
-      "bytes": 21123,
-      "sha256": "5be6c0e0ec296e329e085e1f0453351e2b8bcd6d35dcd69a7ea8ac17542098a0",
-      "git_blob": "83b48e4108cb3fcd1356b1a0533433a8a122fa0c"
-    },
-    {
       "path": "DETENER.cmd",
       "bytes": 91,
       "sha256": "632b3a9a9f4c2928d6b1deb90ccdc15dbc1b813b18673be8197b5fbe5c013133",
@@ -195,6 +159,186 @@
       "git_blob": "b1c6c2622fee3c43cad1810ce1a0440da0c41fed"
     },
     {
+      "path": "GUIA_CCTV_NAVEGADOR.md",
+      "bytes": 4725,
+      "sha256": "eeb17ca58529d79b48e23ca50d4fd0e963a945af34a66719dd1941746ae5ae66",
+      "git_blob": "4b631acb382a68598f78919adcd66facdcdc0d90"
+    },
+    {
+      "path": "GUIA_TELEFONO_Y_CAMARAS.md",
+      "bytes": 5867,
+      "sha256": "fcf58defda8ebddaebef6c251f2ef90d2e10979027f13dafed5de62ef61acb94",
+      "git_blob": "f62fad182015694d8b14f8b00f00c919b9b117c9"
+    },
+    {
+      "path": "GUIA_TERMINAL_ACCESO.md",
+      "bytes": 2734,
+      "sha256": "67a8a752fcca916b738a10b8de415b2e3bb923ebeded6ff3c7f2952e594bb1bf",
+      "git_blob": "0518caa7073fbd740cec22851d100cfb2d75c5e4"
+    },
+    {
+      "path": "GUIA_V130.md",
+      "bytes": 14691,
+      "sha256": "7ebc4bb8d0eace5928425950d16c97b2dce28689fc8dc18e51724a9db23bd7e5",
+      "git_blob": "f584d893fcc074ef397e1df906132013a53bafc5"
+    },
+    {
+      "path": "IMPORTACION_TARJETAS_2026-10-28.md",
+      "bytes": 948,
+      "sha256": "8c45fb2d64f720d13f48abda4b4b37e67455b86df813dee6ea96a43d7bb54cc8",
+      "git_blob": "01d868c9f6bbb772b3bb05392d8bd0348f754ba9"
+    },
+    {
+      "path": "INICIAR.cmd",
+      "bytes": 359,
+      "sha256": "4bb96a31f555bf7df2a38af42baf0afde85b47e4733bbec8e9aea96245f49aba",
+      "git_blob": "f494287af45f36bf8bceb7b10a72942822cc8884"
+    },
+    {
+      "path": "INSTALAR.cmd",
+      "bytes": 362,
+      "sha256": "70a0e145a7f75c06ba5e7875dd5e486702168da30a7b9aa3ea024879088bc9cd",
+      "git_blob": "741eadc173e892af3ce515fe4f31e86845e6b936"
+    },
+    {
+      "path": "INSTALAR_CLOUDFLARED.ps1",
+      "bytes": 947,
+      "sha256": "858e165bcc318a5af970d9ae4e8588a637dd27a294c3e35c45e20e4261ac8a7d",
+      "git_blob": "3f1fe8c2f1078b77dbd413ac4d81eb2664becf1e"
+    },
+    {
+      "path": "INTEGRACION_RFID_2026-10-26.md",
+      "bytes": 4721,
+      "sha256": "8380976c6edca8f494537f759bd79207066f8026925b283ba249a4b29e5c6426",
+      "git_blob": "8263e936d7919324278bc1b2abc14805bc7698c6"
+    },
+    {
+      "path": "LEEME.md",
+      "bytes": 504,
+      "sha256": "03b30c25ed6f11ff8e86dbd49da04e9d336b30cd8d08c4035d130d23f2ff7fa1",
+      "git_blob": "22f155b6a6d527ad0f43052e8df2b97254ddd62a"
+    },
+    {
+      "path": "LICENSES/esbuild.md",
+      "bytes": 1069,
+      "sha256": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681",
+      "git_blob": "2027e8dcf3787f5aac9fcd835e2b80cb75a39211"
+    },
+    {
+      "path": "LICENSES/jsqr-LICENSE.txt",
+      "bytes": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "git_blob": "8f71f43fee3f78649d238238cbde51e6d7055c82"
+    },
+    {
+      "path": "LICENSES/lucide.txt",
+      "bytes": 880,
+      "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+      "git_blob": "325e8ff0aae2dde3134c1ceed780a11d7bd8f544"
+    },
+    {
+      "path": "LICENSES/manrope.txt",
+      "bytes": 4383,
+      "sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30",
+      "git_blob": "462280f3e4037df1839fba6cdee11d0980d3f0a9"
+    },
+    {
+      "path": "LICENSES/react-dom.txt",
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
+    },
+    {
+      "path": "LICENSES/react.txt",
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
+    },
+    {
+      "path": "LICENSES/scheduler.txt",
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
+    },
+    {
+      "path": "PRIMER_INGRESO_INDIVIDUAL.md",
+      "bytes": 2748,
+      "sha256": "42b97c67a3b01faed4ec57b21576a2f2bb496aa45f304d2ef28acac9e51792a5",
+      "git_blob": "257609682049b8252aa776d998e42a346b37d0c7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7175,
+      "sha256": "ddc883e0b16ec673bda0d6f4117f31b004a8f5ae9790ec56574c2afc75e7fa02",
+      "git_blob": "b729a30c5d374831f2da0506ff27e7e8af0c74c1"
+    },
+    {
+      "path": "REVISION_AUDITORIA_2026-10-20.md",
+      "bytes": 13240,
+      "sha256": "4d84d347445cea8940a9198464ed79a58b503f9612237c8350c6dde94a32ee51",
+      "git_blob": "3d6f8f53db39cbd2be532986909f0116b7268d6f"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 1077,
+      "sha256": "2b63febaccf4c471458b7cd22e71efa051fb2651b442e6d64ce1a11519764f64",
+      "git_blob": "ee0310a6023f97b6d5b838dc20230d18fd31daf7"
+    },
+    {
+      "path": "TERMINAL_VISUAL_2026-10-27.md",
+      "bytes": 3831,
+      "sha256": "993b591459b534bf974cfd23136d658a7f96463f2e3927eebb98d8bb5e61a543",
+      "git_blob": "ad5b5c56e018eb6260d733bb8e827a864f4cb83d"
+    },
+    {
+      "path": "VALIDACION_REPOSITORIO.md",
+      "bytes": 1509,
+      "sha256": "9b7f7b8633a3edd47d3a33ab115742cec67653213426363befb126409515fb99",
+      "git_blob": "6c3624152c0a8428d3ce45870beb5701d1afc3a1"
+    },
+    {
+      "path": "access_terminal.py",
+      "bytes": 2326,
+      "sha256": "669dba5529e4987e564077ac83ba5265b22c726bb3ad2e48d7e4b476d2ab1115",
+      "git_blob": "0f65e84a7bd21f03a5d2008e41716152614e5ed6"
+    },
+    {
+      "path": "audit_delivery.py",
+      "bytes": 3182,
+      "sha256": "0d78ad7f7f9b6d43d37b732ba1b45728a1328494dc4f55fe743d6eed07ebda40",
+      "git_blob": "e1ad58a0bd69d28b26042798b0a4277794e3d435"
+    },
+    {
+      "path": "bootstrap_admin.py",
+      "bytes": 1981,
+      "sha256": "e0596e0149111dcada4af2a367ad1103cf93a54921d11ee25a907986046f577f",
+      "git_blob": "69da578e3395fe91b8126a215ddbecf2f9b19e1e"
+    },
+    {
+      "path": "browser_cameras.py",
+      "bytes": 11921,
+      "sha256": "030a97624f5e2854363f52f529489ec9314759ab90027727338cf9fd54a1eb0e",
+      "git_blob": "c525079f49d07edd0ca280921b62e3736ddc9313"
+    },
+    {
+      "path": "build.mjs",
+      "bytes": 495,
+      "sha256": "d84ecade6ffd038c60affb5f0548613a6b0ffdfc13fe36f3bc9127a45c24fdb7",
+      "git_blob": "457286024975c726173e0d776aae6641995d0bfe"
+    },
+    {
+      "path": "camera_hub.py",
+      "bytes": 7506,
+      "sha256": "33d007f38d1c9c8185cfb62ce67d9f9134341dc296905777c33eac572b7dc889",
+      "git_blob": "2209a27402e74afd4bdb750bb9e8d2cc7bf2f12b"
+    },
+    {
+      "path": "db_manager.py",
+      "bytes": 21123,
+      "sha256": "5be6c0e0ec296e329e085e1f0453351e2b8bcd6d35dcd69a7ea8ac17542098a0",
+      "git_blob": "83b48e4108cb3fcd1356b1a0533433a8a122fa0c"
+    },
+    {
       "path": "features.py",
       "bytes": 38223,
       "sha256": "c251e4ce76be14b5509cf0c5837a3ec39355b2305ba391598506d32c61c66407",
@@ -214,9 +358,9 @@
     },
     {
       "path": "frontend/browser-cameras.jsx",
-      "bytes": 19098,
-      "sha256": "fb4b1650e72b95185cf474b515e56f3240eb16c688ee68cca2fed2db265f4808",
-      "git_blob": "b72900421ff3344295e6b5009713d88c0d08830c"
+      "bytes": 19159,
+      "sha256": "66e4cc009161167e5f05d03fc443fdc3b2045e21103548f3fb899c137b597620",
+      "git_blob": "e2640a8b3687d3f73e4663a7eb02afdb74865fea"
     },
     {
       "path": "frontend/camera-management.css",
@@ -297,30 +441,6 @@
       "git_blob": "8041ae8de498a8348694ff5a5c02cc36c162ae49"
     },
     {
-      "path": "GUIA_CCTV_NAVEGADOR.md",
-      "bytes": 4725,
-      "sha256": "eeb17ca58529d79b48e23ca50d4fd0e963a945af34a66719dd1941746ae5ae66",
-      "git_blob": "4b631acb382a68598f78919adcd66facdcdc0d90"
-    },
-    {
-      "path": "GUIA_TELEFONO_Y_CAMARAS.md",
-      "bytes": 5867,
-      "sha256": "fcf58defda8ebddaebef6c251f2ef90d2e10979027f13dafed5de62ef61acb94",
-      "git_blob": "f62fad182015694d8b14f8b00f00c919b9b117c9"
-    },
-    {
-      "path": "GUIA_TERMINAL_ACCESO.md",
-      "bytes": 2734,
-      "sha256": "67a8a752fcca916b738a10b8de415b2e3bb923ebeded6ff3c7f2952e594bb1bf",
-      "git_blob": "0518caa7073fbd740cec22851d100cfb2d75c5e4"
-    },
-    {
-      "path": "GUIA_V130.md",
-      "bytes": 14691,
-      "sha256": "7ebc4bb8d0eace5928425950d16c97b2dce28689fc8dc18e51724a9db23bd7e5",
-      "git_blob": "f584d893fcc074ef397e1df906132013a53bafc5"
-    },
-    {
       "path": "hardening.py",
       "bytes": 5463,
       "sha256": "d4ca95d5910361af05011e563f848d9698304b0cc51486d38986a2e993622e8b",
@@ -333,88 +453,10 @@
       "git_blob": "b290ddf5b1b98c3bd48c7a48361a83799a5a526f"
     },
     {
-      "path": "IMPORTACION_TARJETAS_2026-10-28.md",
-      "bytes": 948,
-      "sha256": "8c45fb2d64f720d13f48abda4b4b37e67455b86df813dee6ea96a43d7bb54cc8",
-      "git_blob": "01d868c9f6bbb772b3bb05392d8bd0348f754ba9"
-    },
-    {
-      "path": "INICIAR.cmd",
-      "bytes": 359,
-      "sha256": "4bb96a31f555bf7df2a38af42baf0afde85b47e4733bbec8e9aea96245f49aba",
-      "git_blob": "f494287af45f36bf8bceb7b10a72942822cc8884"
-    },
-    {
       "path": "initial_passwords.py",
       "bytes": 3465,
       "sha256": "30af9618499c8398637810cc212fc0b7a715978fec2bcd3b7e9e8159a01cfd2d",
       "git_blob": "f0a8ca41cfb8555fbcd3bd531bd62860f9c41df7"
-    },
-    {
-      "path": "INSTALAR.cmd",
-      "bytes": 362,
-      "sha256": "70a0e145a7f75c06ba5e7875dd5e486702168da30a7b9aa3ea024879088bc9cd",
-      "git_blob": "741eadc173e892af3ce515fe4f31e86845e6b936"
-    },
-    {
-      "path": "INSTALAR_CLOUDFLARED.ps1",
-      "bytes": 947,
-      "sha256": "858e165bcc318a5af970d9ae4e8588a637dd27a294c3e35c45e20e4261ac8a7d",
-      "git_blob": "3f1fe8c2f1078b77dbd413ac4d81eb2664becf1e"
-    },
-    {
-      "path": "INTEGRACION_RFID_2026-10-26.md",
-      "bytes": 4721,
-      "sha256": "8380976c6edca8f494537f759bd79207066f8026925b283ba249a4b29e5c6426",
-      "git_blob": "8263e936d7919324278bc1b2abc14805bc7698c6"
-    },
-    {
-      "path": "LEEME.md",
-      "bytes": 504,
-      "sha256": "03b30c25ed6f11ff8e86dbd49da04e9d336b30cd8d08c4035d130d23f2ff7fa1",
-      "git_blob": "22f155b6a6d527ad0f43052e8df2b97254ddd62a"
-    },
-    {
-      "path": "LICENSES/esbuild.md",
-      "bytes": 1069,
-      "sha256": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681",
-      "git_blob": "2027e8dcf3787f5aac9fcd835e2b80cb75a39211"
-    },
-    {
-      "path": "LICENSES/jsqr-LICENSE.txt",
-      "bytes": 11358,
-      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
-      "git_blob": "8f71f43fee3f78649d238238cbde51e6d7055c82"
-    },
-    {
-      "path": "LICENSES/lucide.txt",
-      "bytes": 880,
-      "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
-      "git_blob": "325e8ff0aae2dde3134c1ceed780a11d7bd8f544"
-    },
-    {
-      "path": "LICENSES/manrope.txt",
-      "bytes": 4383,
-      "sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30",
-      "git_blob": "462280f3e4037df1839fba6cdee11d0980d3f0a9"
-    },
-    {
-      "path": "LICENSES/react-dom.txt",
-      "bytes": 1088,
-      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
-    },
-    {
-      "path": "LICENSES/react.txt",
-      "bytes": 1088,
-      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
-    },
-    {
-      "path": "LICENSES/scheduler.txt",
-      "bytes": 1088,
-      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
     },
     {
       "path": "maintenance.py",
@@ -425,14 +467,14 @@
     {
       "path": "package-lock.json",
       "bytes": 16823,
-      "sha256": "356ca1d01f1bc63284414847988867f020e4da789de9eaf2c9263e8a2f226b18",
-      "git_blob": "03ea5e90e8ccb274e54eb9fe4ab87408934f3eef"
+      "sha256": "68f00bc1aed1d521d0a103117a4a982aea3ad56e9eb11c56f03e924606234a1c",
+      "git_blob": "74498b9aee79bca68b699d04f1c4f535354ef5d8"
     },
     {
       "path": "package.json",
       "bytes": 381,
-      "sha256": "c240d215951126ddf52ffc217d7a642bb894a234d3c5b7470bec0d15a6fbaeb2",
-      "git_blob": "61d8309923461e6c3965dbb67332159064ee2659"
+      "sha256": "b2f56b0e1ebdc7ae5650aae8b23c24e25f90881d6f56bfb3c444a65964efae17",
+      "git_blob": "02f25d3cf3cd1417f9ac615e1e9d5bc58aa63842"
     },
     {
       "path": "pass_exchange.py",
@@ -447,18 +489,6 @@
       "git_blob": "f61a44db90ec872b1648b2c447593e9140c65e7e"
     },
     {
-      "path": "PRIMER_INGRESO_INDIVIDUAL.md",
-      "bytes": 2748,
-      "sha256": "42b97c67a3b01faed4ec57b21576a2f2bb496aa45f304d2ef28acac9e51792a5",
-      "git_blob": "257609682049b8252aa776d998e42a346b37d0c7"
-    },
-    {
-      "path": "README.md",
-      "bytes": 7008,
-      "sha256": "be2b995301f7d63ff744fcc4c67386e08512988ca5a0e78e569bb29a4fbefb87",
-      "git_blob": "851f6b30ee92a910179d6c3696f133462c52ecad"
-    },
-    {
       "path": "requirements.lock.txt",
       "bytes": 120,
       "sha256": "e3886669608baa6133abf2d75c1e885a1d8d81e6dddbfb8b2002eae75805d708",
@@ -471,34 +501,22 @@
       "git_blob": "0b8ac229ad7d0f2f444dd68f98a56076be1192d7"
     },
     {
-      "path": "REVISION_AUDITORIA_2026-10-20.md",
-      "bytes": 13240,
-      "sha256": "4d84d347445cea8940a9198464ed79a58b503f9612237c8350c6dde94a32ee51",
-      "git_blob": "3d6f8f53db39cbd2be532986909f0116b7268d6f"
-    },
-    {
       "path": "rfid_cards.py",
       "bytes": 927,
       "sha256": "13bbaffe9c05f332af18460f9b4432fb7fbc57a02dee46bc660dbee8e595f392",
       "git_blob": "f68d78e510f94aee267f5a6ea04bf26fa5339a9b"
     },
     {
-      "path": "SECURITY.md",
-      "bytes": 1077,
-      "sha256": "2b63febaccf4c471458b7cd22e71efa051fb2651b442e6d64ce1a11519764f64",
-      "git_blob": "ee0310a6023f97b6d5b838dc20230d18fd31daf7"
-    },
-    {
       "path": "security.py",
-      "bytes": 27730,
-      "sha256": "4f96e553b7e606a1f1998e557940c6d34839f9e730f3ee4312ff2715141fb209",
-      "git_blob": "b91b2a861ac2a0e58eaee3a4672a26bcd46a49fa"
+      "bytes": 28132,
+      "sha256": "7383a074c6f1b43f228bf8f456226612887a37676f87b6790571f6b0f8fe98aa",
+      "git_blob": "7c21d5c4862da026a827bfaf7910effa2629efcf"
     },
     {
       "path": "server.py",
-      "bytes": 36021,
-      "sha256": "b8ef38b26159809fa6a813d660d0a9abcb38f0ec98390b23a3b047674b47666a",
-      "git_blob": "25e2fc971c6d44a58a3cf6913266e0120b00de76"
+      "bytes": 36677,
+      "sha256": "22463db8f26ebbb01929699073637f6961f2176d69daf9c58a929fc4d467eae7",
+      "git_blob": "5814c8ad192c8dcd9e5d39ab58af2f2c7fa373db"
     },
     {
       "path": "share_cloudflare.py",
@@ -517,12 +535,6 @@
       "bytes": 3253,
       "sha256": "24516632da379c2d9c88ec78ee3aaa4cc3ebb72164805734cd3011c7bcd9e82d",
       "git_blob": "a0b5b6b8991fdfe72e1c212843a5b2c134849692"
-    },
-    {
-      "path": "TERMINAL_VISUAL_2026-10-27.md",
-      "bytes": 3831,
-      "sha256": "993b591459b534bf974cfd23136d658a7f96463f2e3927eebb98d8bb5e61a543",
-      "git_blob": "ad5b5c56e018eb6260d733bb8e827a864f4cb83d"
     },
     {
       "path": "tests/browser.cjs",
@@ -598,9 +610,9 @@
     },
     {
       "path": "tests/run_regression.py",
-      "bytes": 810,
-      "sha256": "2b719106b3be1565620dea719cf56ccea56b2a69fbe801d0c1744ebbfa6714f8",
-      "git_blob": "60a5c74743b5add200e8123df4c52b8e980d38cc"
+      "bytes": 846,
+      "sha256": "a31b317c40c2c31206766b08e6993521167ba14cfabbc7206443d9fafe863f43",
+      "git_blob": "da5993ae2ccf3a001069ce78c60d1e15e0d31b86"
     },
     {
       "path": "tests/test_backend.py",
@@ -657,6 +669,12 @@
       "git_blob": "8eb2b2d326920e0cbba3abc148d4e5f9d546b9a3"
     },
     {
+      "path": "tests/test_cctv_duration.py",
+      "bytes": 6547,
+      "sha256": "1ec5bc419ad71e2fdb6d9e660664a16e9faae8c3c5235638d44ab8ce5f51e4fe",
+      "git_blob": "4b18c5432f8e6964e2af99f74b13be27cd17a622"
+    },
+    {
       "path": "tests/test_hardening.py",
       "bytes": 9702,
       "sha256": "2e7ef9843fda39329608c231a44247227ef2ae5077d9a8a6c955d796b6318d51",
@@ -711,16 +729,10 @@
       "git_blob": "7d7abf59b5fafc477e2383d6621c27a525c096f3"
     },
     {
-      "path": "VALIDACION_REPOSITORIO.md",
-      "bytes": 1384,
-      "sha256": "e2df17f15c2115c3f4bae0c030c6102749104e5e42edfda1140682679fecdde6",
-      "git_blob": "4afd3cf28d89d67f6c3d82386e40c12a1f8cc0b2"
-    },
-    {
       "path": "validation.json",
-      "bytes": 445,
-      "sha256": "ab6241da24751d34f9c6c972994ae0b963d05644d973f298d47938a46fc3752a",
-      "git_blob": "2f616bbf0998e6f550326cd77f3cb375384619f3"
+      "bytes": 461,
+      "sha256": "7388d3d7195824ed95547fe14d0f556cbf6e02570dc46db44345a7f76004a68f",
+      "git_blob": "c00e1ea04e2312f02b12d8480620088fa5193c01"
     },
     {
       "path": "web/assets/app.css",
@@ -730,9 +742,9 @@
     },
     {
       "path": "web/assets/app.js",
-      "bytes": 500396,
-      "sha256": "3ce3ac8dd5b635ab884cc5ae7fac7eabfc82cc07352826db93347c19fde33a11",
-      "git_blob": "06c240ac075321788bdacc2af051df32d6296181"
+      "bytes": 500529,
+      "sha256": "1df53a0cfb9daf314c44124bf448478810e75dbf3e871778a9d68cea9f12356c",
+      "git_blob": "04e7c0dc1276903b7d8818180813a5b4d5365f85"
     },
     {
       "path": "web/assets/manrope-cyrillic-ext-wght-normal-2GMQGZDT.woff2",

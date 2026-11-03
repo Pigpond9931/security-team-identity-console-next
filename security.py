@@ -25,6 +25,11 @@ PUBLIC_COLUMNS = ('id', 'username', 'full_name', 'role', 'area', 'is_guard',
                   'is_active', 'created_at', 'updated_at', 'last_login',
                   'security_version', 'must_change_password', 'terms_accepted', 'terms_accepted_at', 'terms_version', 'allowed_zones')
 SESSION_SECONDS = 1800
+CCTV_SESSION_SECONDS = 4 * 60 * 60
+
+def session_deadline(session):
+    """Plazo absoluto; el tráfico de vídeo nunca renueva el inicio de sesión."""
+    return session.get("issued_at", 0) + (CCTV_SESSION_SECONDS if session.get("cctv_session") is True else SESSION_SECONDS)
 CHALLENGE_SECONDS = 300
 MAX_FAILURES = 3
 
@@ -289,12 +294,15 @@ def regenerate_recovery_codes(session,password,code):
                 'recovery_codes':issue_recovery_codes(conn,user['id'])}
 
 def session_user(conn, session):
-    if not session or not 0 <= time.time()-session.get('issued_at', 0) <= SESSION_SECONDS:
+    if not session or not session.get('issued_at', 0) <= time.time() < session_deadline(session):
         return None
     user = conn.execute('SELECT * FROM users WHERE id=?', (session['user_id'],)).fetchone()
     if (not user or not user['is_active'] or user['is_locked'] or not user['mfa_configured']
             or user['must_change_password'] or user['security_version'] != session['security_version']):
         return None
+    if session.get('cctv_session') is True:
+        import features
+        if not features.cctv(conn,user):return None
     return user
 
 def current_user(session):

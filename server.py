@@ -73,10 +73,14 @@ def initialize():
     secure.cipher()
     secure.encrypt_existing_secrets()
 
+def state_deadline(state):
+    deadline=secure.session_deadline(state["auth"]) if state.get("auth") else state["created"]+secure.SESSION_SECONDS
+    return max(deadline,state.get("cctv_until",0))
+
 def make_session():
     # Cota de memoria: no desplaza sesiones autenticadas para admitir desconocidos.
     now=time.time()
-    for key in [k for k,v in SESSIONS.items() if now-v['created']>1800]:SESSIONS.pop(key,None)
+    for key in [k for k,v in SESSIONS.items() if now>=state_deadline(v)]:SESSIONS.pop(key,None)
     if len(SESSIONS)>=4096:raise SessionCapacity()
     sid=secrets.token_urlsafe(32)
     state={'csrf':secrets.token_urlsafe(32),'created':time.time(),'stage':'login'}
@@ -141,10 +145,13 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('X-Content-Type-Options','nosniff')
         if session_id:
             secure_cookie='; Secure' if self.public_request() else ''
-            self.send_header('Set-Cookie',f'st_session={session_id}; Path=/; HttpOnly; SameSite=Strict; Max-Age=1800{secure_cookie}')
+            with SESSION_LOCK:
+                remaining=max(0,int(state_deadline(SESSIONS[session_id])-time.time())) if session_id in SESSIONS else 0
+            self.send_header('Set-Cookie',f'st_session={session_id}; Path=/; HttpOnly; SameSite=Strict; Max-Age={remaining}{secure_cookie}')
         if capability:
             name,value,path=capability
-            self.send_header('Set-Cookie',name+'='+value+'; Path='+path+'; HttpOnly; SameSite=Strict; Max-Age='+('1800' if value else '0')+('; Secure' if self.public_request() else ''))
+            lifetime=secure.CCTV_SESSION_SECONDS if name=='st_camera' else secure.SESSION_SECONDS
+            self.send_header('Set-Cookie',name+'='+value+'; Path='+path+'; HttpOnly; SameSite=Strict; Max-Age='+str(lifetime if value else 0)+('; Secure' if self.public_request() else ''))
         self.end_headers()
         self.wfile.write(data)
 
@@ -155,7 +162,7 @@ class Handler(BaseHTTPRequestHandler):
         sid=parsed['st_session'].value if 'st_session' in parsed else None
         with SESSION_LOCK:
             now=time.time()
-            for token in [k for k,v in SESSIONS.items() if now-v['created']>1800]: SESSIONS.pop(token,None)
+            for token in [k for k,v in SESSIONS.items() if now>=state_deadline(v)]: SESSIONS.pop(token,None)
             if sid not in SESSIONS: return make_session()
             return sid,SESSIONS[sid]
 
@@ -169,8 +176,10 @@ class Handler(BaseHTTPRequestHandler):
         if state.get('auth'):
             user=secure.current_user(state['auth'])
             if not user:
+                producer_until=state.get('cctv_until',0)
                 state.clear()
                 state.update(csrf=secrets.token_urlsafe(32),created=time.time(),stage='login')
+                if producer_until>time.time():state['cctv_until']=producer_until
         if state.get('challenge'):
             with db.get_connection() as conn: pending=secure.challenge_user(conn,state['challenge'])
             if pending is None:
@@ -182,6 +191,8 @@ class Handler(BaseHTTPRequestHandler):
         if user:
             with db.get_connection() as conn:
                 current=features.row_user(conn,user['username'])
+                if state['stage']=='dashboard' and features.cctv(conn,current):
+                    state['auth']['cctv_session']=True
                 result['permissions']={'terminal':features.global_admin(current) or current['role']=='area_admin' or bool(current['is_guard']),
                     'cctv':bool(features.cctv(conn,current)), 'cctv_admin':bool(features.camera_admin(conn,current)), 'threats':current['role'] in (*db.GLOBAL_ROLES,'area_admin')}
         if state['stage']=='terms':result['terms']={'title':features.TERMS_TITLE,'body':features.TERMS_BODY,'version':db.TERMS_VERSION}
@@ -199,7 +210,7 @@ class Handler(BaseHTTPRequestHandler):
         if not self.allowed_host(): return self.response(403,{'error':'Origen no autorizado.'})
         if self.redirect_https():return
         path=urlsplit(self.path).path
-        if path=='/api/health': return self.response(200,{'ok':True,'application':'SECURITY_TEAM_Studio','version':'1.5.2','mode':'shared' if PUBLIC_ORIGIN else 'local'})
+        if path=='/api/health': return self.response(200,{'ok':True,'application':'SECURITY_TEAM_Studio','version':'1.5.3','mode':'shared' if PUBLIC_ORIGIN else 'local'})
         q={k:v[0] for k,v in parse_qs(urlsplit(self.path).query).items()}
         if path in ('/api/terms','/api/public-pass'):
             sid,state=self.session()
@@ -264,7 +275,7 @@ class Handler(BaseHTTPRequestHandler):
             seq,frame,captured=feed.latest(0,6)
             if not frame:raise ValueError()
             self.send_response(200);self.send_header('Content-Type','multipart/x-mixed-replace; boundary=STFRAME');self.send_header('Cache-Control','no-store, no-cache');self.send_header('X-Content-Type-Options','nosniff');self.end_headers();headers=True
-            deadline=time.monotonic()+1800
+            deadline=time.monotonic()+max(0,state_deadline(state)-time.time())
             previous=-1;checked=0
             while time.monotonic()<deadline and not feed.stop.is_set():
                 if time.monotonic()-checked>=1:
@@ -294,7 +305,7 @@ class Handler(BaseHTTPRequestHandler):
     def camera_owner_alive(self,owner_sid,auth):
         with SESSION_LOCK:
             parent=SESSIONS.get(owner_sid)
-            return bool(parent and parent.get('stage')=='dashboard' and parent.get('auth')==auth and time.time()-parent['created']<=1800)
+            return bool(parent and parent.get('stage')=='dashboard' and parent.get('auth')==auth and time.time()<state_deadline(parent))
 
     def browser_camera_stream(self,state,q,sid):
         headers=False;opened=False;body={'id':q.get('id',''),'peer':q.get('peer','')}
@@ -347,17 +358,16 @@ class Handler(BaseHTTPRequestHandler):
             if not isinstance(body,dict): raise ValueError('Solicitud inválida.')
             path=urlsplit(self.path).path
             if path in phone_links.PRIVATE|phone_links.PUBLIC|browser_cameras.PRIVATE|browser_cameras.PUBLIC:
-                def owner_alive(owner_sid,auth):
-                    with SESSION_LOCK:
-                        parent=SESSIONS.get(owner_sid)
-                        return bool(parent and parent.get('stage')=='dashboard' and parent.get('auth')==auth and time.time()-parent['created']<=1800)
+                owner_alive=self.camera_owner_alive
                 service=browser_cameras if path.startswith('/api/browser-camera/') else phone_links
                 capability=None
                 name,cap_path=('st_camera','/api/browser-camera') if service is browser_cameras else ('st_scan','/api/scanner')
                 if path in service.PUBLIC and not path.endswith('/claim'):body['phone_token']=self.capability_cookie(name)
                 try:result=service.dispatch(path,body,sid,state,owner_alive)
                 except PermissionError as error:return self.response(403,{'error':str(error)},sid)
-                if result.get('phone_token'):capability=(name,result.pop('phone_token'),cap_path)
+                if result.get('phone_token'):
+                    capability=(name,result.pop('phone_token'),cap_path)
+                    if service is browser_cameras:state['cctv_until']=time.time()+secure.CCTV_SESSION_SECONDS
                 if path.endswith('/disconnect'):capability=(name,'',cap_path)
                 if result.get('ticket'):
                     result['pair_url']=(getattr(self.server,'pass_origin','') or self.public_origin() or 'http://'+self.headers['Host'])+('/camera#ticket=' if service is browser_cameras else '/scanner#ticket=')+quote(result.pop('ticket'))

@@ -1,6 +1,6 @@
 # SECURITY TEAM Identity Console
 
-Código completo de la aplicación académica para Windows: React, Python y SQLite. Versión funcional 1.5.2. Reúne Identity Management, IAM, terminal RFID/QR, invitados, licencias internas, auditoría y vigilancia con teléfonos.
+Código completo de la aplicación académica para Windows: React, Python y SQLite. Versión funcional 1.5.3. Reúne Identity Management, IAM, terminal RFID/QR, invitados, licencias internas, auditoría y vigilancia con teléfonos.
 
 Este repositorio es independiente del Portal de cumplimiento. No incluye las cuentas, contraseñas, secretos MFA, tarjetas reales, sesiones, bases de datos ni copias privadas de la laptop. Las 33 identidades del seed son ficticias y solo se cargan en pruebas o al solicitar una demo. No hay contraseña compartida utilizable por defecto en una nueva instalación.
 
@@ -42,7 +42,7 @@ El enlace es temporal. La laptop debe permanecer encendida, sin suspenderse y co
 - Terminal RFID/QR con F1-F4, resultado permitido/denegado, entrada/salida, aforo e historial.
 - Invitados, entrega móvil limitada y confirmación del anfitrión.
 - Centro de vigilancia, vinculación de teléfonos, cámaras IP aprobadas y eliminación de canales.
-- Hasta ocho canales combinados; límites de espectadores y vida de sesión.
+- Hasta ocho canales combinados; sesiones CCTV de hasta cuatro horas, QR de enlace de cinco minutos y límites de espectadores. Consulta [CCTV_SESIONES_4H.md](CCTV_SESIONES_4H.md).
 - Auditoría, análisis de amenazas por reglas y respaldo/rotación local de claves.
 
 La consola sustituye Microsoft 365/OneLogin y los teléfonos sustituyen DVR con el permiso del profesor confirmado por el responsable del proyecto. El lector RFID comercial también fue aprobado. No se implementan SSO externo general, cerradura física, grabación permanente, audio ni reconocimiento facial. La retención y la auditoría bajo custodia independiente siguen siendo decisiones operativas.
@@ -82,6 +82,6 @@ supervise_cloudflare.py   supervisión del túnel
 
 ## Cambios de distribución respecto a la laptop
 
-La lógica de la versión 1.5.2 se conserva. Esta copia usa identidades ficticias, omite importación automática de bases vecinas, no carga ejemplos por defecto y añade bootstrap e instalación de una instancia nueva. El importador RFID es solo un ejemplo ficticio y conserva la separación final de zonas IM/IAM; nunca se ejecuta al iniciar. Nada de esto modifica los datos o procesos de la instalación activa.
+La lógica funcional de la laptop se conserva y la versión 1.5.3 amplía las sesiones CCTV a cuatro horas. Esta copia usa identidades ficticias, omite importación automática de bases vecinas, no carga ejemplos por defecto y añade bootstrap e instalación de una instancia nueva. El importador RFID es solo un ejemplo ficticio y conserva la separación final de zonas IM/IAM; nunca se ejecuta al iniciar. Nada de esto modifica los datos o procesos de la instalación activa.
 
 No se adjuntan reportes con datos personales ni capturas de sesiones reales. Los documentos académicos y sus originales quedan en la carpeta local de entregas del propietario. Este repositorio conserva la documentación técnica textual, saneada para distribución.

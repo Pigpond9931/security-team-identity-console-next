@@ -39,6 +39,7 @@ def dispatch(path,body,sid,state,owner_alive):
             if state.get('stage')!='dashboard':raise PermissionError('Inicia sesión para acceder a CCTV.')
             u=f.actor(c,state.get('auth'))
             if not f.cctv(c,u):raise PermissionError('Sin permiso CCTV.')
+            state['auth']['cctv_session']=True
             if action=='list':
                 editing=f.camera_admin(c,u);total=len(CHANNELS)+c.execute('SELECT COUNT(*) FROM camera_channels').fetchone()[0]
                 return {'channels':[summary(ch)|{'can_manage':editing,'can_pair':editing and ch['sid']==sid} for ch in CHANNELS.values()],
@@ -50,7 +51,7 @@ def dispatch(path,body,sid,state,owner_alive):
                 if not name or zone not in db.ZONES:raise ValueError('Escribe un nombre y selecciona una zona.')
                 ticket=secrets.token_urlsafe(32);key=secrets.token_urlsafe(12)
                 ch={'id':key,'sid':sid,'auth':dict(state['auth']),'name':name,'zone':zone,'zone_label':db.ZONES[zone],
-                    'status':'waiting','confirmation':'','ticket_hash':digest(ticket),'expires':min(time.time()+300,state['created']+1800),
+                    'status':'waiting','confirmation':'','ticket_hash':digest(ticket),'expires':min(time.time()+300,sec.session_deadline(state['auth'])),
                     'peers':{},'frame':None,'seq':0,'uploaded':0}
                 CHANNELS[key]=ch;f.audit(c,u,'CCTV_BROWSER_CREATED',details=name+'; '+zone)
                 return summary(ch)|{'ticket':ticket}
@@ -64,7 +65,7 @@ def dispatch(path,body,sid,state,owner_alive):
                 if ch['sid']!=sid or not f.camera_admin(c,u):raise PermissionError('Este vínculo pertenece a otra sesión.')
                 if action=='approve':
                     if ch['status']!='pending' or not secrets.compare_digest(str(body.get('confirmation','')),ch['confirmation']):raise ValueError('Compara el código del teléfono antes de confirmar.')
-                    ch.update(status='paired',expires=min(time.time()+1800,state['created']+1800));f.audit(c,u,'CCTV_BROWSER_APPROVED',details=ch['name'])
+                    ch.update(status='paired',expires=min(time.time()+sec.CCTV_SESSION_SECONDS,sec.session_deadline(state['auth'])));f.audit(c,u,'CCTV_BROWSER_APPROVED',details=ch['name'])
                 return summary(ch)
             if ch['status']!='paired':raise PermissionError('Confirma primero la cámara.')
             if action=='view':
