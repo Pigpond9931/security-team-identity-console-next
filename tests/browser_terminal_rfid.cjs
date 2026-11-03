@@ -1,0 +1,31 @@
+const assert=require('node:assert/strict'),path=require('node:path');
+module.exports=async({page,context,base})=>{
+ const origin=new URL(base).origin,state=await(await context.request.get(base+'api/session')).json();
+ async function post(route,data){const r=await context.request.post(base+'api/'+route,{headers:{Origin:origin,'X-CSRF-Token':state.csrf},data});assert.equal(r.status(),200,route);return r.json()}
+ const records=await(await context.request.get(base+'api/data')).json(),target=records.users.find(u=>u.role==='user'&&u.mfa_configured&&!u.is_locked&&u.is_active);
+ assert(target);await post('users/update',{id:target.id,changes:{rfid_uid:'777000'}});
+ await page.getByRole('button',{name:'Terminal de Acceso',exact:true}).click();
+ await page.getByRole('button',{name:'Tarjeta RFID',exact:true}).click();
+ const reader=page.getByLabel('Lector RFID USB 125 kHz',{exact:true});
+ await page.getByRole('button',{name:'F1 Access Control',exact:true}).click();assert.equal(await page.getByLabel('Zona / Puerta',{exact:true}).inputValue(),'DATA_CENTER_VAULT');
+ await reader.fill('123');await page.keyboard.press('F2');assert.equal(await reader.inputValue(),'');assert.equal(await page.getByLabel('Zona / Puerta',{exact:true}).inputValue(),'SERVER_ROOM');
+ await page.keyboard.press('F3');assert.equal(await page.getByLabel('Zona / Puerta',{exact:true}).inputValue(),'MONITORING_CCTV');
+ await page.keyboard.press('F4');assert.equal(await page.getByLabel('Zona / Puerta',{exact:true}).inputValue(),'GENERAL_ACCESS');
+ assert(await reader.evaluate(el=>el===document.activeElement));assert.equal(await page.getByRole('button',{name:'F4 IAM',exact:true}).getAttribute('aria-pressed'),'true');
+ await page.getByRole('tab',{name:'Configuración',exact:true}).click();
+ await page.getByText('Configurar aforo de personas',{exact:true}).click();await page.getByLabel('Aforo máximo de personas',{exact:true}).fill('3');const saved=page.waitForResponse(r=>r.url().endsWith('/api/access/terminal-settings'));await page.getByRole('button',{name:'Guardar aforo',exact:true}).click();await saved;
+ assert.equal((await(await context.request.get(base+'api/access/terminal')).json()).occupancy_limit,3);
+ await post('access/terminal-settings',{occupancy_limit:0});
+ await page.getByRole('tab',{name:'Operación',exact:true}).click();
+ await reader.fill('000777000');await reader.press('Enter');
+ const popup=page.getByRole('dialog',{name:'Resultado de acceso'});await popup.getByRole('heading',{name:'Acceso permitido',exact:true}).waitFor();
+ await popup.getByRole('button',{name:'Siguiente lectura',exact:true}).click();
+ await page.getByRole('tab',{name:'Actividad',exact:true}).click();
+ await page.getByRole('table').filter({hasText:'Fecha · CDMX'}).getByText(target.username,{exact:true}).first().waitFor();
+ const download=page.waitForEvent('download');await page.getByRole('button',{name:'Exportar movimientos CSV',exact:true}).click();assert.equal((await download).suggestedFilename(),'movimientos-terminal.csv');
+ await page.getByRole('tab',{name:'Operación',exact:true}).click();
+ await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(__dirname,'../design/27-terminal-rfid-areas.png'),fullPage:true,animations:'disabled'});
+ await reader.fill('777000');await reader.press('Enter');await popup.getByText('SALIDA REGISTRADA',{exact:true}).waitFor();await page.keyboard.press('Escape');
+ await page.setViewportSize({width:390,height:844});await page.waitForFunction(()=>document.querySelector('.sidebar').getBoundingClientRect().right<=1);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(__dirname,'../design/28-terminal-rfid-movil.png'),fullPage:true,animations:'disabled'});await page.setViewportSize({width:1440,height:1000});
+ return ['Terminal con cuatro botones de área y atajos F1–F4','Cambio de área vacía lectura parcial y devuelve foco al lector','RFID decimal con ceros iniciales registra entrada y salida con aviso','Aforo editable por administración, bitácora visible y exportación CSV','Terminal adaptable a móvil sin desbordamiento'];
+};

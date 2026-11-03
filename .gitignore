@@ -1,0 +1,35 @@
+# Estado privado de la instalación
+data/
+backups/
+storage/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.dpapi
+*.key
+*.pem
+.mfa-key*
+.env
+.env.*
+!.env.example
+*cloudflare-links.json
+*processes.json
+ENLACE_CLOUDFLARE.md
+ENLACE_COMPARTIDO.md
+# Dependencias y archivos generados
+.venv/
+node_modules/
+node-store/
+.runtime/
+tools/*.exe
+__pycache__/
+*.pyc
+tests/scratch/
+tests/resultado*
+tests/resultados*
+*.log
+*.zip
+.DS_Store
+Thumbs.db
