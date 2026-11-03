@@ -308,8 +308,13 @@ class Backend(unittest.TestCase):
     def test_26_dacl_privada_sin_herencia(self):
         result=secure.store.directory_acl(TEMP.name)
         self.assertTrue(result['protected'])
-        identities={s.replace('SY','S-1-5-18') for s in re.findall(r';;;([^;)]+)\)',result['sddl'])}
-        self.assertEqual(identities,{'S-1-5-18',secure.store.user_sid()})
+        owner_sid=secure.store.user_sid()
+        aliases={'SY':'S-1-5-18'}
+        # Windows puede representar la cuenta local RID 500 mediante el alias LA.
+        # Solo se acepta ese alias cuando corresponde al administrador esperado.
+        if owner_sid.endswith('-500'):aliases['LA']=owner_sid
+        identities={aliases.get(s,s) for s in re.findall(r';;;([^;)]+)\)',result['sddl'])}
+        self.assertEqual(identities,{'S-1-5-18',owner_sid})
 
     def test_27_respaldo_incluye_base_y_clave_protegida(self):
         import maintenance
