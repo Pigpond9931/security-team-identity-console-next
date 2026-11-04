@@ -2,7 +2,7 @@
 
 **1.6.0-next.1 · evaluación local para Windows.** React, Python y SQLite; gestión de identidades, roles y áreas, MFA, RFID/QR, invitados, auditoría y vigilancia con teléfonos. La instalación existente se conserva por separado. Esta copia no importa ni contiene su base, cuentas reales, claves, sesiones o constancias firmadas.
 
-El repositorio privado de destino es [security-team-identity-console-next](https://github.com/Pigpond9931/security-team-identity-console-next). Fue creado, pero la subida requiere completar la autenticación y el acceso de la integración. Los commits y el respaldo de historial se prepararon localmente. No se presenta un push pendiente como realizado.
+El código y el historial completo están subidos al repositorio privado [security-team-identity-console-next](https://github.com/Pigpond9931/security-team-identity-console-next). Los tres repositorios personales verificados son privados. La CI remota se consulta en la pestaña Actions; los resultados locales y los límites del avance externo se documentan abajo.
 
 Consulta la [revisión posterior y validación actual de 185 pruebas](docs/POST_REVIEW_20261104.md). Los informes anteriores se conservan como evidencia de su etapa.
 

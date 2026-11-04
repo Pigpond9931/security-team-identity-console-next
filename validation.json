@@ -27,7 +27,7 @@
     "python_osv_known_findings": 0
   },
   "build": "npm ci --ignore-scripts and build passed; precompiled assets included",
-  "github_ci": "prepared and linted; not executed remotely; push blocked by authentication",
+  "github_ci": "Code and full history pushed; consult Actions and delivery receipt for current remote job status.",
   "devices_or_production_migration_tested": false,
   "web_asset_sha256": {
     "app.js": "67a4b95269c4ca2b153943ae60f306935c3c997aa97a8dc824fa14e1f2432c27",

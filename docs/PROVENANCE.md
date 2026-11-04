@@ -9,3 +9,6 @@ El ZIP externo mencionado por el propietario no estaba adjunto ni apareció en l
 La primera actualización local incorpora políticas v1.1 y validación versionada, sonido del terminal y consulta/actualización del QR por persona. Los datos de la instalación activa no se copian: se usa exclusivamente la lista de distribución y se verifican sus hashes. El proyecto original no recibe commits ni pushes.
 
 El repositorio Next fue creado vacío como privado. La integración GitHub todavía no lo puede leer/escribir y el cliente Git local no tiene autenticación utilizable. El cambio del original a privado quedó detenido en la confirmación personal de identidad de GitHub; no se debe informar como completado.
+
+
+Actualización posterior: el propietario completó la confirmación personal; los tres repositorios son privados y el código/historial de Next se subió sin force. El estado inicial de bloqueo descrito arriba queda como antecedente. Véase GITHUB_HANDOFF.md.

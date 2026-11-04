@@ -267,8 +267,8 @@
     },
     {
       "path": "README.md",
-      "bytes_normalized": 8295,
-      "sha256": "167574cd386c316eae2ed0ef2dfd4153059236803a268386b5a105f9b704b093"
+      "bytes_normalized": 8307,
+      "sha256": "62cbb46bc9a1744d1d56a10645539d63db2ac6e1a465a6df7c0c6b55d5f5fc98"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
@@ -347,8 +347,8 @@
     },
     {
       "path": "docs/GITHUB_HANDOFF.md",
-      "bytes_normalized": 3725,
-      "sha256": "11966733087e99745dd480887275aa7ca299ee10075f415537ff2390ad134507"
+      "bytes_normalized": 1615,
+      "sha256": "7b26b74d47766c28427273ec69b0bce0ba7e7a9bac37e109fb164268224e4233"
     },
     {
       "path": "docs/ITERATION_02_LOCAL.md",
@@ -367,8 +367,8 @@
     },
     {
       "path": "docs/PROVENANCE.md",
-      "bytes_normalized": 1430,
-      "sha256": "9ee8402f12165f145fbb9a10317e06b2c87357b24f9cc4cf2da360e7ada9851a"
+      "bytes_normalized": 1692,
+      "sha256": "f8ea876c6745e0155d96a11e6566d209d99321dbb295a66b1a9bb5be64a179e5"
     },
     {
       "path": "docs/SECURITY_REVIEW_20261104.md",
@@ -927,8 +927,8 @@
     },
     {
       "path": "validation.json",
-      "bytes_normalized": 1360,
-      "sha256": "9a1046f263d23a7cf84060cc6ae2449dbeddb5971d01754e12bda18e4ecaa7c7"
+      "bytes_normalized": 1383,
+      "sha256": "b787d434f34ce98c46636025fa12cf7459d7e7c2c4b337a2f62eea4b2b6e58bb"
     },
     {
       "path": "web/assets/Politicas_y_aceptacion_SECURITY_TEAM.pdf",
