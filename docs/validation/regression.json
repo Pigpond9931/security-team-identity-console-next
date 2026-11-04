@@ -5,49 +5,49 @@
       "returncode": 0,
       "tests": 35,
       "skipped": 0,
-      "seconds": 53.4
+      "seconds": 53.1
     },
     {
       "group": "test_v130",
       "returncode": 0,
       "tests": 20,
       "skipped": 0,
-      "seconds": 39.5
+      "seconds": 39.1
     },
     {
       "group": "test_hardening",
       "returncode": 0,
       "tests": 8,
       "skipped": 0,
-      "seconds": 16.4
+      "seconds": 16.3
     },
     {
       "group": "test_initial_passwords",
       "returncode": 0,
       "tests": 7,
       "skipped": 0,
-      "seconds": 23.2
+      "seconds": 22.9
     },
     {
       "group": "test_terminal_rfid",
       "returncode": 0,
       "tests": 6,
       "skipped": 0,
-      "seconds": 21.8
+      "seconds": 21.5
     },
     {
       "group": "test_rfid_reference_import",
       "returncode": 0,
       "tests": 4,
       "skipped": 0,
-      "seconds": 18.3
+      "seconds": 18.2
     },
     {
       "group": "test_browser_cameras",
       "returncode": 0,
       "tests": 5,
       "skipped": 0,
-      "seconds": 15.6
+      "seconds": 15.7
     },
     {
       "group": "test_phone_links",
@@ -68,21 +68,21 @@
       "returncode": 0,
       "tests": 5,
       "skipped": 0,
-      "seconds": 20.6
+      "seconds": 20.7
     },
     {
       "group": "test_camera_removal",
       "returncode": 0,
       "tests": 9,
       "skipped": 0,
-      "seconds": 21.1
+      "seconds": 20.9
     },
     {
       "group": "test_surveillance",
       "returncode": 0,
       "tests": 7,
       "skipped": 0,
-      "seconds": 19.4
+      "seconds": 19.2
     },
     {
       "group": "test_supervisor",
@@ -117,14 +117,14 @@
       "returncode": 0,
       "tests": 4,
       "skipped": 0,
-      "seconds": 27.8
+      "seconds": 27.7
     },
     {
       "group": "test_terms_revision",
       "returncode": 0,
       "tests": 3,
       "skipped": 0,
-      "seconds": 15.6
+      "seconds": 15.7
     },
     {
       "group": "test_runtime_paths",
@@ -138,7 +138,7 @@
       "returncode": 0,
       "tests": 3,
       "skipped": 0,
-      "seconds": 13.7
+      "seconds": 13.6
     },
     {
       "group": "test_publication_guard",
@@ -167,9 +167,16 @@
       "tests": 2,
       "skipped": 0,
       "seconds": 13.8
+    },
+    {
+      "group": "test_camera_read_transactions",
+      "returncode": 0,
+      "tests": 4,
+      "skipped": 0,
+      "seconds": 13.8
     }
   ],
-  "tests": 173,
+  "tests": 177,
   "skipped": 1,
   "ok": true,
   "production_data_used": false

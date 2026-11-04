@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "queue": 64,
+  "clients": 35,
+  "preauthenticated_fixture_sessions": true,
+  "authentication_load_measured": false,
+  "transport": "localhost HTTP; Python clients; synthetic JPEG",
+  "production_data_used": false,
+  "real_wifi_phone_or_cloudflare_test": false,
+  "results": {
+    "35_clients_read_burst": {
+      "requests": 105,
+      "status_counts": {
+        "200": 105
+      },
+      "latency_ms": {
+        "p50": 125.0,
+        "p95": 719.0,
+        "max": 781.0
+      },
+      "seconds": 1.03
+    },
+    "35_readers_with_terminal_and_one_camera": {
+      "requests": 391,
+      "status_counts": {
+        "200": 391
+      },
+      "latency_ms": {
+        "p50": 125.0,
+        "p95": 172.0,
+        "max": 188.0
+      },
+      "seconds": 5.0,
+      "camera_accepted": 91,
+      "access_verified": 20,
+      "per_route": {
+        "/api/access/verify": {
+          "requests": 20,
+          "status_counts": {
+            "200": 20
+          },
+          "latency_ms": {
+            "p50": 16.0,
+            "p95": 125.0,
+            "max": 125.0
+          }
+        },
+        "/api/browser-camera/upload-frame": {
+          "requests": 91,
+          "status_counts": {
+            "200": 91
+          },
+          "latency_ms": {
+            "p50": 16.0,
+            "p95": 47.0,
+            "max": 63.0
+          }
+        },
+        "/api/data": {
+          "requests": 280,
+          "status_counts": {
+            "200": 280
+          },
+          "latency_ms": {
+            "p50": 125.0,
+            "p95": 187.0,
+            "max": 188.0
+          }
+        }
+      }
+    }
+  }
+}

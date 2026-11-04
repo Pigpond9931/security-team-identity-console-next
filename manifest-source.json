@@ -267,8 +267,8 @@
     },
     {
       "path": "README.md",
-      "bytes_normalized": 7519,
-      "sha256": "c554cac988588790b9bd6ff07dc039424e9fa23c7959405a5f934711f8d655b3"
+      "bytes_normalized": 8128,
+      "sha256": "48bb8b641ce53a62b4d9459c70cfcf2eb46505452455d1030c8985ab28651c1a"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
@@ -293,7 +293,7 @@
     {
       "path": "VALIDACION_REPOSITORIO.md",
       "bytes_normalized": 546,
-      "sha256": "64be459554c83274bd81fe068a8dc64d5c7f00d73f032956a7772a773f270c6e"
+      "sha256": "e022a81663e75f4e0ac73dc851ec5820e4ce1e7f72be55c0611ae758843f4033"
     },
     {
       "path": "access_terminal.py",
@@ -317,13 +317,13 @@
     },
     {
       "path": "browser_cameras.py",
-      "bytes_normalized": 11939,
-      "sha256": "01041945fad3891c203093f44f0794ffa6de518de4d42c35c8ba80faca8bb37f"
+      "bytes_normalized": 12322,
+      "sha256": "b66cf1df0cb4af23449fe569f82e7b09104f5a71184c613125984232cc04a9ea"
     },
     {
       "path": "build.mjs",
-      "bytes_normalized": 726,
-      "sha256": "ee3fd6e03dcd2bbc6f85da5646b15948b8add27f524472e92e44715cf2b467cf"
+      "bytes_normalized": 1342,
+      "sha256": "de2e656abee8e2733fee4f2057e6c84fceb822674e2f59f869056713b5c6bb6b"
     },
     {
       "path": "camera_hub.py",
@@ -334,6 +334,11 @@
       "path": "db_manager.py",
       "bytes_normalized": 21416,
       "sha256": "b4b648eee6a18c16256b7db0cea46d7a305190d43b350a651e538f1c25ba5181"
+    },
+    {
+      "path": "docs/BENCHMARK_LOCAL.md",
+      "bytes_normalized": 4107,
+      "sha256": "9a5fa803a5f9b9b56f08e2b5051fb25fee078b90181dfc8205389637b3b3b2e3"
     },
     {
       "path": "docs/GALERIA_NEXT.md",
@@ -347,8 +352,8 @@
     },
     {
       "path": "docs/ITERATION_02_LOCAL.md",
-      "bytes_normalized": 5437,
-      "sha256": "94f2c5e3903f1c29606abf553a80515d0a5168f60a6bace570f173bb42ac849f"
+      "bytes_normalized": 6205,
+      "sha256": "0473f9c73d116b6dee2750565bd5b04201c9da14d7b098180a536f75489fd915"
     },
     {
       "path": "docs/PRIVATE_STORAGE.md",
@@ -362,13 +367,13 @@
     },
     {
       "path": "docs/SECURITY_REVIEW_20261104.md",
-      "bytes_normalized": 8516,
-      "sha256": "16d79ad3af4929c529037390775fe8675b22e3c29d210e79b18735644b3a878f"
+      "bytes_normalized": 9254,
+      "sha256": "a173426a03a94b83ac6dd9fa82f987ff2df7046ea6a7a3e09c8493e6dcdf00c2"
     },
     {
       "path": "docs/VALIDACION_20261104.md",
-      "bytes_normalized": 7277,
-      "sha256": "6629011e0ca5717459d5bc2402b32e3fc11295677eff7432b905e86b8bab4714"
+      "bytes_normalized": 7727,
+      "sha256": "469c407aaecf85327129bcc68442cb4e12b746eb4c3244136f5e6389a69938d0"
     },
     {
       "path": "docs/action-pins.json",
@@ -382,18 +387,18 @@
     },
     {
       "path": "docs/images/02-operaciones.png",
-      "bytes_normalized": 190123,
-      "sha256": "a0353a30fa7aa44d9a114d66576ef12328bd6aa3fd6c19beee107058720fe354"
+      "bytes_normalized": 190391,
+      "sha256": "976d7ab762bb4c929c1725246e42ae1df2107609245327498121d1238878aa1d"
     },
     {
       "path": "docs/images/03-qr-movil.png",
-      "bytes_normalized": 126838,
-      "sha256": "5e853e99827f5d57563fb5e3be458994a892ef39520d1d32e6afbfb62d361e88"
+      "bytes_normalized": 126894,
+      "sha256": "b050a5ef56f74de2a51b83cf687dbed8965eda8ee0a72d3a4c810101e20e81fc"
     },
     {
       "path": "docs/images/04-vigilancia.png",
-      "bytes_normalized": 165957,
-      "sha256": "978ab7350edab9c8c2a378a15657d3d2217f82dc17ad4a20374037cd1890bd14"
+      "bytes_normalized": 166014,
+      "sha256": "3ec57debd956954edc40869d99f4e413b0cc374311eee3c9ee8aec1bdb1fc745"
     },
     {
       "path": "docs/validation/browser-chrome.json",
@@ -412,8 +417,18 @@
     },
     {
       "path": "docs/validation/camera-synthetic-local.json",
-      "bytes_normalized": 328,
-      "sha256": "93dbd4bc6331db6f8e0840db7f66ce6b1e24347c00008a8a807995af6120828f"
+      "bytes_normalized": 322,
+      "sha256": "c44109627469cd5e38930a24dabd9932fd48e1857847eea2c25d2aa09539f99b"
+    },
+    {
+      "path": "docs/validation/clients-35-queue-5.json",
+      "bytes_normalized": 1617,
+      "sha256": "8e3379d54bd3a087e3f00623d969ed3d26e616a9c2625f055fb22701f34c555c"
+    },
+    {
+      "path": "docs/validation/clients-35-queue-64.json",
+      "bytes_normalized": 1614,
+      "sha256": "8fc5d4ffd1a4ce476e19b888034dfd343e926d52f9a6a39b812184ea19982b65"
     },
     {
       "path": "docs/validation/crypto-image-compatibility.json",
@@ -442,8 +457,8 @@
     },
     {
       "path": "docs/validation/regression.json",
-      "bytes_normalized": 3288,
-      "sha256": "4962dd526976ad668ba844420c9f6fefc127a50fb6e635a5dcf050bfd16756a1"
+      "bytes_normalized": 3432,
+      "sha256": "7a98dc99f72c9690952a35cbac4fa97d31f6227dfa88580ba8a13d3df83f17b8"
     },
     {
       "path": "docs/validation/secret-scan-summary.json",
@@ -647,8 +662,8 @@
     },
     {
       "path": "server.py",
-      "bytes_normalized": 36576,
-      "sha256": "7a3449c7f3c3ed0a261e43a370a88afd0dd59ba1d456f3f666303a94308481b3"
+      "bytes_normalized": 36747,
+      "sha256": "e6257c0cff97be4ce7ae4b4293706b824d3e0fa9ba4129b6bf85e3a59f0701f0"
     },
     {
       "path": "share_cloudflare.py",
@@ -669,6 +684,11 @@
       "path": "terms_policy.py",
       "bytes_normalized": 13807,
       "sha256": "01ddd8ea95fe86905831daebce5166955fbf4b749e1ce6e28e3279db06f78788"
+    },
+    {
+      "path": "tests/benchmark_local_clients.py",
+      "bytes_normalized": 7984,
+      "sha256": "d49dfddb23844665aa83f11d3c971ccb657595c15f52530ef9cfd8183f3ca880"
     },
     {
       "path": "tests/browser.cjs",
@@ -742,8 +762,8 @@
     },
     {
       "path": "tests/run_regression.py",
-      "bytes_normalized": 1039,
-      "sha256": "5a0a063f9aee675c86788b93af661ec353500a0519f9a84e41341474575687ca"
+      "bytes_normalized": 1071,
+      "sha256": "9086d5b31cf9bbbcd2fe121d8ae8548b51786640b0c0c456a4c795ca5d11b668"
     },
     {
       "path": "tests/test_access_capacity.py",
@@ -779,6 +799,11 @@
       "path": "tests/test_camera_admin.py",
       "bytes_normalized": 4708,
       "sha256": "863ffc90eead3fd323d03526c3b8a1e2b35ae644b771ecad9ed037467ec539d3"
+    },
+    {
+      "path": "tests/test_camera_read_transactions.py",
+      "bytes_normalized": 3173,
+      "sha256": "c1ba6130aa331757cc56747688c6371a1e9380cef11d9ab63f8191c2457f869d"
     },
     {
       "path": "tests/test_camera_removal.py",
@@ -893,7 +918,7 @@
     {
       "path": "validation.json",
       "bytes_normalized": 1311,
-      "sha256": "3e3f3dc223bc9a1e5092a54fd237cd241b80dd0477bbc6398d4431efa2cf2a59"
+      "sha256": "d3ad69fdf14dab6992f0743981b043bf68c538ae046332140b11549463d531ad"
     },
     {
       "path": "web/assets/Politicas_y_aceptacion_SECURITY_TEAM.pdf",
@@ -959,6 +984,11 @@
       "path": "web/assets/motion-init.js",
       "bytes_normalized": 436,
       "sha256": "62ede531992c165244909f8e0cb86eeb65ff26e8093a52d5ceadc9d5de561c21"
+    },
+    {
+      "path": "web/assets/third-party-notices.txt",
+      "bytes_normalized": 20952,
+      "sha256": "cf058b0e623736ed3ee874e0f3844e172626152551cea84e591f4b6cad92d5ea"
     },
     {
       "path": "web/favicon.svg",

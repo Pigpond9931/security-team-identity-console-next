@@ -43,6 +43,7 @@ Se rechazan rutas dentro del repositorio, relativas, raíces, directorios que lo
 - Consulta y actualización del gafete por persona, también desde el directorio administrativo. Muestra zonas, habilitaciones internas pendientes y vencimiento en Ciudad de México.
 - Separación entre rol administrativo, zona física y licencia interna. Un rol administrativo no sustituye la licencia de una zona. La terminal siempre vuelve a validar el estado vigente.
 - Consultas GET en transacciones SQLite de solo lectura, sin reservar el bloqueo de escritura. Una consulta no puede ejecutar una mutación por accidente.
+- Cuadros y señalización de vídeo en RAM sin reservar el escritor SQLite; eventos de creación, aprobación y revocación siguen auditados. Cola TCP acotada para conexiones simultáneas, con los límites de solicitudes y espectadores conservados.
 - Cupos existentes respetados; el perfil histórico de cuatro personas solo bloquea su límite cuando fue configurado explícitamente.
 - Respaldos externos con comprobación de integridad, archivos privados y manifiesto SHA-256; ensayo de restauración con datos ficticios y las mismas claves.
 - Publicación condicionada a un administrador global activo, con MFA y políticas vigentes, tanto para DPO como para administrador del sistema.
@@ -84,8 +85,11 @@ Las políticas v1.1 se conservaron. Indican conservación hasta treinta días de
 - [Resumen de implementación y decisiones](docs/ITERATION_02_LOCAL.md).
 - [Revisión de seguridad y pendientes](docs/SECURITY_REVIEW_20261104.md).
 - [Validaciones y sus límites](docs/VALIDACION_20261104.md).
+- [Ensayo local de 35 clientes y límites de sus mediciones](docs/BENCHMARK_LOCAL.md).
 - [Capturas de Next con datos ficticios](docs/GALERIA_NEXT.md).
 - [GitHub: privacidad, autenticación y subida pendiente](docs/GITHUB_HANDOFF.md).
 - [Almacén, respaldo y reversión](docs/PRIVATE_STORAGE.md).
 
 Las guías heredadas 1.5.x se conservan como historia del proyecto. Para esta copia prevalecen este README y los documentos de la iteración local. No ejecutes un procedimiento heredado sobre la instalación real sin comprobar su alcance.
+
+La compilación conserva los [avisos y licencias de las bibliotecas y fuentes distribuidas](web/assets/third-party-notices.txt): React, React DOM, scheduler, Lucide, jsQR y Manrope. Las licencias internas de acceso del proyecto se administran por separado en la consola.

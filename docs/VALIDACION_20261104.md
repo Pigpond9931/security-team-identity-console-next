@@ -6,7 +6,7 @@
 
 | Comprobación | Resultado y alcance |
 |---|---|
-| Regresiones Python nativas | **173 descubiertas: 172 pasaron, 1 omitida, 0 fallos**, en 24 grupos aislados. Windows y DPAPI reales; SQLite y personas ficticias. |
+| Regresiones Python nativas | **177 descubiertas: 176 pasaron, 1 omitida, 0 fallos**, en 25 grupos aislados. Windows y DPAPI reales; SQLite y personas ficticias. |
 | Navegador | 16 comprobaciones en Google Chrome y las mismas 16 en Chromium de Playwright, con backend Python real aislado. Cero errores JavaScript observados. |
 | Accesibilidad | axe-core, seis pantallas por navegador, reglas WCAG 2.0/2.1 A/AA: cero violaciones detectadas. No es certificación ni reemplaza un ensayo con lector de pantalla. |
 | Diseño adaptable | Escritorio 1440 px, tablet 768 px, móvil 390 y 320 px; gafete sin desbordamiento horizontal. Terminal móvil y centro de vigilancia revisados. |
@@ -15,6 +15,7 @@
 | URLs de cámara | Ocho comprobaciones: pegado de URL completa, reparación del campo ruta y conservación de controles del servidor. |
 | PowerShell y CI | Todos los lanzadores `.ps1` de la raíz pasan el análisis sintáctico. Los dos workflows pasan actionlint 1.7.12. No se ejecutaron Actions remotas porque no se ha podido subir la copia. |
 | Custodia y recuperación | Ensayo real de DACL privada, claves DPAPI y respaldo/restauración en un proceso nuevo bajo el mismo usuario Windows. Datos ficticios. |
+| Concurrencia | 35 clientes HTTP de prueba, terminal y cámara sintética; sin errores en las muestras. El detalle de latencias, medianas que aumentaron y límites está en [BENCHMARK_LOCAL](BENCHMARK_LOCAL.md). No se midió carga de autenticación ni Wi-Fi. |
 | Compatibilidad de actualización | Fernet de cryptography 48.0.1 descifrado por 50.0.2 y viceversa; JPEG de Pillow 12.3.0 leído por 13.0.0. El archivo DPAPI ficticio se conservó byte a byte. No prueba reversión de esquema de SQLite. |
 
 La omisión corresponde a crear junctions reales: el entorno restringido de Windows denegó su creación. Se probaron rutas internas, relativas, vacías, raíces, ascendientes, archivos, recorrido normalizado y `data/` antiguo, pero **debe repetirse el caso real de junction fuera del sandbox**.
@@ -47,8 +48,9 @@ La omisión corresponde a crear junctions reales: el entorno restringido de Wind
 | `test_private_backup` | 3 | 0 |
 | `test_read_transactions` | 5 | 0 |
 | `test_qr_readiness` | 2 | 0 |
+| `test_camera_read_transactions` | 4 | 0 |
 
-El runner es `tests/run_regression.py`; lanza cada grupo en un proceso separado. Los ensayos adicionales impiden una escritura accidental mediante GET, permiten dos generaciones simultáneas de gafete, respetan un cupo existente de doce y deniegan el acceso tras revocar una habilitación. No reducen requisitos de MFA, políticas ni alcance administrativo.
+El runner es `tests/run_regression.py`; lanza cada grupo en un proceso separado. Los ensayos adicionales impiden una escritura accidental mediante GET o una consulta de cámara, permiten dos generaciones simultáneas de gafete, respetan un cupo existente de doce y deniegan el acceso tras revocar una habilitación. El vídeo frecuente no reserva el escritor de SQLite y las operaciones de ciclo de vida conservan la auditoría. No se reducen requisitos de MFA, políticas ni alcance administrativo.
 
 ## Recorrido de navegador
 
@@ -60,7 +62,7 @@ El teléfono de prueba reclama y confirma una vinculación real, recibe una capa
 
 ## Medición limitada de vídeo
 
-En Chromium local se observaron 51 cuadros WebRTC decodificados en 2,5 segundos y 54 cuadros JPEG aceptados por el backend en aproximadamente 2,52 segundos. Son **20,4 fps** y **21,4 fps** en esa muestra sintética. No miden una cámara física, el túnel, la distancia del salón, estabilidad durante cuatro horas ni carga de treinta y cinco personas. No se promete esa velocidad en la universidad.
+En Chromium local se observaron 51 cuadros WebRTC decodificados en 2.5 segundos y 54 cuadros JPEG aceptados por el backend en aproximadamente 2.51 segundos. Son **20.4 fps** y **21.5 fps** en esa muestra sintética. No miden una cámara física, el túnel, la distancia del salón, estabilidad durante cuatro horas ni carga de treinta y cinco teléfonos. No se promete esa velocidad en la universidad.
 
 ## Ejecutarlo otra vez
 

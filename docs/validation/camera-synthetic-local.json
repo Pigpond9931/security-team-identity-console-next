@@ -1,9 +1,9 @@
 {
   "ok": true,
   "transport": "WebRTC y MJPEG continuo; cámara sintética en Chrome local",
-  "sampleSeconds": 2.520240899999997,
+  "sampleSeconds": 2.5101152,
   "acceptedJpegFrames": 54,
-  "acceptedJpegFps": 21.4265231549889,
+  "acceptedJpegFps": 21.512956855525992,
   "webRtcDecodedFrames": 51,
   "webRtcSampleSeconds": 2.5,
   "webRtcDecodedFps": 20.4,

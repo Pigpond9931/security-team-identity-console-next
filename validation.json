@@ -5,11 +5,11 @@
   "external_iteration_zip_recovered": false,
   "production_data_included": false,
   "native_regression": {
-    "tests_discovered": 173,
-    "passed": 172,
+    "tests_discovered": 177,
+    "passed": 176,
     "skipped": 1,
     "failed": 0,
-    "isolated_groups": 24
+    "isolated_groups": 25
   },
   "browser": {
     "chrome": "passed",

@@ -30,6 +30,10 @@ El gafete muestra la diferencia entre **zona asignada** y **habilitación intern
 
 Las lecturas de servicios usan una instantánea de solo lectura con `mode=ro` y `query_only`. Las mutaciones conservan `BEGIN IMMEDIATE`. La caducidad de invitados se calcula al consultar sin cambiar la base mediante GET; la decisión de acceso sigue comprobando la fecha real. Dos generaciones de gafete pueden procesarse simultáneamente sin reservar el bloqueo del escritor.
 
+El tráfico frecuente de las cámaras del navegador —cuadros, consultas y señalización— también deja de reservar el escritor de SQLite: sus datos de vídeo permanecen en RAM. Los cuatro cambios de ciclo de vida que generan auditoría conservan la escritura. No se reducen las comprobaciones de permisos ni se hacen permanentes las capacidades de dispositivo.
+
+La cola de aceptación TCP se acota a 64 para reducir esperas de conexión al entrar el grupo simultáneamente; se mantienen los límites de 64 solicitudes activas y dieciséis vistas. El [ensayo de 35 clientes](BENCHMARK_LOCAL.md) incluye lecturas, terminal y una cámara sintética. Documenta las latencias y sus límites: no sustituye una prueba física ni implica que todas las medianas mejoren.
+
 La corrección de cupo separa la antigua exclusión de visitantes del límite explícito de un perfil de cuatro personas. Mantiene las asignaciones existentes y rechaza reducir el cupo por debajo de las licencias asignadas. No amplía permisos ni asigna licencias automáticamente.
 
 Los respaldos nuevos se niegan a escribir dentro del repositorio, a sobrescribir un destino o a crear una base inexistente por accidente. Utilizan la API de respaldo de SQLite, comprueban integridad y conservan claves/configuraciones privadas con un manifiesto verificable. La restauración ensayada usa datos ficticios y el mismo usuario Windows; no constituye una migración real.
