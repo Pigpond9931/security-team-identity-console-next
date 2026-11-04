@@ -46,6 +46,9 @@ def configure_public(url):
     PUBLIC_ORIGIN='https://'+value.netloc.lower()
 
 class ThreadingHTTPServer(BaseHTTPServer):
+    # Bounded accept backlog for simultaneous classroom clients. Active requests
+    # remain separately limited to 64, and video viewers to 16.
+    request_queue_size=64
     daemon_threads=True
     def __init__(self,*args,**kwargs):
         self.slots=threading.BoundedSemaphore(64)

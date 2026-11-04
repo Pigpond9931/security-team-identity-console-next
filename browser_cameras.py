@@ -10,6 +10,7 @@ FRAMES=threading.Condition(LOCK)
 CHANNELS={}
 PRIVATE={'/api/browser-camera/'+p for p in ('list','create','status','approve','revoke','view','viewer-poll','viewer-signal','leave','frame')}
 PUBLIC={'/api/browser-camera/'+p for p in ('claim','poll','signal','upload','upload-frame','disconnect')}
+AUDITED_WRITES={'create','approve','revoke','disconnect'}
 
 def digest(token):
     if not isinstance(token,str) or not 20<=len(token)<=160:raise PermissionError('Vínculo de cámara inválido.')
@@ -32,8 +33,12 @@ def collect(c,owner_alive):
             if time.time()-p['seen']>20 or not owner_alive(p['sid'],p['auth']):ch['peers'].pop(pid)
 
 def dispatch(path,body,sid,state,owner_alive):
+    if path not in PRIVATE | PUBLIC:raise ValueError('Ruta de cámara desconocida.')
     action=path.rsplit('/',1)[-1]
-    with LOCK, sec.write_transaction() as c:
+    # Video and signaling live in RAM. Do not reserve SQLite's only writer for
+    # every frame/poll; keep the same authorization snapshot and channel lock.
+    transaction=sec.write_transaction if action in AUDITED_WRITES else sec.read_transaction
+    with LOCK, transaction() as c:
         collect(c,owner_alive)
         if path in PRIVATE:
             if state.get('stage')!='dashboard':raise PermissionError('Inicia sesión para acceder a CCTV.')
