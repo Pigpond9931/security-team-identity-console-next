@@ -12,6 +12,7 @@ import urllib.request
 import webbrowser
 import server
 import windows_store as store
+from runtime_paths import prepare_private_store
 
 SETTINGS=server.DATA/'ngrok.dpapi'
 
@@ -26,7 +27,7 @@ def make_policy(emails):
          'actions':[{'type':'deny'}]}]}
 
 def configure():
-    store.private_directory(server.DATA)
+    prepare_private_store(server.DATA)
     url=input('Dominio HTTPS asignado por ngrok (ej. https://tu-dominio.ngrok-free.app): ').strip()
     server.configure_public(url)
     emails=[e.strip().lower() for e in input('Correos de Google autorizados, separados por coma: ').split(',') if e.strip()]

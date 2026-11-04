@@ -21,6 +21,7 @@ from terms_policy import TITLE as TERMS_TITLE, BODY as TERMS_BODY
 ZONE_LICENSE={'DATA_CENTER_VAULT':'LIC-DC-VAULT','SERVER_ROOM':'LIC-SRV-CRIT','MONITORING_CCTV':'LIC-CCTV-MON'}
 
 class Conflict(ValueError):pass
+class CredentialStoreError(RuntimeError):pass
 
 def now():return datetime.now(timezone.utc).isoformat(timespec='seconds')
 def row_user(c,username):
@@ -52,10 +53,12 @@ def accept(c,u,via):
         c.execute('UPDATE users SET terms_accepted=1,terms_accepted_at=?,terms_version=? WHERE id=?',(now(),db.TERMS_VERSION,u['id']))
         audit(c,u,'TERMS_ACCEPTED',u['username'],'version='+db.TERMS_VERSION+' via='+via)
 
-def qr_key():
+def qr_key(*,create=False):
     p=Path(os.environ['ST_KEY_PATH']).parent/'.qr-key'
     with store.file_lock(p.parent/'.qr-key.lock',wait=True):
-        if not p.exists():store.atomic_write(p,store.protect(secrets.token_bytes(32)))
+        if not p.exists():
+            if not create:raise CredentialStoreError('Falta la clave de los pases QR. Restaura el respaldo completo; no se generó una sustituta.')
+            store.atomic_write(p,store.protect(secrets.token_bytes(32)))
         return store.unprotect(p.read_bytes())
 def b64(v):return base64.urlsafe_b64encode(v).decode().rstrip('=')
 def sign(data):

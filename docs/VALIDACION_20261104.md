@@ -6,7 +6,7 @@
 
 | Comprobación | Resultado y alcance |
 |---|---|
-| Regresiones Python nativas | **177 descubiertas: 176 pasaron, 1 omitida, 0 fallos**, en 25 grupos aislados. Windows y DPAPI reales; SQLite y personas ficticias. |
+| Regresiones Python nativas | **185 descubiertas: 185 pasaron, 0 omitidas, 0 fallos**, en 25 grupos aislados. Windows y DPAPI reales; SQLite y personas ficticias. |
 | Navegador | 16 comprobaciones en Google Chrome y las mismas 16 en Chromium de Playwright, con backend Python real aislado. Cero errores JavaScript observados. |
 | Accesibilidad | axe-core, seis pantallas por navegador, reglas WCAG 2.0/2.1 A/AA: cero violaciones detectadas. No es certificación ni reemplaza un ensayo con lector de pantalla. |
 | Diseño adaptable | Escritorio 1440 px, tablet 768 px, móvil 390 y 320 px; gafete sin desbordamiento horizontal. Terminal móvil y centro de vigilancia revisados. |
@@ -18,7 +18,7 @@
 | Concurrencia | 35 clientes HTTP de prueba, terminal y cámara sintética; sin errores en las muestras. El detalle de latencias, medianas que aumentaron y límites está en [BENCHMARK_LOCAL](BENCHMARK_LOCAL.md). No se midió carga de autenticación ni Wi-Fi. |
 | Compatibilidad de actualización | Fernet de cryptography 48.0.1 descifrado por 50.0.2 y viceversa; JPEG de Pillow 12.3.0 leído por 13.0.0. El archivo DPAPI ficticio se conservó byte a byte. No prueba reversión de esquema de SQLite. |
 
-La omisión corresponde a crear junctions reales: el entorno restringido de Windows denegó su creación. Se probaron rutas internas, relativas, vacías, raíces, ascendientes, archivos, recorrido normalizado y `data/` antiguo, pero **debe repetirse el caso real de junction fuera del sandbox**.
+La revisión posterior pudo ejecutarse con permisos Windows completos: los 16 casos de almacenamiento pasan, incluidas junctions reales y rechazo de carpetas ajenas sin cambiar sus bytes, fecha o DACL. Las pruebas de respaldo también incluyen la CLI anterior a migraciones, pérdida de clave QR y verificación de un token después de restaurar.
 
 ## Cobertura nativa por grupo
 
@@ -42,12 +42,12 @@ La omisión corresponde a crear junctions reales: el entorno restringido de Wind
 | `test_group_onboarding` | 8 | 0 |
 | `test_four_person_access` | 4 | 0 |
 | `test_terms_revision` | 3 | 0 |
-| `test_runtime_paths` | 10 | 1 |
+| `test_runtime_paths` | 16 | 0 |
 | `test_access_capacity` | 3 | 0 |
 | `test_publication_guard` | 3 | 0 |
-| `test_private_backup` | 3 | 0 |
+| `test_private_backup` | 5 | 0 |
 | `test_read_transactions` | 5 | 0 |
-| `test_qr_readiness` | 2 | 0 |
+| `test_qr_readiness` | 3 | 0 |
 | `test_camera_read_transactions` | 4 | 0 |
 
 El runner es `tests/run_regression.py`; lanza cada grupo en un proceso separado. Los ensayos adicionales impiden una escritura accidental mediante GET o una consulta de cámara, permiten dos generaciones simultáneas de gafete, respetan un cupo existente de doce y deniegan el acceso tras revocar una habilitación. El vídeo frecuente no reserva el escritor de SQLite y las operaciones de ciclo de vida conservan la auditoría. No se reducen requisitos de MFA, políticas ni alcance administrativo.
@@ -88,4 +88,4 @@ Para comprobar la entrega sin arrancar la aplicación: `python tools/source_mani
 
 Los JSON saneados de esta ejecución están en [validation/](validation/). Las capturas están en [galería](GALERIA_NEXT.md); contienen únicamente personas y cámaras ficticias. El inventario privado de producción y los archivos temporales con secretos de prueba no se incorporan al repositorio.
 
-Antes de sustituir la instalación activa faltan: recuperar el ZIP externo, resolver acceso/privacidad GitHub y ejecutar CI remoto; ensayar junctions, lector físico y teléfonos Android/iOS; probar red escolar y aforo; y acordar el respaldo/restauración y despliegue. La instalación real conserva sus dependencias anteriores hasta una decisión específica. La conservación manual de políticas y la custodia independiente de auditoría continúan como pendientes operativos.
+Antes de sustituir la instalación activa faltan: recuperar el ZIP externo, resolver acceso/privacidad GitHub y ejecutar CI remoto; ensayar lector físico y teléfonos Android/iOS; probar red escolar y aforo; y acordar el respaldo/restauración y despliegue. La instalación real conserva sus dependencias anteriores hasta una decisión específica. La conservación manual de políticas y la custodia independiente de auditoría continúan como pendientes operativos.

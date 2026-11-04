@@ -4,9 +4,9 @@ import json
 import windows_store as store
 
 def main():
-    from runtime_paths import data_dir
+    from runtime_paths import data_dir, prepare_private_store
     data=data_dir()
-    store.private_directory(data)
+    prepare_private_store(data)
     dest=data/'cloudflare.dpapi'
     if dest.exists():
         raise SystemExit('Ya existe configuración privada. No se reemplaza.')

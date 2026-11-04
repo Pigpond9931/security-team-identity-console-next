@@ -4,12 +4,12 @@ from pathlib import Path
 import windows_store as store
 
 ROOT=Path(__file__).resolve().parent
-from runtime_paths import data_dir
+from runtime_paths import data_dir, prepare_private_store
 DATA=data_dir()
 STOP=DATA/'cloudflare-supervisor.stop'
 
 def main(open_browser=False):
-    store.private_directory(DATA)
+    prepare_private_store(DATA)
     with store.file_lock(DATA/'.supervisor.lock'):
         STOP.unlink(missing_ok=True)
         delay=5

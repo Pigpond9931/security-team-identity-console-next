@@ -5,9 +5,9 @@
   "external_iteration_zip_recovered": false,
   "production_data_included": false,
   "native_regression": {
-    "tests_discovered": 177,
-    "passed": 176,
-    "skipped": 1,
+    "tests_discovered": 185,
+    "passed": 185,
+    "skipped": 0,
     "failed": 0,
     "isolated_groups": 25
   },
@@ -34,5 +34,6 @@
     "app.css": "03649b6fa72f4d36250664ad61e1ada62c96fd636a7a9aba4f5fd2964ee9812b",
     "motion-init.js": "62ede531992c165244909f8e0cb86eeb65ff26e8093a52d5ceadc9d5de561c21"
   },
-  "evidence": "docs/validation; screenshots contain only fictitious identities"
+  "evidence": "docs/validation; screenshots contain only fictitious identities",
+  "post_review": "docs/POST_REVIEW_20261104.md"
 }

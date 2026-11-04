@@ -18,7 +18,7 @@ from app_version import VERSION
 
 ROOT=Path(__file__).resolve().parent
 WEB_ROOT=ROOT/'web'
-from runtime_paths import data_dir
+from runtime_paths import data_dir, prepare_private_store
 DATA=data_dir()
 DATA.mkdir(parents=True,exist_ok=True)
 os.environ['ST_DB_PATH']=str(DATA/'identity.sqlite')
@@ -67,7 +67,7 @@ class ThreadingHTTPServer(BaseHTTPServer):
 
 def initialize():
     """Inicializa el directorio configurado sin importar datos de otra instalación."""
-    store.private_directory(DATA)
+    prepare_private_store(DATA)
     fresh=not Path(db.DB_PATH).exists()
     db.init_db()
     db.seed_users()  # Marca bases importadas sin insertar y no repite el seed.
@@ -77,6 +77,9 @@ def initialize():
     # Crear la clave antes de aceptar inscripciones MFA concurrentes.
     secure.cipher()
     secure.encrypt_existing_secrets()
+    # Only a genuinely new database may create its signing key. Reopening or
+    # restoring an existing store must preserve the original QR credentials.
+    features.qr_key(create=fresh)
 
 def state_deadline(state):
     deadline=secure.session_deadline(state["auth"]) if state.get("auth") else state["created"]+secure.SESSION_SECONDS
@@ -238,6 +241,7 @@ class Handler(BaseHTTPRequestHandler):
             if path=='/api/browser-camera/stream':return self.browser_camera_stream(state,q,sid)
             if path in features.ROUTES['GET']:
                 try:return self.response(200,features.dispatch(state.get('auth'),'GET',path,q,{}),sid)
+                except features.CredentialStoreError:return self.response(503,{'error':'Custodia de credenciales no disponible. Contacta al operador.'},sid)
                 except PermissionError:return self.response(403,{'error':'Sin permiso para esta operación.'},sid)
                 except ValueError as e:return self.response(400,{'error':str(e)},sid)
             if path=='/api/data':
@@ -519,6 +523,7 @@ class Handler(BaseHTTPRequestHandler):
                     state.update(auth=auth,stage='backup',recovery_codes=codes)
                 return self.response(200,self.state_payload(state),sid)
             return self.response(404,{'error':'Operación no encontrada.'},sid)
+        except features.CredentialStoreError:return self.response(503,{'error':'Custodia de credenciales no disponible. Contacta al operador.'},sid)
         except features.Conflict as error:return self.response(409,{'error':str(error)},sid)
         except PermissionError: return self.response(403,{'error':'No tienes permisos para esta operación.'},sid)
         except sqlite3.IntegrityError: return self.response(409,{'error':'La matrícula o el UID ya están asignados.'},sid)

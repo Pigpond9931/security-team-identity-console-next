@@ -4,6 +4,8 @@
 
 El repositorio privado de destino es [security-team-identity-console-next](https://github.com/Pigpond9931/security-team-identity-console-next). Fue creado, pero la subida requiere completar la autenticación y el acceso de la integración. Los commits y el respaldo de historial se prepararon localmente. No se presenta un push pendiente como realizado.
 
+Consulta la [revisión posterior y validación actual de 185 pruebas](docs/POST_REVIEW_20261104.md). Los informes anteriores se conservan como evidencia de su etapa.
+
 ## Procedencia
 
 El original termina en `e58fa9a620b834e6284c679d1dd771bd7cc79750`. Esta rama conserva sus cinco commits y añade el código local saneado más reciente. El ZIP externo mencionado por el propietario no estaba disponible: **no se ha recuperado el commit `8c667079ae43a3046a4dd8c4fab83bfa2db5b24c`**. Véase [PROVENANCE](docs/PROVENANCE.md). Esta iteración es trabajo local provisional que deberá compararse con aquel avance cuando llegue.

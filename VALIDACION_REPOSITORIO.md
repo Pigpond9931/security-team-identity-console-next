@@ -1,5 +1,3 @@
-# Validación vigente de esta copia
+# Validación vigente
 
-La validación de Next del **4 de noviembre de 2026** sustituye al resumen heredado 1.5.4. Consulta [resultados, comandos y límites](docs/VALIDACION_20261104.md) y [validation.json](validation.json).
-
-Se descubrieron 177 pruebas Python: 176 pasaron, una se omitió por la restricción de crear junctions y no hubo fallos. El navegador se ensayó con backend real aislado y cámara sintética. No se realizaron migraciones de datos reales ni pruebas físicas del salón. La CI remota todavía no se ejecutó.
+185 pruebas Python pasaron, cero omitidas, en 25 grupos aislados. Incluyen junctions reales, custodia, respaldo por CLI anterior a migraciones y pérdida de clave QR. Consulta [resultados](docs/VALIDACION_20261104.md) y [revisión posterior](docs/POST_REVIEW_20261104.md). Las pruebas físicas y la recuperación del ZIP externo siguen pendientes.

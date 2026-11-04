@@ -97,8 +97,8 @@
     },
     {
       "path": "CONFIGURAR_CLOUDFLARE.py",
-      "bytes_normalized": 800,
-      "sha256": "5e14a3900572c495d0979e080dabbad61df56577be9750170a411d3d0671de5c"
+      "bytes_normalized": 821,
+      "sha256": "28889102749003ce0ab140e7a7e851ad6894d202371c17c6a3e3f4b55adb607b"
     },
     {
       "path": "CONFIGURAR_NGROK.cmd",
@@ -267,8 +267,8 @@
     },
     {
       "path": "README.md",
-      "bytes_normalized": 8128,
-      "sha256": "48bb8b641ce53a62b4d9459c70cfcf2eb46505452455d1030c8985ab28651c1a"
+      "bytes_normalized": 8295,
+      "sha256": "167574cd386c316eae2ed0ef2dfd4153059236803a268386b5a105f9b704b093"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
@@ -292,8 +292,8 @@
     },
     {
       "path": "VALIDACION_REPOSITORIO.md",
-      "bytes_normalized": 546,
-      "sha256": "e022a81663e75f4e0ac73dc851ec5820e4ce1e7f72be55c0611ae758843f4033"
+      "bytes_normalized": 371,
+      "sha256": "e72a0929f6ddc854f1d0b4f3fe5c3c1c207bf5bd0bc3da5cea934490bc9350b3"
     },
     {
       "path": "access_terminal.py",
@@ -356,9 +356,14 @@
       "sha256": "0473f9c73d116b6dee2750565bd5b04201c9da14d7b098180a536f75489fd915"
     },
     {
+      "path": "docs/POST_REVIEW_20261104.md",
+      "bytes_normalized": 2654,
+      "sha256": "f3f9c337e4e33c2994f2170e55916dd060ea4f5bdc3fe38e81ff0adb7bfbd230"
+    },
+    {
       "path": "docs/PRIVATE_STORAGE.md",
-      "bytes_normalized": 3411,
-      "sha256": "24db624fd42b64cf972d083555bdc684da2ac40c35e7991578e4d5cdbf058e54"
+      "bytes_normalized": 4266,
+      "sha256": "20bcace50cab12ed766a4b6128cf866aa81245b103ba6bf42dc6e9117f9897d1"
     },
     {
       "path": "docs/PROVENANCE.md",
@@ -372,8 +377,8 @@
     },
     {
       "path": "docs/VALIDACION_20261104.md",
-      "bytes_normalized": 7727,
-      "sha256": "469c407aaecf85327129bcc68442cb4e12b746eb4c3244136f5e6389a69938d0"
+      "bytes_normalized": 7768,
+      "sha256": "2f0fcd0c01b49c2e9118b6b42a02d8e0a04b7aa8c1722ab701d7822b141752c9"
     },
     {
       "path": "docs/action-pins.json",
@@ -409,6 +414,11 @@
       "path": "docs/validation/browser-chromium.json",
       "bytes_normalized": 1576,
       "sha256": "f2d477cb48e006eac6c65dc49e5db8031acb3e82ee4541f5d6329ac60c667331"
+    },
+    {
+      "path": "docs/validation/browser-store-final.json",
+      "bytes_normalized": 1575,
+      "sha256": "54d151a8b12f747bf674efc323e2ff013aa6ae5b45a4349d6f4bc2701549fa5d"
     },
     {
       "path": "docs/validation/browser-versions.json",
@@ -458,7 +468,7 @@
     {
       "path": "docs/validation/regression.json",
       "bytes_normalized": 3432,
-      "sha256": "7a98dc99f72c9690952a35cbac4fa97d31f6227dfa88580ba8a13d3df83f17b8"
+      "sha256": "ca28c81229ff5fecf132b30994f67e65be53062b26ff803943b50a259ce749f8"
     },
     {
       "path": "docs/validation/secret-scan-summary.json",
@@ -477,8 +487,8 @@
     },
     {
       "path": "features.py",
-      "bytes_normalized": 39345,
-      "sha256": "c2deaf0e2c585668ec3db5576d85e841274aa0e90f1bb8b0208b6585280d83b0"
+      "bytes_normalized": 39566,
+      "sha256": "122fa8502437402da1c35c0714be06253d0ce76f483fd767b1ecad11b9b6958f"
     },
     {
       "path": "four_person_access.py",
@@ -607,8 +617,8 @@
     },
     {
       "path": "maintenance.py",
-      "bytes_normalized": 7824,
-      "sha256": "aadbf5478c32ffe53036d1aa4f0cf161e58197580059c9b78915a23e8b11be3f"
+      "bytes_normalized": 8917,
+      "sha256": "1f42962ac7c58a67a58be76f866d4d83f2e0d6482688a292fdd67da47fbe24ae"
     },
     {
       "path": "package-lock.json",
@@ -652,8 +662,8 @@
     },
     {
       "path": "runtime_paths.py",
-      "bytes_normalized": 3060,
-      "sha256": "c81bf53a5157610fce1f704e79ce5ff135d982ed5f30f61fad817b77af86d861"
+      "bytes_normalized": 5448,
+      "sha256": "a138a419f601fbbc884bfc00f0b40a8bd526a55b027216b562c576e83e4450ff"
     },
     {
       "path": "security.py",
@@ -662,23 +672,23 @@
     },
     {
       "path": "server.py",
-      "bytes_normalized": 36747,
-      "sha256": "e6257c0cff97be4ce7ae4b4293706b824d3e0fa9ba4129b6bf85e3a59f0701f0"
+      "bytes_normalized": 37262,
+      "sha256": "2f35741905c5fa50dc2d66c0560a5fd6b4790ca3e6580f5f4e96accd0554a04c"
     },
     {
       "path": "share_cloudflare.py",
-      "bytes_normalized": 8853,
-      "sha256": "20b3e7a06b471b74b622427c95e22bb292167aa8f03d014171e0bc314b6b4e54"
+      "bytes_normalized": 8897,
+      "sha256": "9a43af39b6e0f07844087f580ae8c7985fc8e84a0bbc4d3a8c18b10fca922ab0"
     },
     {
       "path": "share_ngrok.py",
-      "bytes_normalized": 6865,
-      "sha256": "16595202563991dcf590ce63ccece9c9be1037e40b5ea03bce445269c5823636"
+      "bytes_normalized": 6911,
+      "sha256": "609a89b019cec6fb6a7fd0831f1c5db40573c70c8ef7083e7541f816acbfcb37"
     },
     {
       "path": "supervise_cloudflare.py",
-      "bytes_normalized": 3321,
-      "sha256": "b8e8d55086644aba5cbb164ead0887b167d6d31a6666ece9aa7509c66ef27300"
+      "bytes_normalized": 3342,
+      "sha256": "1299c7ac323b226d62b1b7b004c4b9c6366d37b43fc300df73fea369eb105711"
     },
     {
       "path": "terms_policy.py",
@@ -852,8 +862,8 @@
     },
     {
       "path": "tests/test_private_backup.py",
-      "bytes_normalized": 2915,
-      "sha256": "60428d38e0d9053d48fc316a1c2a7774eec71b21f25b008d255ecae62e87d157"
+      "bytes_normalized": 5781,
+      "sha256": "4a644508857a4c7ee47b00cc8157d624756963dbe50fbf9944466c5aade4e559"
     },
     {
       "path": "tests/test_publication_guard.py",
@@ -862,8 +872,8 @@
     },
     {
       "path": "tests/test_qr_readiness.py",
-      "bytes_normalized": 1990,
-      "sha256": "f4e9864ef20a9137c83352ab5852dbb9c3cc01c0c0b4b539c885f318d21535a0"
+      "bytes_normalized": 3188,
+      "sha256": "a0e9ce4914e45a1f5a6f1a576fe1eb9650f628d095fc1d99010410238749fc7a"
     },
     {
       "path": "tests/test_read_transactions.py",
@@ -877,8 +887,8 @@
     },
     {
       "path": "tests/test_runtime_paths.py",
-      "bytes_normalized": 4022,
-      "sha256": "7b47e1116ba6f0fc83c90cfd6c8eda22f56ba1a98187f10714a5ec57511e1d16"
+      "bytes_normalized": 7556,
+      "sha256": "416491cc5f7597c7046510874f372f7eafafda48906b3eb6c17a01aa7aa54c00"
     },
     {
       "path": "tests/test_supervisor.py",
@@ -917,8 +927,8 @@
     },
     {
       "path": "validation.json",
-      "bytes_normalized": 1311,
-      "sha256": "d3ad69fdf14dab6992f0743981b043bf68c538ae046332140b11549463d531ad"
+      "bytes_normalized": 1360,
+      "sha256": "9a1046f263d23a7cf84060cc6ae2449dbeddb5971d01754e12bda18e4ecaa7c7"
     },
     {
       "path": "web/assets/Politicas_y_aceptacion_SECURITY_TEAM.pdf",

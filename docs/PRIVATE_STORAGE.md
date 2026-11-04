@@ -6,6 +6,10 @@ El valor predeterminado es `%LOCALAPPDATA%\SecurityTeam\IdentityConsoleNext`. `S
 
 Si el antiguo `data/` del proyecto contiene algo, el inicio se detiene incluso si se ha indicado una ubicación externa. Así se evita iniciar por equivocación una base vacía y aparentar que desaparecieron las cuentas. No hay traslado automático ni regeneración de claves para ocultar errores. Los ensayos usan carpetas temporales externas al proyecto.
 
+Una carpeta externa poblada también se rechaza antes de cambiar sus permisos o abrir SQLite, salvo que contenga el marcador válido `.identity-console-store.json`. El marcador identifica esta aplicación y su formato; no contiene secretos. Se crea al preparar una carpeta nueva y privada. Una carpeta con únicamente el archivo regular `.server.lock` del arranque inicial se considera nueva. Configuración, supervisor y publicadores pasan por la misma guardia antes de cambiar DACL.
+
+No se adopta automáticamente una instalación antigua sin marcador. Debe respaldarse y revisarse su migración expresamente; no añadas el marcador a una carpeta de uso general para evitar la comprobación. Un marcador es una protección frente a una selección accidental, no una prueba criptográfica de propiedad frente a alguien con control de la cuenta Windows.
+
 ## Arranque limpio aislado
 
 1. Instala dependencias con `INSTALAR.cmd` o crea `.venv` e instala `requirements.lock.txt`.

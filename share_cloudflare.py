@@ -4,6 +4,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 import server
 import windows_store as store
+from runtime_paths import prepare_private_store
 
 SETTINGS=server.DATA/'cloudflare.dpapi'
 PUBLIC_GET={'/pass','/scanner','/camera','/activate','/api/terms','/api/public-pass','/favicon.svg'}
@@ -36,7 +37,7 @@ def config():
     result['emails']=emails_valid(result['emails']);return result
 
 def change_emails():
-    store.private_directory(server.DATA)
+    prepare_private_store(server.DATA)
     if SETTINGS.exists() or (server.DATA/'ngrok.dpapi').exists():current=config()
     else:
         owner=input('Tu correo completo: ').strip().lower();current={'owner_email':owner,'emails':[owner]}
@@ -59,7 +60,7 @@ def find_url(path):
     return found[-1] if found else None
 
 def run(open_browser=False):
-    store.private_directory(server.DATA)
+    prepare_private_store(server.DATA)
     settings=config();pin=settings.get('email_pin',True) is not False;agents=[];servers=[];delivery=None
     record=server.DATA/'cloudflare-processes.json';process_file=server.DATA/'server-process.json'
     with store.file_lock(server.DATA/'.server.lock'):

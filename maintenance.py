@@ -10,24 +10,31 @@ import server
 import windows_store as store
 
 def backup(destination):
-    from runtime_paths import external_path
+    from runtime_paths import external_path, STORE_MARKER
     destination=external_path(destination)
     if destination.exists():raise ValueError('El destino ya existe; usa una carpeta nueva.')
     database=Path(server.db.DB_PATH)
     if not database.is_file() or database.is_symlink():raise ValueError('No existe una base válida para respaldar. No se creó otra.')
     import hashlib,json
-    files=[p for p in server.DATA.iterdir() if p.name in ('.mfa-key','.qr-key') or p.suffix.lower()=='.dpapi']
+    files=[p for p in server.DATA.iterdir() if p.name in ('.mfa-key','.qr-key',STORE_MARKER) or p.suffix.lower()=='.dpapi']
     if any(p.is_symlink() or not p.is_file() for p in files):raise ValueError('Archivo privado enlazado o inválido; respaldo detenido.')
     with closing(sqlite3.connect(database.as_uri()+'?mode=ro',uri=True)) as source:
         if source.execute('PRAGMA quick_check').fetchone()[0]!='ok':raise ValueError('La integridad de origen no es correcta.')
         if source.execute("SELECT 1 FROM users WHERE mfa_secret IS NOT NULL LIMIT 1").fetchone() and not (server.DATA/'.mfa-key').is_file():
             raise ValueError('Falta la clave de los factores; no se generó una sustituta ni un respaldo incompleto.')
+        tables={r[0] for r in source.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+        qr_expected=(server.DATA/STORE_MARKER).exists()
+        if 'mobile_passes' in tables:qr_expected=qr_expected or bool(source.execute('SELECT 1 FROM mobile_passes LIMIT 1').fetchone())
+        if 'visitors' in tables and 'qr_token_hash' in {r[1] for r in source.execute('PRAGMA table_info(visitors)')}:
+            qr_expected=qr_expected or bool(source.execute('SELECT 1 FROM visitors WHERE qr_token_hash IS NOT NULL LIMIT 1').fetchone())
+        if qr_expected and not (server.DATA/'.qr-key').is_file():
+            raise ValueError('Falta la clave de los pases QR; no se generó una sustituta ni un respaldo incompleto.')
     store.private_directory(destination)
     with closing(sqlite3.connect(database.as_uri()+'?mode=ro',uri=True)) as source,closing(sqlite3.connect(destination/'identity.sqlite')) as target:
         source.backup(target)
         if target.execute('PRAGMA quick_check').fetchone()[0]!='ok':raise ValueError('Falló la integridad del respaldo.')
     for p in files:store.atomic_write(destination/p.name,p.read_bytes())
-    manifest={'format':1,'requires_same_windows_user_and_machine':True,'files':[
+    manifest={'format':1,'requires_same_windows_user_and_machine':True,'qr_signing_key_present':(destination/'.qr-key').is_file(),'files':[
         {'name':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
         for p in sorted(destination.iterdir())]}
     store.atomic_write(destination/'backup-manifest.json',(json.dumps(manifest,indent=2)+'\n').encode())
@@ -95,13 +102,18 @@ def main():
     if not Path(server.db.DB_PATH).is_file():
         raise ValueError('No existe una base en el almacén seleccionado. Mantenimiento detenido sin crear otra.')
     with store.file_lock(server.DATA/'.server.lock'):
+        # A pre-upgrade backup must not migrate SQLite or rewrite the source keys.
+        # The backup routine opens the existing database read-only and preserves
+        # the private files exactly, including an older schema/key representation.
+        if args.action=='backup':
+            backup(args.destination)
+            return
         server.initialize()
         if args.action=='project-access-four':
             import four_person_access
             with server.secure.write_transaction() as c:result=four_person_access.configure(c,args.usernames)
             print('Centro de datos: cuatro identidades autorizadas; otras áreas conservadas.')
         elif args.action=='rotate-key':server.secure.rotate_key();print('Clave rotada; autenticadores conservados.')
-        elif args.action=='backup':backup(args.destination)
         elif args.action=='activate-account':activate_account(args.username)
         elif args.action=='recover-account':recover(args.username)
         elif args.action=='assign-system-admin':assign_system_admin(args.username)
