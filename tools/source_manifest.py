@@ -8,7 +8,7 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 MANIFEST='manifest-source.json'
-TEXT={'.py','.ps1','.cmd','.jsx','.css','.md','.js','.cjs','.mjs','.json','.yml','.yaml','.toml','.txt','.html'}
+TEXT={'.py','.ps1','.cmd','.jsx','.css','.svg','.md','.js','.cjs','.mjs','.json','.yml','.yaml','.toml','.txt','.html'}
 
 
 def source_bytes(path):

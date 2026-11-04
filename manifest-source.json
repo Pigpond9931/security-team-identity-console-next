@@ -7,8 +7,8 @@
   "files": [
     {
       "path": ".gitattributes",
-      "bytes_normalized": 346,
-      "sha256": "e31fd9597855060a06fd32e48f9bf00efb762fb394e22a0a3d672c78db4b8a88"
+      "bytes_normalized": 364,
+      "sha256": "6bb19170125c30a9589a8b9d6596dd541c7cba4fc747bdb64d6f34f2ebd9f936"
     },
     {
       "path": ".github/dependabot.yml",
@@ -887,8 +887,8 @@
     },
     {
       "path": "tools/source_manifest.py",
-      "bytes_normalized": 3495,
-      "sha256": "87df57599e06cf2a307202249dab34b4a05a55745bb9500e0b22c7af79a86325"
+      "bytes_normalized": 3502,
+      "sha256": "e175dd26d8fcaf006f603887f9597cdd6a6cf6a65a7cc642283106bdea56f73f"
     },
     {
       "path": "validation.json",
