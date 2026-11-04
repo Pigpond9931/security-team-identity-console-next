@@ -66,16 +66,16 @@ def run(open_browser=False):
         stop_file=server.DATA/'cloudflare-child.stop';stop_file.unlink(missing_ok=True)
         server.initialize()
         with server.db.get_connection() as c:
-            ready=c.execute("SELECT 1 FROM users WHERE role IN ('dpo','system_admin') AND is_active=1 AND is_locked=0 AND mfa_configured=1 AND must_change_password=0").fetchone()
-        if not ready:raise ValueError('Completa primero el acceso inicial y MFA de un administrador global en modo local.')
+            ready=server.secure.publication_ready(c)
+        if not ready:raise ValueError('Completa primero acceso, MFA y políticas de un administrador global en modo local.')
         # Reservar los puertos antes de publicar evita servir otra aplicación.
-        console=server.ThreadingHTTPServer(('127.0.0.1',8765),server.Handler);servers.append(console)
+        console=server.ThreadingHTTPServer(('127.0.0.1',8876),server.Handler);servers.append(console)
         portal=None
-        if pin:portal=server.ThreadingHTTPServer(('127.0.0.1',8766),PassOnlyHandler);servers.append(portal)
+        if pin:portal=server.ThreadingHTTPServer(('127.0.0.1',8877),PassOnlyHandler);servers.append(portal)
         started=[]
         try:
             urls=[]
-            specifications=[('console',8765,settings['emails'] if pin else None)]+([('passes',8766,None)] if pin else [])
+            specifications=[('console',8876,settings['emails'] if pin else None)]+([('passes',8877,None)] if pin else [])
             for name,port,emails in specifications:
                 log=server.DATA/('cloudflare-'+name+'.log');log.unlink(missing_ok=True)
                 agent=subprocess.Popen(command(port,log,emails),cwd=server.ROOT,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
@@ -85,7 +85,7 @@ def run(open_browser=False):
                 deadline=time.monotonic()+45;url=None
                 while time.monotonic()<deadline:
                     if stop_file.exists():return
-                    if agent.poll() is not None:raise RuntimeError('Cloudflare no pudo iniciar '+name+'. Revisa el registro privado en data/.')
+                    if agent.poll() is not None:raise RuntimeError('Cloudflare no pudo iniciar '+name+'. Revisa el registro del almacén privado externo.')
                     url=find_url(log)
                     if url:break
                     time.sleep(.2)
@@ -99,7 +99,7 @@ def run(open_browser=False):
             info={'console_url':urls[0],'pass_origin':console.pass_origin,'allowed_emails':len(settings['emails']) if pin else None,
                   'email_pin':pin,'authentication':'email_pin_and_app_mfa' if pin else 'app_password_totp','started_at':time.time(),'temporary':True}
             store.atomic_write(server.DATA/'cloudflare-links.json',json.dumps(info).encode())
-            (server.ROOT/'ENLACE_CLOUDFLARE.md').write_text('# SECURITY TEAM · Cloudflare activo\n\n'
+            (server.DATA/'ENLACE_CLOUDFLARE.md').write_text('# SECURITY TEAM · Cloudflare activo\n\n'
                 +'**Consola:** '+urls[0]+'\n\n'+('Correo autorizado + PIN recibido por email; después matrícula, contraseña y MFA de SECURITY TEAM.' if pin else 'Acceso con matrícula, contraseña y autenticador de SECURITY TEAM. Sin PIN de correo ni lista de correos en el túnel, por elección del propietario.')+'\n\n'
                 +'Las entregas móviles caducan en cinco minutos y se canjean una vez. Los usuarios deben autenticar su propia cuenta; los invitados necesitan confirmación del anfitrión. Las APIs administrativas requieren autenticación y permisos.\n\n'
                 +'El enlace cambia al reiniciar. Abre `COMPARTIR_CLOUDFLARE.cmd` para iniciar con recuperación automática y `ABRIR_CLOUDFLARE.cmd` para ver el enlace actual. '

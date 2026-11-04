@@ -30,7 +30,7 @@ def configure(c,usernames,issued_by='operador_windows'):
             c.execute('DELETE FROM user_licenses WHERE matricula=? AND license_id=?',(user['username'],LICENSE))
             db.write_audit(c,issued_by,'LICENSE_REVOKED',LICENSE,user['username'])
     c.execute('UPDATE licenses_catalog SET seats=4 WHERE license_id=?',(LICENSE,))
-    for key,value in (('rfid_capacity','4'),('restricted_four_enabled','1')):
+    for key,value in (('rfid_capacity','4'),('restricted_four_enabled','1'),('restricted_identity_limit','4')):
         c.execute('INSERT INTO access_settings VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value',(key,value))
     db.write_audit(c,issued_by,'PROJECT_FOUR_CONFIGURED','Cuatro identidades para F1; otras zonas conservadas; visitantes excluidos; no es un límite de aforo.')
     return {'zone':ZONE,'authorized':[{'matricula':u['username'],'full_name':u['full_name']} for u in selected],'capacity':4}

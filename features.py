@@ -87,9 +87,14 @@ def badge(c,kind,subject):
     zs=[subject['allowed_zone']] if visitor else zones(subject)
     signed={'purpose':'BADGE','tipo':kind,'ref':ref,'sv':0 if visitor else subject['security_version'],'exp':exp}
     terms=accepted(subject)
+    requirements=[]
+    for zone in zs:
+        license_id=ZONE_LICENSE.get(zone) if not visitor else None
+        ready=not license_id or bool(c.execute('SELECT 1 FROM user_licenses WHERE matricula=? AND license_id=?',(ref,license_id)).fetchone())
+        requirements.append({'zone':zone,'label':db.ZONES[zone],'ready':ready})
     return {'tipo':kind,'matricula':ref,'full_name':subject['full_name'],'role':'VISITOR' if visitor else subject['role'],
         'area':subject['organization'] if visitor else subject['area'] or 'Administración global','zones':zs,
-        'zones_labels':[db.ZONES[z] for z in zs],'terms_accepted':terms,'token':sign(signed) if terms else None,
+        'zones_labels':[db.ZONES[z] for z in zs],'access_requirements':requirements,'expires_at':exp,'terms_accepted':terms,'token':sign(signed) if terms else None,
         'valid_hint':'Válido hasta '+datetime.fromtimestamp(exp,timezone.utc).isoformat(timespec='minutes')}
 def delivery(c,u,kind,subject):
     ref=subject['username'] if kind=='USER' else subject['visitor_id']
@@ -160,7 +165,7 @@ def access(c,u,body):
         subject=valid_subject(c,data)
         name=subject['full_name'];role='VISITOR' if kind=='VISITOR' else subject['role'];area=subject['organization'] if kind=='VISITOR' else subject['area'] or 'Administración global'
         if zone=='DATA_CENTER_VAULT' and kind!='USER' and c.execute("SELECT 1 FROM access_settings WHERE key='restricted_four_enabled' AND value='1'").fetchone():
-            raise ValueError('Centro de datos reservado a las cuatro identidades autorizadas; no admite pases de invitado.')
+            raise ValueError('Centro de datos reservado a titulares autorizados; no admite pases de invitado.')
         if kind=='USER':
             if not accepted(subject):raise ValueError('MFA o términos pendientes.')
             if zone not in zones(subject):raise ValueError('Sin permiso para esta zona.')
@@ -213,7 +218,8 @@ def threats(c,u):
     return [{'code':code,'severity':severity,'title':title,'count':len(ev),'evidence':json.dumps(ev[:30],ensure_ascii=False),'recommendation':rec,'false_positive_note':fp} for code,severity,title,ev,rec,fp in groups if ev and (code!='TH-01' or any(x['is_locked'] for x in users) or len(ev)>=3)]
 
 def dispatch(session,method,path,q,body):
-    """Todas las decisiones y mutaciones comparten la transacción SQLite."""
+    """Lecturas en snapshot sin escritura; mutaciones autorizadas en transacción."""
+    if path not in ROUTES.get(method,set()):raise ValueError('Método o ruta no admitidos.')
     if path=='/api/cctv/test':
         # La espera de red no debe bloquear las escrituras de identidad.
         with db.get_connection() as c:
@@ -222,7 +228,7 @@ def dispatch(session,method,path,q,body):
             import hardening
             url=hardening.camera_target(c,body.get('url',''))
         return camera_hub.probe(url)
-    with sec.write_transaction() as c:
+    with (sec.read_transaction() if method=='GET' else sec.write_transaction()) as c:
         u=actor(c,session,terms=path!='/api/auth/accept-terms')
         username=q.get('matricula') or body.get('matricula') or u['username']
         if path=='/api/auth/accept-terms':
@@ -286,7 +292,11 @@ def dispatch(session,method,path,q,body):
             if method=='POST':
                 capacity=body.get('rfid_capacity')
                 if type(capacity)!=int or not 1<=capacity<=40:raise ValueError('Cupo entre 1 y 40.')
-                if capacity!=4 and c.execute("SELECT 1 FROM access_settings WHERE key='restricted_four_enabled' AND value='1'").fetchone():raise ValueError('La prueba del proyecto limita el centro de datos a cuatro identidades autorizadas.')
+                # The historical four-person fixture locks its own limit explicitly.
+                # Existing installations may have another approved quota; the old
+                # visitor restriction flag must not silently force them back to four.
+                locked_limit=c.execute("SELECT value FROM access_settings WHERE key='restricted_identity_limit'").fetchone()
+                if locked_limit and capacity!=int(locked_limit['value']):raise ValueError('El perfil restringido fija el cupo de identidades; revisa ese perfil antes de cambiarlo.')
                 if c.execute("SELECT COUNT(*) FROM user_licenses WHERE license_id='LIC-DC-VAULT'").fetchone()[0]>capacity:raise Conflict('Revoca primero las licencias que excedan el nuevo cupo.')
                 c.execute("UPDATE access_settings SET value=? WHERE key='rfid_capacity'",(str(capacity),));c.execute("UPDATE licenses_catalog SET seats=? WHERE license_id='LIC-DC-VAULT'",(capacity,));audit(c,u,'RFID_CAPACITY_UPDATED',details=str(capacity))
             return {'capacity':int(c.execute("SELECT value FROM access_settings WHERE key='rfid_capacity'").fetchone()[0]),'used':c.execute('SELECT COUNT(*) FROM users WHERE is_active=1 AND rfid_uid IS NOT NULL').fetchone()[0]}
@@ -309,7 +319,7 @@ def dispatch(session,method,path,q,body):
             return pass_exchange.approve(c,u,body.get('id'),body.get('confirmation'))
         if path.startswith('/api/visitors'):
             terminal(c,u)
-            c.execute("UPDATE visitors SET status='EXPIRED' WHERE status='ACTIVE' AND valid_until<?",(now(),))
+            if method=='POST':c.execute("UPDATE visitors SET status='EXPIRED' WHERE status='ACTIVE' AND valid_until<?",(now(),))
             if path.endswith('/delivery'):
                 v=valid_subject(c,{'tipo':'VISITOR','ref':body.get('visitor_id')})
                 if not global_admin(u) and v['host_matricula']!=u['username']:raise PermissionError('Invitado fuera de tu alcance.')
@@ -331,7 +341,7 @@ def dispatch(session,method,path,q,body):
                 v=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(body.get('visitor_id'),)).fetchone()
                 if not v or (not global_admin(u) and v['host_matricula']!=u['username']):raise PermissionError('Invitado fuera de alcance.')
                 c.execute("UPDATE visitors SET status='REVOKED' WHERE visitor_id=?",(v['visitor_id'],));audit(c,u,'VISITOR_REVOKED',v['visitor_id']);return {'ok':True}
-            return {'visitors':[{**dict(v),'terms_accepted':int(accepted(v))} for v in c.execute('SELECT * FROM visitors ORDER BY created_at DESC LIMIT 250') if global_admin(u) or v['host_matricula']==u['username']], 'pending_devices':[dict(r) for r in c.execute("SELECT r.id,r.confirmation,r.subject_id,v.full_name,v.host_matricula FROM pass_receipts r JOIN visitors v ON v.visitor_id=r.subject_id WHERE r.subject_type='VISITOR' AND r.status='pending' AND r.expires>?",(time.time(),)) if global_admin(u) or r['host_matricula']==u['username']]}
+            return {'visitors':[{**dict(v),'terms_accepted':int(accepted(v)),'status':'EXPIRED' if v['status']=='ACTIVE' and datetime.fromisoformat(v['valid_until']).timestamp()<=time.time() else v['status']} for v in c.execute('SELECT * FROM visitors ORDER BY created_at DESC LIMIT 250') if global_admin(u) or v['host_matricula']==u['username']], 'pending_devices':[dict(r) for r in c.execute("SELECT r.id,r.confirmation,r.subject_id,v.full_name,v.host_matricula FROM pass_receipts r JOIN visitors v ON v.visitor_id=r.subject_id WHERE r.subject_type='VISITOR' AND r.status='pending' AND r.expires>?",(time.time(),)) if global_admin(u) or r['host_matricula']==u['username']]}
         if path=='/api/threats':return {'findings':threats(c,u),'window_hours':24,'generated_at':now()}
         if path=='/api/users/initial-password-group':
             if not global_admin(u):raise PermissionError('Solo administración global habilita el ingreso grupal.')

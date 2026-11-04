@@ -15,7 +15,9 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 def optimize(jpeg,profile):
     if not 0<len(jpeg)<=MAX_FRAME:raise ValueError('Cuadro fuera de límites.')
-    with Image.open(io.BytesIO(jpeg)) as image:
+    # The configured camera contract is JPEG/MJPEG. Do not invoke unrelated
+    # image parsers or external image-rendering helpers for an untrusted frame.
+    with Image.open(io.BytesIO(jpeg),formats=('JPEG',)) as image:
         if image.width>4096 or image.height>4096:raise ValueError('Resolución de origen excesiva; usa hasta 1080p en el teléfono.')
         if image.format=='JPEG' and max(image.size)<=profile['width'] and len(jpeg)<=image.width*image.height*.16 and not image.info.get('exif'):
             return jpeg,image.size  # Evita volver a comprimir cuadros pequeños ya adecuados.

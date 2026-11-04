@@ -124,7 +124,7 @@ def dispatch(path,body,sid,state,owner_alive):
                     if not isinstance(encoded,str) or len(encoded)>260000:raise ValueError('Cuadro demasiado grande.')
                 try:
                     if not binary:raw=base64.b64decode(encoded,validate=True)
-                    with Image.open(io.BytesIO(raw)) as image:
+                    with Image.open(io.BytesIO(raw),formats=('JPEG',)) as image:
                         if image.format!='JPEG' or max(image.size)>1280 or min(image.size)<16:raise ValueError()
                         image.verify()
                 except Exception:raise ValueError('JPEG inválido.')

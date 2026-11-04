@@ -7,7 +7,7 @@ import supervise_cloudflare as supervisor
 
 class Supervisor(unittest.TestCase):
     def test_failed_child_is_restarted_and_stop_marker_prevents_respawn(self):
-        with tempfile.TemporaryDirectory(dir=Path(__file__).parent/'scratch') as temporary:
+        with tempfile.TemporaryDirectory(prefix='SecurityTeamNextSupervisor-') as temporary:
             data=Path(temporary);stop=data/'stop';calls=[]
             def launch(*args,**kwargs):
                 calls.append(args)
@@ -19,7 +19,7 @@ class Supervisor(unittest.TestCase):
                 supervisor.main()
             self.assertEqual(len(calls),2)
     def test_stop_during_backoff_does_not_start_another_child(self):
-        with tempfile.TemporaryDirectory(dir=Path(__file__).parent/'scratch') as temporary:
+        with tempfile.TemporaryDirectory(prefix='SecurityTeamNextSupervisor-') as temporary:
             data=Path(temporary);stop=data/'stop';child=Mock();child.poll.return_value=1
             with patch.object(supervisor,'DATA',data),patch.object(supervisor,'STOP',stop),patch.object(supervisor.subprocess,'Popen',return_value=child) as launch,patch.object(supervisor.time,'sleep',side_effect=lambda _:stop.touch()):
                 supervisor.main()

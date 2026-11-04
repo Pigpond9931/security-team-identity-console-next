@@ -4,10 +4,12 @@ from pathlib import Path
 import windows_store as store
 
 ROOT=Path(__file__).resolve().parent
-DATA=ROOT/'data'
+from runtime_paths import data_dir
+DATA=data_dir()
 STOP=DATA/'cloudflare-supervisor.stop'
 
 def main(open_browser=False):
+    store.private_directory(DATA)
     with store.file_lock(DATA/'.supervisor.lock'):
         STOP.unlink(missing_ok=True)
         delay=5
@@ -23,7 +25,7 @@ def main(open_browser=False):
                     time.sleep(5)
                     if time.monotonic()-started<65:continue
                     try:
-                        request=urllib.request.Request('http://127.0.0.1:8765/api/health')
+                        request=urllib.request.Request('http://127.0.0.1:8876/api/health')
                         with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request,timeout=5) as response:
                             if not json.load(response).get('ok'):raise ValueError('health')
                         failures=0

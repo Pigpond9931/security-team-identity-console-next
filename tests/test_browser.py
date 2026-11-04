@@ -7,7 +7,7 @@ import tempfile
 import threading
 
 ROOT=Path(__file__).resolve().parents[1]
-SCRATCH=ROOT/'tests'/'scratch'
+SCRATCH=Path(tempfile.gettempdir())/'SecurityTeamNextTests'
 SCRATCH.mkdir(parents=True,exist_ok=True)
 with tempfile.TemporaryDirectory(dir=SCRATCH) as temporary:
     os.environ['ST_DATA_DIR']=temporary

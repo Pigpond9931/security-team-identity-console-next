@@ -33,8 +33,15 @@ def session_deadline(session):
 CHALLENGE_SECONDS = 300
 MAX_FAILURES = 3
 
+def publication_ready(conn):
+    """An initialized global administrator must complete factors and current policy."""
+    return conn.execute("""SELECT 1 FROM users WHERE role IN ('system_admin','dpo')
+        AND is_active=1 AND is_locked=0 AND mfa_configured=1 AND must_change_password=0
+        AND terms_accepted=1 AND terms_version=? LIMIT 1""",(db.TERMS_VERSION,)).fetchone() is not None
+
 def cipher():
-    key_path=Path(os.environ.get('ST_KEY_PATH',str(Path(__file__).parent/'data'/'.mfa-key')))
+    from runtime_paths import private_file
+    key_path=private_file('.mfa-key')
     key_path.parent.mkdir(parents=True,exist_ok=True)
     with store.file_lock(key_path.parent/'.key.lock',wait=True):
         if not key_path.exists():
@@ -57,7 +64,8 @@ def cipher():
 
 def rotate_key():
     """Usar solo bajo .server.lock, con el servidor detenido. Recuperable tras fallo."""
-    key_path=Path(os.environ['ST_KEY_PATH'])
+    from runtime_paths import private_file
+    key_path=private_file('.mfa-key')
     cipher()
     with store.file_lock(key_path.parent/'.key.lock',wait=True):
         ring=json.loads(store.unprotect(key_path.read_bytes()))
@@ -98,6 +106,14 @@ def public_user(row):
 def write_transaction():
     with db.get_connection() as conn:
         conn.execute('BEGIN IMMEDIATE')
+        yield conn
+
+@contextmanager
+def read_transaction():
+    """Consistent authorization snapshot without reserving SQLite's writer lock."""
+    with db.get_connection(readonly=True) as conn:
+        conn.execute('PRAGMA query_only = ON')
+        conn.execute('BEGIN')
         yield conn
 
 def migrate():

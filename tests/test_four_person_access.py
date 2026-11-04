@@ -45,6 +45,6 @@ class FourPersons(unittest.TestCase):
             visitor=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(visitor['visitor_id'],)).fetchone()
             badge=f.badge(c,'VISITOR',visitor)
         result=f.dispatch(self.admin,'POST','/api/access/verify',{},dict(zone=four.ZONE,method='QR_BADGE',direction='AUTO',ref=badge['token']))['result']
-        self.assertEqual(result['verdict'],'DENIED');self.assertIn('cuatro',result['reason'])
+        self.assertEqual(result['verdict'],'DENIED');self.assertIn('no admite pases de invitado',result['reason'])
 
 if __name__=='__main__':unittest.main()

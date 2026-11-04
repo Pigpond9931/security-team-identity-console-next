@@ -25,6 +25,10 @@ class Camera(unittest.TestCase):
         for data in (b'',b'x'*(hub.MAX_FRAME+1),b'not an image'):
             with self.assertRaises((ValueError,OSError)):hub.optimize(data,hub.PROFILES['smooth'])
         with self.assertRaises(ValueError):hub.optimize(jpeg((4097,10)),hub.PROFILES['smooth'])
+    def test_non_jpeg_formats_cannot_invoke_other_image_parsers(self):
+        buffer=io.BytesIO();Image.new('RGB',(32,32)).save(buffer,'PNG')
+        for data in (buffer.getvalue(),b'%!PS-Adobe-3.0 EPSF-3.0\n%%BoundingBox: 0 0 10 10\n'):
+            with self.assertRaises((ValueError,OSError)):hub.optimize(data,hub.PROFILES['smooth'])
     def serve(self,mode):
         data=jpeg((800,600));calls=[]
         class Handler(BaseHTTPRequestHandler):

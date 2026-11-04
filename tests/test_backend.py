@@ -19,7 +19,7 @@ import urllib.request
 from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
-SCRATCH=ROOT/'tests'/'scratch'
+SCRATCH=Path(tempfile.gettempdir())/'SecurityTeamNextTests'
 SCRATCH.mkdir(parents=True,exist_ok=True)
 TEMP=tempfile.TemporaryDirectory(dir=SCRATCH)
 os.environ['ST_DATA_DIR']=TEMP.name

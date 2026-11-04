@@ -4,12 +4,14 @@ No ofrece CRUD, autenticación ni borrado de bases sin controles.
 import os,io,sqlite3,datetime as dt
 import secrets
 import json
+from pathlib import Path
 from datetime import datetime, timedelta, timezone
 from contextlib import contextmanager
 import bcrypt,pyotp,qrcode
 import qrcode.image.pil
 
-DB_PATH = os.getenv("ST_DB_PATH", "security_team.db")
+from runtime_paths import private_file
+DB_PATH = str(private_file("identity.sqlite"))
 
 # Emisor mostrado en la app de autenticación (Google Authenticator, Authy...).
 ISSUER_NAME = "SECURITY TEAM - UPY"
@@ -112,14 +114,14 @@ def _today_prefix() -> str:
 
 
 @contextmanager
-def get_connection(timeout=15):
+def get_connection(timeout=15,readonly=False):
     """
     Context manager de conexión a SQLite.
 
     - Se habilita `row_factory = Row` para acceso a columnas por nombre.
     - Commit automático si no hay excepción; rollback en caso de error.
     """
-    conn = sqlite3.connect(DB_PATH, timeout=timeout)
+    conn = sqlite3.connect(Path(DB_PATH).resolve().as_uri()+'?mode=ro',uri=True,timeout=timeout) if readonly else sqlite3.connect(DB_PATH,timeout=timeout)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON;")
     try:

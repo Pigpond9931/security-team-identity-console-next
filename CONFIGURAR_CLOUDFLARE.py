@@ -4,7 +4,8 @@ import json
 import windows_store as store
 
 def main():
-    data=Path(__file__).resolve().parent/'data'
+    from runtime_paths import data_dir
+    data=data_dir()
     store.private_directory(data)
     dest=data/'cloudflare.dpapi'
     if dest.exists():

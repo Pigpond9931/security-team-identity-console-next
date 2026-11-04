@@ -10,13 +10,27 @@ import server
 import windows_store as store
 
 def backup(destination):
-    destination=Path(destination)
+    from runtime_paths import external_path
+    destination=external_path(destination)
     if destination.exists():raise ValueError('El destino ya existe; usa una carpeta nueva.')
+    database=Path(server.db.DB_PATH)
+    if not database.is_file() or database.is_symlink():raise ValueError('No existe una base válida para respaldar. No se creó otra.')
+    import hashlib,json
+    files=[p for p in server.DATA.iterdir() if p.name in ('.mfa-key','.qr-key') or p.suffix.lower()=='.dpapi']
+    if any(p.is_symlink() or not p.is_file() for p in files):raise ValueError('Archivo privado enlazado o inválido; respaldo detenido.')
+    with closing(sqlite3.connect(database.as_uri()+'?mode=ro',uri=True)) as source:
+        if source.execute('PRAGMA quick_check').fetchone()[0]!='ok':raise ValueError('La integridad de origen no es correcta.')
+        if source.execute("SELECT 1 FROM users WHERE mfa_secret IS NOT NULL LIMIT 1").fetchone() and not (server.DATA/'.mfa-key').is_file():
+            raise ValueError('Falta la clave de los factores; no se generó una sustituta ni un respaldo incompleto.')
     store.private_directory(destination)
-    with closing(sqlite3.connect(server.db.DB_PATH)) as source,closing(sqlite3.connect(destination/'identity.sqlite')) as target:source.backup(target)
-    for name in ('.mfa-key','.qr-key','audit.dpapi','ngrok.dpapi','cloudflare.dpapi'):
-        p=server.DATA/name
-        if p.exists():store.atomic_write(destination/name,p.read_bytes())
+    with closing(sqlite3.connect(database.as_uri()+'?mode=ro',uri=True)) as source,closing(sqlite3.connect(destination/'identity.sqlite')) as target:
+        source.backup(target)
+        if target.execute('PRAGMA quick_check').fetchone()[0]!='ok':raise ValueError('Falló la integridad del respaldo.')
+    for p in files:store.atomic_write(destination/p.name,p.read_bytes())
+    manifest={'format':1,'requires_same_windows_user_and_machine':True,'files':[
+        {'name':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+        for p in sorted(destination.iterdir())]}
+    store.atomic_write(destination/'backup-manifest.json',(json.dumps(manifest,indent=2)+'\n').encode())
     print('Respaldo completo protegido. Requiere el mismo usuario y equipo de Windows.')
 
 def recover(username):
@@ -78,6 +92,8 @@ def main():
     p=commands.add_parser('audit');p.add_argument('url')
     commands.add_parser('audit-status')
     args=parser.parse_args()
+    if not Path(server.db.DB_PATH).is_file():
+        raise ValueError('No existe una base en el almacén seleccionado. Mantenimiento detenido sin crear otra.')
     with store.file_lock(server.DATA/'.server.lock'):
         server.initialize()
         if args.action=='project-access-four':

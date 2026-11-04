@@ -49,7 +49,7 @@ if __name__ == '__main__':
     import maintenance
     from datetime import datetime, timezone
     with store.file_lock(server.DATA / '.server.lock'):
-        maintenance.backup(server.ROOT / 'backups' / ('antes-importar-rfid-' + datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%SZ')))
+        maintenance.backup(server.DATA / 'backups' / ('antes-importar-rfid-' + datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%SZ')))
         server.initialize()
         with server.secure.write_transaction() as conn:
             before = {r['id']: dict(r) for r in conn.execute('SELECT * FROM users')}

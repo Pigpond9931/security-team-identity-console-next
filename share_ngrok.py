@@ -62,8 +62,8 @@ def run():
     if not executable.exists():raise ValueError('Falta tools/ngrok.exe. Consulta COMPARTIR.md.')
     # No conectar el túnel hasta comprobar la protección del DPO.
     with server.db.get_connection() as conn:
-        ready=conn.execute("SELECT 1 FROM users WHERE role='dpo' AND is_active=1 AND is_locked=0 AND mfa_configured=1 AND must_change_password=0 LIMIT 1").fetchone()
-    if not ready:raise ValueError('Primero entra como DPO en la aplicación local y completa MFA y su configuración inicial.')
+        ready=server.secure.publication_ready(conn)
+    if not ready:raise ValueError('Completa primero acceso, MFA y políticas de un administrador global en modo local.')
     with store.file_lock(server.DATA/'.server.lock'):pass
     policy_path=server.DATA/'ngrok-policy.json';store.atomic_write(policy_path,json.dumps(policy).encode())
     child=subprocess.Popen([sys.executable,str(server.ROOT/'server.py'),'--public-url',config['url'],'--trusted-proxy','ngrok'],cwd=server.ROOT)
@@ -76,13 +76,13 @@ def run():
         while time.monotonic()<deadline:
             if child.poll() is not None:raise RuntimeError('No se pudo iniciar la aplicación para compartir.')
             try:
-                with opener.open('http://127.0.0.1:8765/api/health',timeout=1) as response:
+                with opener.open('http://127.0.0.1:8876/api/health',timeout=1) as response:
                     if json.load(response).get('application')=='SECURITY_TEAM_Studio':break
             except OSError:time.sleep(.2)
         else:raise RuntimeError('La aplicación no confirmó su arranque.')
         owned_record=server_record.read_bytes()
         env=dict(os.environ,NGROK_AUTHTOKEN=config['token'])
-        agent=subprocess.Popen([str(executable),'http','127.0.0.1:8765','--url',config['url'],
+        agent=subprocess.Popen([str(executable),'http','127.0.0.1:8876','--url',config['url'],
                                 '--traffic-policy-file',str(policy_path),'--inspect=false'],env=env,cwd=server.ROOT)
         store.atomic_write(record,json.dumps({'launcher':os.getpid(),'server':child.pid,'agent':agent.pid,
                                              'registered_ms':int(time.time()*1000)}).encode())

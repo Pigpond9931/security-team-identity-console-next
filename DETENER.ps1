@@ -1,8 +1,10 @@
 [CmdletBinding(SupportsShouldProcess)]
 param()
 $ErrorActionPreference='Stop'
+. (Join-Path $PSScriptRoot 'runtime_paths.ps1')
+$stDataDirectory = Get-STDataDirectory
 $env:PSModulePath=Join-Path $PSHOME 'Modules'
-$recordFile=Join-Path $PSScriptRoot 'data\server-process.json'
+$recordFile=Join-Path $stDataDirectory 'server-process.json'
 if (-not (Test-Path -LiteralPath $recordFile)) { Write-Host 'No hay un servidor registrado por esta version.'; exit 0 }
 $record=Get-Content -LiteralPath $recordFile -Raw | ConvertFrom-Json
 $processId=[int]$record.pid

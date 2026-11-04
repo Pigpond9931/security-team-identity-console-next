@@ -14,10 +14,12 @@ from http import cookies
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer as BaseHTTPServer
 from urllib.parse import urlsplit, parse_qs, quote
 import webbrowser
+from app_version import VERSION
 
 ROOT=Path(__file__).resolve().parent
 WEB_ROOT=ROOT/'web'
-DATA=Path(os.environ.get('ST_DATA_DIR',str(ROOT/'data')))
+from runtime_paths import data_dir
+DATA=data_dir()
 DATA.mkdir(parents=True,exist_ok=True)
 os.environ['ST_DB_PATH']=str(DATA/'identity.sqlite')
 os.environ['ST_KEY_PATH']=str(DATA/'.mfa-key')
@@ -210,7 +212,7 @@ class Handler(BaseHTTPRequestHandler):
         if not self.allowed_host(): return self.response(403,{'error':'Origen no autorizado.'})
         if self.redirect_https():return
         path=urlsplit(self.path).path
-        if path=='/api/health': return self.response(200,{'ok':True,'application':'SECURITY_TEAM_Studio','version':'1.5.4','mode':'shared' if PUBLIC_ORIGIN else 'local'})
+        if path=='/api/health': return self.response(200,{'ok':True,'application':'SECURITY_TEAM_Studio','version':VERSION,'mode':'shared' if PUBLIC_ORIGIN else 'local'})
         q={k:v[0] for k,v in parse_qs(urlsplit(self.path).query).items()}
         if path in ('/api/terms','/api/public-pass'):
             sid,state=self.session()
@@ -525,7 +527,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--port',type=int,default=8765)
+    parser.add_argument('--port',type=int,default=8876)
     parser.add_argument('--open',action='store_true')
     parser.add_argument('--public-url',default='')
     parser.add_argument('--trusted-proxy',choices=['','ngrok','cloudflare'],default='')
@@ -534,8 +536,8 @@ def main():
     with store.file_lock(DATA/'.server.lock'):
         initialize()
         if args.public_url:
-            with db.get_connection() as conn:ready=conn.execute("SELECT 1 FROM users WHERE role='dpo' AND is_active=1 AND is_locked=0 AND mfa_configured=1 AND must_change_password=0 LIMIT 1").fetchone()
-            if not ready:raise RuntimeError('Configura primero el acceso y MFA del DPO desde la aplicación local antes de compartir.')
+            with db.get_connection() as conn:ready=secure.publication_ready(conn)
+            if not ready:raise RuntimeError('Completa primero acceso, MFA y políticas de un administrador global en modo local.')
         httpd=ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
         httpd.trusted_proxy=args.trusted_proxy
         process_file=DATA/'server-process.json'
