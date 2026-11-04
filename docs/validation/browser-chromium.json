@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "checks": [
+    "OS reduced motion is applied before React loads",
+    "Motion preference persists across reloads",
+    "Real individual-password, private-password, MFA, recovery and current-policy onboarding",
+    "Primary button text contrast exceeds 4.5:1",
+    "Directory, own current QR and keyboard dismissal",
+    "Current QR refresh uses the real API",
+    "Assigned zones with missing internal licenses display a pending status",
+    "Tablet and mobile QR screens fit viewport",
+    "Mobile terminal remains navigable",
+    "Mi QR abre directamente el gafete del titular autenticado",
+    "CCTV WebRTC entre dos navegadores con cámara simulada y hora CDMX",
+    "Alternativa HTTPS con cuadros JPEG recientes y sin grabación",
+    "Teléfono sin acceso administrativo y revocación efectiva",
+    "Centro de vigilancia individual, mosaico, cambio de cámara y liberación de vistas",
+    "Ronda automática de 15 s, pantalla completa y diseño móvil",
+    "Automated WCAG 2.1 AA checks on six fixture screens"
+  ],
+  "pageErrors": [],
+  "accessibility": [
+    {
+      "screen": "login",
+      "violations": []
+    },
+    {
+      "screen": "operations",
+      "violations": []
+    },
+    {
+      "screen": "identity-drawer",
+      "violations": []
+    },
+    {
+      "screen": "mobile-qr",
+      "violations": []
+    },
+    {
+      "screen": "mobile-terminal",
+      "violations": []
+    },
+    {
+      "screen": "surveillance",
+      "violations": []
+    }
+  ],
+  "backend": "real isolated SQLite + Windows DPAPI",
+  "productionDataUsed": false
+}

@@ -1,0 +1,12 @@
+title = "SECURITY TEAM: default rules with one reviewed migration-marker exception"
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+  [[rules.allowlists]]
+  description = "Public schema migration identifier, not an API credential"
+  condition = "AND"
+  regexTarget = "secret"
+  regexes = ['''^hardening_140$''']
+  paths = ['''(^|/)hardening\.py$''']

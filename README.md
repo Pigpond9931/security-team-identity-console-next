@@ -1,12 +1,18 @@
-# SECURITY TEAM Identity Console
+# SECURITY TEAM · Identity Console Next
 
-Código completo de la aplicación académica para Windows: React, Python y SQLite. Versión funcional 1.5.4. Reúne Identity Management, IAM, terminal RFID/QR, invitados, licencias internas, auditoría y vigilancia con teléfonos.
+**1.6.0-next.1 · evaluación local para Windows.** React, Python y SQLite; gestión de identidades, roles y áreas, MFA, RFID/QR, invitados, auditoría y vigilancia con teléfonos. La instalación existente se conserva por separado. Esta copia no importa ni contiene su base, cuentas reales, claves, sesiones o constancias firmadas.
 
-Este repositorio es independiente del Portal de cumplimiento. No incluye las cuentas, contraseñas, secretos MFA, tarjetas reales, sesiones, bases de datos ni copias privadas de la laptop. Las 33 identidades del seed son ficticias y solo se cargan en pruebas o al solicitar una demo. No hay contraseña compartida utilizable por defecto en una nueva instalación.
+El repositorio privado de destino es [security-team-identity-console-next](https://github.com/Pigpond9931/security-team-identity-console-next). Fue creado, pero la subida requiere completar la autenticación y el acceso de la integración. Los commits y el respaldo de historial se prepararon localmente. No se presenta un push pendiente como realizado.
 
-## Instalación nueva en Windows
+## Procedencia
 
-Requisitos: Windows 10/11 x64 y Python 3.12 disponible mediante `py -3.12`. Para desarrollar la interfaz también necesitas Node.js 22 o posterior; para utilizarla no hace falta Node, porque `web/` incluye la compilación.
+El original termina en `e58fa9a620b834e6284c679d1dd771bd7cc79750`. Esta rama conserva sus cinco commits y añade el código local saneado más reciente. El ZIP externo mencionado por el propietario no estaba disponible: **no se ha recuperado el commit `8c667079ae43a3046a4dd8c4fab83bfa2db5b24c`**. Véase [PROVENANCE](docs/PROVENANCE.md). Esta iteración es trabajo local provisional que deberá compararse con aquel avance cuando llegue.
+
+La propuesta de Base44 sigue independiente. Su código está bloqueado por el plan y su vista previa exige iniciar sesión. No se importaron sus módulos ni se contrataron servicios.
+
+## Instalar una copia limpia
+
+Requisitos: Windows 10/11 x64 y CPython 3.12 x64. Node.js 22 o posterior se necesita para desarrollar la interfaz; `web/` ya contiene una compilación. El lock de Python incluye hashes de wheels para Windows x64/CPython 3.12; no es un lock universal para otros sistemas o arquitecturas.
 
 ```powershell
 py -3.12 -m venv .venv
@@ -15,73 +21,71 @@ py -3.12 -m venv .venv
 .\INICIAR.cmd
 ```
 
-También puedes preparar Python con `INSTALAR.cmd`. Bootstrap pide matrícula y nombre, crea el primer administrador del sistema y muestra una contraseña temporal individual una sola vez. Se niega a modificar una base existente. Abre `http://127.0.0.1:8765`, elige contraseña privada, configura MFA, guarda recuperación y acepta los términos. Después crea las demás cuentas desde Personas y permisos.
+También existe `INSTALAR.cmd`. Bootstrap solo crea el primer administrador en una base nueva, pide su identidad y muestra una contraseña individual temporal una vez. No sirve para reemplazar cuentas de una instalación existente. Completa contraseña privada, autenticador, recuperación y políticas desde el navegador.
 
-No hace falta recibir un QR administrativo para el primer ingreso. El QR del autenticador sigue siendo privado y necesario para registrar el segundo factor. Lee [PRIMER_INGRESO_INDIVIDUAL.md](PRIMER_INGRESO_INDIVIDUAL.md).
+Next abre **http://127.0.0.1:8876**. El original utiliza otro puerto y almacén. No publiques Next durante su evaluación ni lo conectes a los datos reales para probarlo.
 
-## Instalación existente
+## Almacén privado
 
-Este código no incluye una migración automática de los datos de tu laptop a GitHub. Conserva la instalación activa y sus respaldos por separado. No copies `data/` o `backups/` al repositorio. Antes de actualizar una instalación con datos, detén sus procesos, respalda mediante `maintenance.py` y valida la restauración en un entorno aislado. DPAPI vincula secretos al usuario/equipo Windows.
-
-## Compartir por Internet con Cloudflare
-
-1. Completa primero el acceso del administrador global en modo local.
-2. Ejecuta `./INSTALAR_CLOUDFLARED.ps1` para descargar el binario oficial fijado y verificar SHA-256, o instala tu binario oficial compatible en `tools/cloudflared.exe`. El ejecutable no se almacena en Git.
-3. Ejecuta `.\.venv\Scripts\python.exe CONFIGURAR_CLOUDFLARE.py`. Prepara el login propio de la app, sin lista de correos ni PIN.
-4. Usa `COMPARTIR_CLOUDFLARE.cmd`, consulta `ENLACE_CLOUDFLARE.md` o `ABRIR_CLOUDFLARE.cmd` y entrega el enlace actual.
-5. Detén con `DETENER_CLOUDFLARE.cmd`. No inicies otra instancia sobre el mismo puerto.
-
-El enlace es temporal. La laptop debe permanecer encendida, sin suspenderse y con Internet. Cloudflare no aloja la base ni sustituye el login. No se promete un dominio fijo, disponibilidad permanente o una copia externa de auditoría.
-
-## Funciones
-
-- Cuentas, roles globales y administradores de área con alcance controlado.
-- Contraseña temporal individual y modo grupal temporal para pendientes sin privilegios; un uso por cuenta, 24 horas, cambio de contraseña y MFA obligatorios. [Procedimiento grupal y desbloqueo](PRIMER_INGRESO_GRUPAL.md).
-- Contraseña privada, autenticador TOTP, bloqueo por fallos y recuperación privada.
-- Separación entre rol, área, permiso de zona y licencia académica interna.
-- Terminal RFID/QR con F1-F4, resultado permitido/denegado, entrada/salida, aforo e historial. [Perfil de cuatro personas en F1](PRUEBA_CUATRO_PERSONAS.md).
-- Invitados, entrega móvil limitada y confirmación del anfitrión.
-- Centro de vigilancia, vinculación de teléfonos, cámaras IP aprobadas y eliminación de canales.
-- Hasta ocho canales combinados; sesiones CCTV de hasta cuatro horas, QR de enlace de cinco minutos y límites de espectadores. Consulta [CCTV_SESIONES_4H.md](CCTV_SESIONES_4H.md).
-- Auditoría, análisis de amenazas por reglas y respaldo/rotación local de claves.
-
-La consola sustituye Microsoft 365/OneLogin y los teléfonos sustituyen DVR con el permiso del profesor confirmado por el responsable del proyecto. El lector RFID comercial también fue aprobado. No se implementan SSO externo general, cerradura física, grabación permanente, audio ni reconocimiento facial. La retención y la auditoría bajo custodia independiente siguen siendo decisiones operativas.
-
-## Desarrollo y pruebas
+El valor predeterminado es `%LOCALAPPDATA%\SecurityTeam\IdentityConsoleNext`. Para un ensayo utiliza una carpeta nueva, absoluta y externa:
 
 ```powershell
-npm ci
+$env:ST_DATA_DIR='C:\MiCarpetaPrivada\IdentityConsoleNextPrueba'
+.\.venv\Scripts\python.exe bootstrap_admin.py
+.\INICIAR.cmd
+```
+
+Se rechazan rutas dentro del repositorio, relativas, raíces, directorios que lo contengan y rutas enlazadas. Un `data/` antiguo con contenido detiene el inicio para no abrir por error otra base vacía. El código no migra datos automáticamente. DPAPI CurrentUser y las ACL privadas de Windows siguen protegiendo el almacén. Consulta [almacenamiento, traslado futuro y reversión](docs/PRIVATE_STORAGE.md).
+
+## Qué incluye esta iteración
+
+- Diseño con grafito, papel cálido y cobre; centro de operaciones con accesos a las funciones autorizadas. Movimiento reducido según el dispositivo, con preferencia persistente.
+- Consulta y actualización del gafete por persona, también desde el directorio administrativo. Muestra zonas, habilitaciones internas pendientes y vencimiento en Ciudad de México.
+- Separación entre rol administrativo, zona física y licencia interna. Un rol administrativo no sustituye la licencia de una zona. La terminal siempre vuelve a validar el estado vigente.
+- Consultas GET en transacciones SQLite de solo lectura, sin reservar el bloqueo de escritura. Una consulta no puede ejecutar una mutación por accidente.
+- Cupos existentes respetados; el perfil histórico de cuatro personas solo bloquea su límite cuando fue configurado explícitamente.
+- Respaldos externos con comprobación de integridad, archivos privados y manifiesto SHA-256; ensayo de restauración con datos ficticios y las mismas claves.
+- Publicación condicionada a un administrador global activo, con MFA y políticas vigentes, tanto para DPO como para administrador del sistema.
+- Actualización de Pillow y cryptography; cámaras limitadas al decodificador JPEG. Dependencias Python con hashes; acciones CI fijadas a commits oficiales con runtime Node 24 y escaneo de secretos.
+
+## Pruebas
+
+```powershell
+npm ci --ignore-scripts
 npm run build
 .\.venv\Scripts\python.exe tests/run_regression.py
+node tests/test_camera_url.cjs
 ```
 
-`package.json` fija versiones directas; `package-lock.json` se genera para usar `npm ci`. Las pruebas Python utilizan identidades ficticias y SQLite temporal. Las pruebas de navegador `.cjs` se conservan como fuentes históricas y necesitan un entorno Playwright; no se presentan como una ejecución actual ni todos esos guiones representan el flujo 1.5.2. Para la cobertura y los resultados actuales consulta [VALIDACION_REPOSITORIO.md](VALIDACION_REPOSITORIO.md).
+Para el recorrido de navegador, instala Chromium de Playwright y usa una base temporal creada por el propio ensayo:
 
-Para comprobar el lector y el video debes realizar además un ensayo real con dispositivos y red del lugar. Una captura de una pantalla vacía no demuestra señal de cámara. Las guías antiguas se conservan como historial; para primer ingreso prevalece el procedimiento individual de 1.5.2 y este README para instalación.
-
-## Estructura
-
-```text
-frontend/                 React, componentes, estilos y HTML
-web/                      interfaz compilada y fuentes tipográficas
-tests/                    pruebas Python y fuentes de pruebas de navegador
-LICENSES/                 licencia de las fuentes tipográficas incluidas
-server.py                 HTTP, sesiones, CSRF y estados de autenticación
-db_manager.py             esquema y seed ficticio opcional
-security.py               autenticación, recuperación y autorización
-initial_passwords.py      primer ingreso individual
-features.py               recursos, invitados, terminal y CCTV
-rfid_cards.py             normalización y asociaciones de tarjetas
-browser_cameras.py        cámara de navegador y señalización
-camera_hub.py             procesamiento y retransmisión de fuentes IP
-hardening.py              autorizaciones temporales y destinos aprobados
-maintenance.py            respaldo y rotación de claves
-bootstrap_admin.py        primer administrador de una base nueva
-supervise_cloudflare.py   supervisión del túnel
+```powershell
+npx playwright install chromium
+$env:ST_TEST_BROWSER_CHANNEL='chromium'
+.\.venv\Scripts\python.exe tests/browser_next.py
 ```
 
-## Cambios de distribución respecto a la laptop
+Si ya tienes Google Chrome puedes omitir esa variable; el ensayo usa `chrome` por defecto. Las dependencias de Playwright y axe-core están fijadas en `package-lock.json`. El ensayo no necesita iniciar sesión en la aplicación real, utiliza una cámara sintética y genera resultados fuera del repositorio, en `../qa-browser/`.
 
-La lógica funcional de la laptop se conserva y la versión 1.5.3 amplía las sesiones CCTV a cuatro horas. Esta copia usa identidades ficticias, omite importación automática de bases vecinas, no carga ejemplos por defecto y añade bootstrap e instalación de una instancia nueva. El importador RFID es solo un ejemplo ficticio y conserva la separación final de zonas IM/IAM; nunca se ejecuta al iniciar. Nada de esto modifica los datos o procesos de la instalación activa.
+Los resultados vigentes, omisiones y límites se encuentran en [VALIDACION](docs/VALIDACION_20261104.md). No equivalen a una prueba física de tarjetas, teléfonos, red escolar o transmisión de cuatro horas. CI está preparado; no se informa como ejecutado remotamente antes de subir la copia.
 
-No se adjuntan reportes con datos personales ni capturas de sesiones reales. Los documentos académicos y sus originales quedan en la carpeta local de entregas del propietario. Este repositorio conserva la documentación técnica textual, saneada para distribución.
+## Funciones y límites
+
+La aplicación conserva contraseña privada, TOTP, recuperación individual, bloqueos, roles por área, invitados, verificación RFID/QR, aforo y registro de decisiones. Las licencias son habilitaciones internas del proyecto, no suscripciones comerciales.
+
+CCTV permite hasta ocho canales combinados, cuatro espectadores por canal y dieciséis vistas simultáneas. Las sesiones de vigilancia tienen un máximo absoluto de cuatro horas; el QR de vinculación dura cinco minutos. Hay WebRTC y una alternativa HTTP(S) de cuadros JPEG recientes. No hay grabación permanente, audio, reconocimiento facial ni activación de una cerradura física.
+
+La consola y los teléfonos sustituyen OneLogin/Microsoft y DVR según la autorización académica comunicada por el propietario. No se implementan federación SSO externa ni SCIM. El lector comercial recibe UIDs; el software no programa físicamente las tarjetas ni convierte ese UID en una prueba criptográfica de posesión.
+
+Las políticas v1.1 se conservaron. Indican conservación hasta treinta días después de la última práctica, con revisión/eliminación manual; no existe borrado automático. La firma de la tablet no registra automáticamente una aceptación en la base. La auditoría es local salvo que se configure y verifique un receptor independiente.
+
+## Documentación para continuar
+
+- [Resumen de implementación y decisiones](docs/ITERATION_02_LOCAL.md).
+- [Revisión de seguridad y pendientes](docs/SECURITY_REVIEW_20261104.md).
+- [Validaciones y sus límites](docs/VALIDACION_20261104.md).
+- [Capturas de Next con datos ficticios](docs/GALERIA_NEXT.md).
+- [GitHub: privacidad, autenticación y subida pendiente](docs/GITHUB_HANDOFF.md).
+- [Almacén, respaldo y reversión](docs/PRIVATE_STORAGE.md).
+
+Las guías heredadas 1.5.x se conservan como historia del proyecto. Para esta copia prevalecen este README y los documentos de la iteración local. No ejecutes un procedimiento heredado sobre la instalación real sin comprobar su alcance.

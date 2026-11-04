@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "old": {
+    "cryptography": "48.0.1",
+    "pillow": "12.3.0"
+  },
+  "next": {
+    "cryptography": "50.0.2",
+    "pillow": "13.0.0"
+  },
+  "fixture_only": true,
+  "same_windows_user_and_machine": true,
+  "checks": [
+    "DPAPI v1 keyring retained byte for byte",
+    "Old Fernet ciphertext decrypted by Next",
+    "Next Fernet ciphertext decrypted by old dependencies",
+    "Old JPEG decoded by Next Pillow"
+  ],
+  "production_keys_or_database_read": false,
+  "database_schema_rollback_tested": false
+}

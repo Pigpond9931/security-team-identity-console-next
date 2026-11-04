@@ -1,0 +1,176 @@
+{
+  "groups": [
+    {
+      "group": "test_backend",
+      "returncode": 0,
+      "tests": 35,
+      "skipped": 0,
+      "seconds": 53.4
+    },
+    {
+      "group": "test_v130",
+      "returncode": 0,
+      "tests": 20,
+      "skipped": 0,
+      "seconds": 39.5
+    },
+    {
+      "group": "test_hardening",
+      "returncode": 0,
+      "tests": 8,
+      "skipped": 0,
+      "seconds": 16.4
+    },
+    {
+      "group": "test_initial_passwords",
+      "returncode": 0,
+      "tests": 7,
+      "skipped": 0,
+      "seconds": 23.2
+    },
+    {
+      "group": "test_terminal_rfid",
+      "returncode": 0,
+      "tests": 6,
+      "skipped": 0,
+      "seconds": 21.8
+    },
+    {
+      "group": "test_rfid_reference_import",
+      "returncode": 0,
+      "tests": 4,
+      "skipped": 0,
+      "seconds": 18.3
+    },
+    {
+      "group": "test_browser_cameras",
+      "returncode": 0,
+      "tests": 5,
+      "skipped": 0,
+      "seconds": 15.6
+    },
+    {
+      "group": "test_phone_links",
+      "returncode": 0,
+      "tests": 8,
+      "skipped": 0,
+      "seconds": 25.8
+    },
+    {
+      "group": "test_camera",
+      "returncode": 0,
+      "tests": 7,
+      "skipped": 0,
+      "seconds": 3.7
+    },
+    {
+      "group": "test_camera_admin",
+      "returncode": 0,
+      "tests": 5,
+      "skipped": 0,
+      "seconds": 20.6
+    },
+    {
+      "group": "test_camera_removal",
+      "returncode": 0,
+      "tests": 9,
+      "skipped": 0,
+      "seconds": 21.1
+    },
+    {
+      "group": "test_surveillance",
+      "returncode": 0,
+      "tests": 7,
+      "skipped": 0,
+      "seconds": 19.4
+    },
+    {
+      "group": "test_supervisor",
+      "returncode": 0,
+      "tests": 2,
+      "skipped": 0,
+      "seconds": 0.6
+    },
+    {
+      "group": "test_bootstrap",
+      "returncode": 0,
+      "tests": 2,
+      "skipped": 0,
+      "seconds": 3.3
+    },
+    {
+      "group": "test_cctv_duration",
+      "returncode": 0,
+      "tests": 6,
+      "skipped": 0,
+      "seconds": 16.9
+    },
+    {
+      "group": "test_group_onboarding",
+      "returncode": 0,
+      "tests": 8,
+      "skipped": 0,
+      "seconds": 78.3
+    },
+    {
+      "group": "test_four_person_access",
+      "returncode": 0,
+      "tests": 4,
+      "skipped": 0,
+      "seconds": 27.8
+    },
+    {
+      "group": "test_terms_revision",
+      "returncode": 0,
+      "tests": 3,
+      "skipped": 0,
+      "seconds": 15.6
+    },
+    {
+      "group": "test_runtime_paths",
+      "returncode": 0,
+      "tests": 11,
+      "skipped": 1,
+      "seconds": 0.9
+    },
+    {
+      "group": "test_access_capacity",
+      "returncode": 0,
+      "tests": 3,
+      "skipped": 0,
+      "seconds": 13.7
+    },
+    {
+      "group": "test_publication_guard",
+      "returncode": 0,
+      "tests": 3,
+      "skipped": 0,
+      "seconds": 12.8
+    },
+    {
+      "group": "test_private_backup",
+      "returncode": 0,
+      "tests": 3,
+      "skipped": 0,
+      "seconds": 13.7
+    },
+    {
+      "group": "test_read_transactions",
+      "returncode": 0,
+      "tests": 5,
+      "skipped": 0,
+      "seconds": 15.5
+    },
+    {
+      "group": "test_qr_readiness",
+      "returncode": 0,
+      "tests": 2,
+      "skipped": 0,
+      "seconds": 13.8
+    }
+  ],
+  "tests": 173,
+  "skipped": 1,
+  "ok": true,
+  "production_data_used": false
+}

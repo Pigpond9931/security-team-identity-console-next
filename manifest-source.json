@@ -1,901 +1,979 @@
 {
-  "version": "1.5.4",
+  "format": 2,
+  "version": "1.6.0-next.1",
   "prepared": "2026-11-04",
+  "scope": "Source files only; excludes this manifest, Git internals, dependencies and private runtime.",
+  "normalization": "CRLF to LF for known text extensions; binary files unchanged.",
   "files": [
     {
       "path": ".gitattributes",
-      "bytes": 159,
-      "sha256": "6ab2894e0b840755a1118568774d2980575d105e3ec7ce8b1c9559fb3a6fd844",
-      "git_blob": "4ad4cce29d11e716cc99f81404f9edfe620d7225"
+      "bytes_normalized": 346,
+      "sha256": "e31fd9597855060a06fd32e48f9bf00efb762fb394e22a0a3d672c78db4b8a88"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "bytes_normalized": 370,
+      "sha256": "52d8f5547ddda350dac7033c93010f4d7c0f17e1a62e04b13f64317c00cd3279"
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 710,
-      "sha256": "0c5395a8a5a2cd2af01db8320495ad879bbdcbfc24cae6ffd4a680c1fe48fdd7",
-      "git_blob": "88492b74b901268053f72e10dadf99510c17f6f0"
+      "bytes_normalized": 1465,
+      "sha256": "4467b0b8e7e16a5eb258355c492bef309e2422dbc6244d63ed8313ba67083d0e"
+    },
+    {
+      "path": ".github/workflows/secrets.yml",
+      "bytes_normalized": 1720,
+      "sha256": "ed4e0fa2c84937fc5b64ac881f855c7ffe83374c80814b5a522db7bea0c9712e"
     },
     {
       "path": ".gitignore",
-      "bytes": 466,
-      "sha256": "8c7b3d4d99324b68784676d8952e378826bc45dc1b86ca1728daa4f245175425",
-      "git_blob": "5e029b412f5740ed629c3acc8ff3ec0679d13fc6"
+      "bytes_normalized": 431,
+      "sha256": "72b3e62b158488cbbc99e8b75104de4548cebee2358d67aa7133ac66f9d0caea"
+    },
+    {
+      "path": ".gitleaks.toml",
+      "bytes_normalized": 363,
+      "sha256": "11243c97023107ef95e4e5edb8bf31b5c883d16a3d1073da59cdba54a3bd615f"
     },
     {
       "path": "ABRIR_CLOUDFLARE.cmd",
-      "bytes": 94,
-      "sha256": "80ac8e8d876a23cbdd2bc1bdea47253854002251e8e778a37e115d1a839c6d6d",
-      "git_blob": "67bff92db4b37c85a76074fbde80551cab193256"
+      "bytes_normalized": 94,
+      "sha256": "80ac8e8d876a23cbdd2bc1bdea47253854002251e8e778a37e115d1a839c6d6d"
     },
     {
       "path": "ABRIR_CLOUDFLARE.ps1",
-      "bytes": 658,
-      "sha256": "84aeedacd807306963b98adfb1e9a3e80ab272776677c8d0486d01650b1ebb61",
-      "git_blob": "1f239e32ce019c083e08b775f64ec25b2d382449"
+      "bytes_normalized": 741,
+      "sha256": "e561f6652ec12990e6b288c13bb7fbbc70f9bc49528a628d91007ff165dfbf8e"
     },
     {
       "path": "ADMINISTRACION.md",
-      "bytes": 2748,
-      "sha256": "ac6fefae2ba2b5653c64469f559d3169fe351502e4d71120724a00dbc7ac478a",
-      "git_blob": "5490e248ccbafda4f8eb66295a54ff4d2cfbd943"
+      "bytes_normalized": 2748,
+      "sha256": "ac6fefae2ba2b5653c64469f559d3169fe351502e4d71120724a00dbc7ac478a"
     },
     {
       "path": "ADMINISTRACION_CAMARAS.md",
-      "bytes": 2212,
-      "sha256": "b47d11b3682a26fe62f2d70ee33df8b7a12a89cd9a39629919f436ce197a3d9c",
-      "git_blob": "2b318b9284a7d564ecf176cc46b3f34e8ab6c8b8"
+      "bytes_normalized": 2212,
+      "sha256": "b47d11b3682a26fe62f2d70ee33df8b7a12a89cd9a39629919f436ce197a3d9c"
     },
     {
       "path": "AUTORIZAR_CLOUDFLARE.cmd",
-      "bytes": 86,
-      "sha256": "07bf3b03d6db9ac5610674f36330bc5539a7810124136e54d9ee3dadbd6ee85e",
-      "git_blob": "b727d11496bdb8f77fb5043a7745991e20b6f090"
+      "bytes_normalized": 86,
+      "sha256": "07bf3b03d6db9ac5610674f36330bc5539a7810124136e54d9ee3dadbd6ee85e"
     },
     {
       "path": "AUTORIZAR_CORREOS.cmd",
-      "bytes": 88,
-      "sha256": "abf1d39330b65fc05ade29933197c1900e6a6db0a20d731f86c84e0da00fe3de",
-      "git_blob": "f1092b8c32e88850d18cb4158a4a77df089b4ad2"
+      "bytes_normalized": 88,
+      "sha256": "abf1d39330b65fc05ade29933197c1900e6a6db0a20d731f86c84e0da00fe3de"
     },
     {
       "path": "AVISO_CHROME.md",
-      "bytes": 3182,
-      "sha256": "08ab636a0d66ddb00a7757336839e18fbdfe1bbf6f6a1080a0eb842fc66466a8",
-      "git_blob": "fce391f013e5556c69d645f3bfbeb7b63266ceac"
+      "bytes_normalized": 3182,
+      "sha256": "08ab636a0d66ddb00a7757336839e18fbdfe1bbf6f6a1080a0eb842fc66466a8"
     },
     {
       "path": "CCTV_SESIONES_4H.md",
-      "bytes": 2566,
-      "sha256": "2055950fa913526cadca52bdd43f91bd4b50fd093382cfc2dc9fbd23496453eb",
-      "git_blob": "65397a35850ded8ee5048fbe8f454628d4615d41"
+      "bytes_normalized": 2542,
+      "sha256": "b10fbc4b1d838461daba7419ade146cc6ea88691243dededc481a4654a85203e"
     },
     {
       "path": "CENTRO_VIGILANCIA_2026-10-27.md",
-      "bytes": 5635,
-      "sha256": "ff77a49c2715a3077bd4f32422cb38d839d0b56a66c1510100894189136515ec",
-      "git_blob": "97c270c8c5efbe1a166d165bfc8c5b8d977eb048"
+      "bytes_normalized": 5635,
+      "sha256": "ff77a49c2715a3077bd4f32422cb38d839d0b56a66c1510100894189136515ec"
     },
     {
       "path": "COMPARTIR.md",
-      "bytes": 4079,
-      "sha256": "eedb16034d6b1ede3a4ed2453eb25ca0350871a9812274c7ed4061f31770c35c",
-      "git_blob": "2e406b5d7883cabdefcd6656d27ac4a1a1b94d07"
+      "bytes_normalized": 4079,
+      "sha256": "eedb16034d6b1ede3a4ed2453eb25ca0350871a9812274c7ed4061f31770c35c"
     },
     {
       "path": "COMPARTIR_CLOUDFLARE.cmd",
-      "bytes": 124,
-      "sha256": "6368cfa6874cbcb51f7ec442390a55a1ea8d14364485ddf5a48b26d02e47d68a",
-      "git_blob": "819e315663e84f4775de753d4c84c0c79bd1eecb"
+      "bytes_normalized": 124,
+      "sha256": "6368cfa6874cbcb51f7ec442390a55a1ea8d14364485ddf5a48b26d02e47d68a"
     },
     {
       "path": "COMPARTIR_NGROK.cmd",
-      "bytes": 79,
-      "sha256": "5b15b339a3430302ba2f28bf13df7b3875975951ffbecf665824e0fd4c1905b2",
-      "git_blob": "7790f659ebf6de72423b60a5d0a7ff2fc9be0997"
+      "bytes_normalized": 79,
+      "sha256": "5b15b339a3430302ba2f28bf13df7b3875975951ffbecf665824e0fd4c1905b2"
     },
     {
       "path": "CONFIGURAR_CLOUDFLARE.py",
-      "bytes": 789,
-      "sha256": "e251bd041612016c42fde3eb4e6aa5c6e88353433b13a5b6ec7b37fd9b993cdc",
-      "git_blob": "65ab009e43ecf251083c60be8dbd0792b76223ca"
+      "bytes_normalized": 800,
+      "sha256": "5e14a3900572c495d0979e080dabbad61df56577be9750170a411d3d0671de5c"
     },
     {
       "path": "CONFIGURAR_NGROK.cmd",
-      "bytes": 91,
-      "sha256": "d27d6b786f4fb0c3b6d4562fd2899ca22b3762a02c26c4cb1c4ec93fb4939f23",
-      "git_blob": "787a88930dfbb182950c92fd8decdfe8a44edf60"
+      "bytes_normalized": 91,
+      "sha256": "d27d6b786f4fb0c3b6d4562fd2899ca22b3762a02c26c4cb1c4ec93fb4939f23"
     },
     {
       "path": "CORRECCIONES_APLICADAS.md",
-      "bytes": 5571,
-      "sha256": "8ace5bbcd9f9d6096d819b692aac2f10476bf7c8d8e32021605de75576f8b74f",
-      "git_blob": "1d28f54ab92ed8ffd80533c81b3cadc6e63e8616"
+      "bytes_normalized": 5571,
+      "sha256": "8ace5bbcd9f9d6096d819b692aac2f10476bf7c8d8e32021605de75576f8b74f"
     },
     {
       "path": "CORRECCIONES_AUDITORIA_2026-10-21.md",
-      "bytes": 8829,
-      "sha256": "3178690783e5bbcdf8469cc8933fde4a49ce85f1a13f6cd918f57c796a6a65f8",
-      "git_blob": "8cae9f7e5adac5e5424d62f7fab097ffc9cd620d"
+      "bytes_normalized": 8829,
+      "sha256": "3178690783e5bbcdf8469cc8933fde4a49ce85f1a13f6cd918f57c796a6a65f8"
     },
     {
       "path": "DETENER.cmd",
-      "bytes": 91,
-      "sha256": "632b3a9a9f4c2928d6b1deb90ccdc15dbc1b813b18673be8197b5fbe5c013133",
-      "git_blob": "1d05e175e17a57b1f48f7aa3b2cee4a4958de3ea"
+      "bytes_normalized": 91,
+      "sha256": "632b3a9a9f4c2928d6b1deb90ccdc15dbc1b813b18673be8197b5fbe5c013133"
     },
     {
       "path": "DETENER.ps1",
-      "bytes": 1170,
-      "sha256": "2ba89df7a4b7dbdc8a70b9fe66a4f4c2bf7221c9cd7d06733286a7dd5be392d0",
-      "git_blob": "ab0744e0863b91765b8af45be099c3446224817a"
+      "bytes_normalized": 1255,
+      "sha256": "b1cc7c100f83c52a8ee5d57633c9fba45ab3e747c740718fa864938553554a22"
     },
     {
       "path": "DETENER_CLOUDFLARE.cmd",
-      "bytes": 102,
-      "sha256": "4faec401923c8e72c1081799213a925b646cef48e3aa95c91d4b6ca202d34a45",
-      "git_blob": "e3267d0e8476cf489630476ef4e3f9416b7f17b6"
+      "bytes_normalized": 102,
+      "sha256": "4faec401923c8e72c1081799213a925b646cef48e3aa95c91d4b6ca202d34a45"
     },
     {
       "path": "DETENER_CLOUDFLARE.ps1",
-      "bytes": 637,
-      "sha256": "e8d0c8d4b229b5cd43a21fbe30023b560e73405e1519f5576f9ccdf6ecd15aa1",
-      "git_blob": "0064f6ba204b22a32c2c5f628a1c2b11f9337603"
+      "bytes_normalized": 720,
+      "sha256": "f06d7cbd9cddbefd4627ed0c5e3ef97d386f78dd6c14f5645bce7abdfa435620"
     },
     {
       "path": "DETENER_NGROK.cmd",
-      "bytes": 97,
-      "sha256": "054d88e3df55ad6b36a955608d6e189c9e359a91a35e8a2fac3e2764dd669670",
-      "git_blob": "64cc09853cc31a42c6e182e152199398da85f2a8"
+      "bytes_normalized": 97,
+      "sha256": "054d88e3df55ad6b36a955608d6e189c9e359a91a35e8a2fac3e2764dd669670"
     },
     {
       "path": "DETENER_NGROK.ps1",
-      "bytes": 1300,
-      "sha256": "563ad9b739c5393a8419da28f538546901a8a8b722ab10572313944907b345d0",
-      "git_blob": "de50f63d15fd149613c4a48c8bb796e15104d533"
+      "bytes_normalized": 1383,
+      "sha256": "85d62e1b3fb91fd322a9eab4160a5d4fa271f0fb811770b3b06a529c56a314f5"
     },
     {
       "path": "ELIMINAR_CAMARAS_2026-10-27.md",
-      "bytes": 3252,
-      "sha256": "f89517bf80cff79c18e417428e62a8c2ec581622f26cbdf895440c611d46188d",
-      "git_blob": "b1c6c2622fee3c43cad1810ce1a0440da0c41fed"
+      "bytes_normalized": 3252,
+      "sha256": "f89517bf80cff79c18e417428e62a8c2ec581622f26cbdf895440c611d46188d"
     },
     {
       "path": "GUIA_CCTV_NAVEGADOR.md",
-      "bytes": 4725,
-      "sha256": "eeb17ca58529d79b48e23ca50d4fd0e963a945af34a66719dd1941746ae5ae66",
-      "git_blob": "4b631acb382a68598f78919adcd66facdcdc0d90"
+      "bytes_normalized": 4725,
+      "sha256": "eeb17ca58529d79b48e23ca50d4fd0e963a945af34a66719dd1941746ae5ae66"
     },
     {
       "path": "GUIA_TELEFONO_Y_CAMARAS.md",
-      "bytes": 5867,
-      "sha256": "fcf58defda8ebddaebef6c251f2ef90d2e10979027f13dafed5de62ef61acb94",
-      "git_blob": "f62fad182015694d8b14f8b00f00c919b9b117c9"
+      "bytes_normalized": 5867,
+      "sha256": "fcf58defda8ebddaebef6c251f2ef90d2e10979027f13dafed5de62ef61acb94"
     },
     {
       "path": "GUIA_TERMINAL_ACCESO.md",
-      "bytes": 2734,
-      "sha256": "67a8a752fcca916b738a10b8de415b2e3bb923ebeded6ff3c7f2952e594bb1bf",
-      "git_blob": "0518caa7073fbd740cec22851d100cfb2d75c5e4"
+      "bytes_normalized": 2734,
+      "sha256": "67a8a752fcca916b738a10b8de415b2e3bb923ebeded6ff3c7f2952e594bb1bf"
     },
     {
       "path": "GUIA_V130.md",
-      "bytes": 14691,
-      "sha256": "7ebc4bb8d0eace5928425950d16c97b2dce28689fc8dc18e51724a9db23bd7e5",
-      "git_blob": "f584d893fcc074ef397e1df906132013a53bafc5"
+      "bytes_normalized": 14691,
+      "sha256": "7ebc4bb8d0eace5928425950d16c97b2dce28689fc8dc18e51724a9db23bd7e5"
     },
     {
       "path": "IMPORTACION_TARJETAS_2026-10-28.md",
-      "bytes": 948,
-      "sha256": "8c45fb2d64f720d13f48abda4b4b37e67455b86df813dee6ea96a43d7bb54cc8",
-      "git_blob": "01d868c9f6bbb772b3bb05392d8bd0348f754ba9"
+      "bytes_normalized": 935,
+      "sha256": "f35a3b0edf7bdeb535909205ab52d8b0bde5056edd95dce4e283e137c0b56333"
     },
     {
       "path": "INICIAR.cmd",
-      "bytes": 359,
-      "sha256": "4bb96a31f555bf7df2a38af42baf0afde85b47e4733bbec8e9aea96245f49aba",
-      "git_blob": "f494287af45f36bf8bceb7b10a72942822cc8884"
+      "bytes_normalized": 359,
+      "sha256": "4cc8ba1ecd40260a1b4aee06c325bef4c904813d41ad5326568890f6ff6c8740"
     },
     {
       "path": "INSTALAR.cmd",
-      "bytes": 362,
-      "sha256": "70a0e145a7f75c06ba5e7875dd5e486702168da30a7b9aa3ea024879088bc9cd",
-      "git_blob": "741eadc173e892af3ce515fe4f31e86845e6b936"
+      "bytes_normalized": 352,
+      "sha256": "a061c2eb336e1b8b65f0de71bb84b2bff2bba2ee5b27c30ed890dbdb6a03fd84"
     },
     {
       "path": "INSTALAR_CLOUDFLARED.ps1",
-      "bytes": 947,
-      "sha256": "858e165bcc318a5af970d9ae4e8588a637dd27a294c3e35c45e20e4261ac8a7d",
-      "git_blob": "3f1fe8c2f1078b77dbd413ac4d81eb2664becf1e"
+      "bytes_normalized": 936,
+      "sha256": "9bbe3ce6cce58a1ab139271d54f7d013b47423ce4281839dee30c28e57065c8f"
     },
     {
       "path": "INTEGRACION_RFID_2026-10-26.md",
-      "bytes": 4721,
-      "sha256": "8380976c6edca8f494537f759bd79207066f8026925b283ba249a4b29e5c6426",
-      "git_blob": "8263e936d7919324278bc1b2abc14805bc7698c6"
+      "bytes_normalized": 4721,
+      "sha256": "8380976c6edca8f494537f759bd79207066f8026925b283ba249a4b29e5c6426"
     },
     {
       "path": "LEEME.md",
-      "bytes": 504,
-      "sha256": "03b30c25ed6f11ff8e86dbd49da04e9d336b30cd8d08c4035d130d23f2ff7fa1",
-      "git_blob": "22f155b6a6d527ad0f43052e8df2b97254ddd62a"
+      "bytes_normalized": 499,
+      "sha256": "94ea657c3ab7e34edf793163f69429eea1e79bed15b79c53e75ba72a0a16e3b3"
     },
     {
       "path": "LICENSES/esbuild.md",
-      "bytes": 1069,
-      "sha256": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681",
-      "git_blob": "2027e8dcf3787f5aac9fcd835e2b80cb75a39211"
+      "bytes_normalized": 1069,
+      "sha256": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681"
     },
     {
       "path": "LICENSES/jsqr-LICENSE.txt",
-      "bytes": 11358,
-      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
-      "git_blob": "8f71f43fee3f78649d238238cbde51e6d7055c82"
+      "bytes_normalized": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
     },
     {
       "path": "LICENSES/lucide.txt",
-      "bytes": 880,
-      "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
-      "git_blob": "325e8ff0aae2dde3134c1ceed780a11d7bd8f544"
+      "bytes_normalized": 880,
+      "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
     },
     {
       "path": "LICENSES/manrope.txt",
-      "bytes": 4383,
-      "sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30",
-      "git_blob": "462280f3e4037df1839fba6cdee11d0980d3f0a9"
+      "bytes_normalized": 4383,
+      "sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30"
     },
     {
       "path": "LICENSES/react-dom.txt",
-      "bytes": 1088,
-      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
+      "bytes_normalized": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
     },
     {
       "path": "LICENSES/react.txt",
-      "bytes": 1088,
-      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
+      "bytes_normalized": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
     },
     {
       "path": "LICENSES/scheduler.txt",
-      "bytes": 1088,
-      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-      "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
+      "bytes_normalized": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
     },
     {
       "path": "PLANTILLA_FIRMA_TABLET.md",
-      "bytes": 2248,
-      "sha256": "da855be801bff88997201ce5349adfb6534b1c35ef5fc7f7f376b09088878886",
-      "git_blob": "2a5adc3750efe4208f158cd02b6f7c7940ec9295"
+      "bytes_normalized": 2228,
+      "sha256": "71fc5d68a9cc06450c65917962c4751e5c8acc24e143ef165804367f0fbc8604"
     },
     {
       "path": "POLITICAS_V11_CAMBIOS.md",
-      "bytes": 3375,
-      "sha256": "ee6e51d448b3b86f8dfa47770a5ff8eb1b0698e868818c6a7c388d64ee8f3e20",
-      "git_blob": "ddfd6a60681096adfc7c5259e9c6a9b8b92e25c4"
+      "bytes_normalized": 3375,
+      "sha256": "ee6e51d448b3b86f8dfa47770a5ff8eb1b0698e868818c6a7c388d64ee8f3e20"
     },
     {
       "path": "POLITICAS_v1.1.md",
-      "bytes": 13618,
-      "sha256": "233de61e6cb98c33bf16dd955154cac2c2179d018098cde79e50424a4303bb9e",
-      "git_blob": "68c104319961be0b8d39e26f280c612b9d119f17"
+      "bytes_normalized": 13543,
+      "sha256": "a2ecad25387496bb560614f81a2114ef233bf005752d2833d85db517bdea63d0"
     },
     {
       "path": "PRIMER_INGRESO_GRUPAL.md",
-      "bytes": 1884,
-      "sha256": "7124f31390abff6074482a4913b08efe259a429287d46cb5edbe79c3aae700d4",
-      "git_blob": "77bcfc7356f08a06f68616eb1039790d417b80f7"
+      "bytes_normalized": 1871,
+      "sha256": "962070200123aba4feb2c5172b3850c7b67d34da925d9bf833f2f05a7e42b02f"
     },
     {
       "path": "PRIMER_INGRESO_INDIVIDUAL.md",
-      "bytes": 3096,
-      "sha256": "bc3a9e2a97639488cfa719d077d9c0ad940f670010afa38e925a093b278a07d2",
-      "git_blob": "1800bce6ef4b3ec30cb8c8affb84b1b38c5f5317"
+      "bytes_normalized": 3043,
+      "sha256": "7c1d89d35d0deca5a00e8bb7deff63161db010b206c0f02d7c306c7bcbb2f165"
     },
     {
       "path": "PRUEBA_CUATRO_PERSONAS.md",
-      "bytes": 1483,
-      "sha256": "370747723257f347d76532e3eaf6079244d8efc05176d866082b18d0db05ad89",
-      "git_blob": "d739ff2ddd0573e8150ed89e8eb4c6783f4dbd7c"
+      "bytes_normalized": 1468,
+      "sha256": "d51dc804ae827a5876843455208469b6cb0a594f7c95453d3377d91907224146"
     },
     {
       "path": "README.md",
-      "bytes": 7359,
-      "sha256": "e232857f8d2d12382965cc05f0d43aae4331e7a47612f3d82ae8806684de9bc3",
-      "git_blob": "a018eac71817541f6b71c679b906e7cccf2abc5e"
+      "bytes_normalized": 7519,
+      "sha256": "c554cac988588790b9bd6ff07dc039424e9fa23c7959405a5f934711f8d655b3"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
-      "bytes": 13240,
-      "sha256": "4d84d347445cea8940a9198464ed79a58b503f9612237c8350c6dde94a32ee51",
-      "git_blob": "3d6f8f53db39cbd2be532986909f0116b7268d6f"
+      "bytes_normalized": 13240,
+      "sha256": "4d84d347445cea8940a9198464ed79a58b503f9612237c8350c6dde94a32ee51"
     },
     {
       "path": "REVISION_RBAC_SCIM_RFID.md",
-      "bytes": 5723,
-      "sha256": "5bccf4aa9be9df15e7e2030b9c7515621df29f1b2a9cba57df2975a3c9d99329",
-      "git_blob": "cc2c8655714b99e8b5a41eec1bd1e5770b00dffc"
+      "bytes_normalized": 5723,
+      "sha256": "5bccf4aa9be9df15e7e2030b9c7515621df29f1b2a9cba57df2975a3c9d99329"
     },
     {
       "path": "SECURITY.md",
-      "bytes": 1077,
-      "sha256": "2b63febaccf4c471458b7cd22e71efa051fb2651b442e6d64ce1a11519764f64",
-      "git_blob": "ee0310a6023f97b6d5b838dc20230d18fd31daf7"
+      "bytes_normalized": 1077,
+      "sha256": "2b63febaccf4c471458b7cd22e71efa051fb2651b442e6d64ce1a11519764f64"
     },
     {
       "path": "TERMINAL_VISUAL_2026-10-27.md",
-      "bytes": 3831,
-      "sha256": "993b591459b534bf974cfd23136d658a7f96463f2e3927eebb98d8bb5e61a543",
-      "git_blob": "ad5b5c56e018eb6260d733bb8e827a864f4cb83d"
+      "bytes_normalized": 3831,
+      "sha256": "993b591459b534bf974cfd23136d658a7f96463f2e3927eebb98d8bb5e61a543"
     },
     {
       "path": "VALIDACION_REPOSITORIO.md",
-      "bytes": 2238,
-      "sha256": "6fa991499aca2dc80cef55a76d8610d5612a347cdf9fcd644a3a1386022fdfb9",
-      "git_blob": "97b9345a5d87e13a962255cfdbee9c6fd82ada09"
+      "bytes_normalized": 546,
+      "sha256": "64be459554c83274bd81fe068a8dc64d5c7f00d73f032956a7772a773f270c6e"
     },
     {
       "path": "access_terminal.py",
-      "bytes": 2326,
-      "sha256": "669dba5529e4987e564077ac83ba5265b22c726bb3ad2e48d7e4b476d2ab1115",
-      "git_blob": "0f65e84a7bd21f03a5d2008e41716152614e5ed6"
+      "bytes_normalized": 2326,
+      "sha256": "669dba5529e4987e564077ac83ba5265b22c726bb3ad2e48d7e4b476d2ab1115"
+    },
+    {
+      "path": "app_version.py",
+      "bytes_normalized": 25,
+      "sha256": "74d590ce7cc183d3c2f3b02ecb7114266293e16b19371d356d7018c5e41fb545"
     },
     {
       "path": "audit_delivery.py",
-      "bytes": 3182,
-      "sha256": "0d78ad7f7f9b6d43d37b732ba1b45728a1328494dc4f55fe743d6eed07ebda40",
-      "git_blob": "e1ad58a0bd69d28b26042798b0a4277794e3d435"
+      "bytes_normalized": 3182,
+      "sha256": "0d78ad7f7f9b6d43d37b732ba1b45728a1328494dc4f55fe743d6eed07ebda40"
     },
     {
       "path": "bootstrap_admin.py",
-      "bytes": 1981,
-      "sha256": "e0596e0149111dcada4af2a367ad1103cf93a54921d11ee25a907986046f577f",
-      "git_blob": "69da578e3395fe91b8126a215ddbecf2f9b19e1e"
+      "bytes_normalized": 1981,
+      "sha256": "e0596e0149111dcada4af2a367ad1103cf93a54921d11ee25a907986046f577f"
     },
     {
       "path": "browser_cameras.py",
-      "bytes": 11921,
-      "sha256": "030a97624f5e2854363f52f529489ec9314759ab90027727338cf9fd54a1eb0e",
-      "git_blob": "c525079f49d07edd0ca280921b62e3736ddc9313"
+      "bytes_normalized": 11939,
+      "sha256": "01041945fad3891c203093f44f0794ffa6de518de4d42c35c8ba80faca8bb37f"
     },
     {
       "path": "build.mjs",
-      "bytes": 495,
-      "sha256": "d84ecade6ffd038c60affb5f0548613a6b0ffdfc13fe36f3bc9127a45c24fdb7",
-      "git_blob": "457286024975c726173e0d776aae6641995d0bfe"
+      "bytes_normalized": 726,
+      "sha256": "ee3fd6e03dcd2bbc6f85da5646b15948b8add27f524472e92e44715cf2b467cf"
     },
     {
       "path": "camera_hub.py",
-      "bytes": 7506,
-      "sha256": "33d007f38d1c9c8185cfb62ce67d9f9134341dc296905777c33eac572b7dc889",
-      "git_blob": "2209a27402e74afd4bdb750bb9e8d2cc7bf2f12b"
+      "bytes_normalized": 7680,
+      "sha256": "65dbf9798bc0e6c4f64b986250862b4e5f1c098f7a695dcd598f5e9a033169de"
     },
     {
       "path": "db_manager.py",
-      "bytes": 21741,
-      "sha256": "ae16b33d23f15af130a268b75a0a5056c4a2472208cb372c3af2941e547f7f1e",
-      "git_blob": "4de29e7f4750a5e971f3379d1f985183d9b2ec64"
+      "bytes_normalized": 21416,
+      "sha256": "b4b648eee6a18c16256b7db0cea46d7a305190d43b350a651e538f1c25ba5181"
+    },
+    {
+      "path": "docs/GALERIA_NEXT.md",
+      "bytes_normalized": 1408,
+      "sha256": "b9b30b7111c46b7a2ccf2d439033614913b3f4fb33725c980441feab58dba605"
+    },
+    {
+      "path": "docs/GITHUB_HANDOFF.md",
+      "bytes_normalized": 3725,
+      "sha256": "11966733087e99745dd480887275aa7ca299ee10075f415537ff2390ad134507"
+    },
+    {
+      "path": "docs/ITERATION_02_LOCAL.md",
+      "bytes_normalized": 5437,
+      "sha256": "94f2c5e3903f1c29606abf553a80515d0a5168f60a6bace570f173bb42ac849f"
+    },
+    {
+      "path": "docs/PRIVATE_STORAGE.md",
+      "bytes_normalized": 3411,
+      "sha256": "24db624fd42b64cf972d083555bdc684da2ac40c35e7991578e4d5cdbf058e54"
+    },
+    {
+      "path": "docs/PROVENANCE.md",
+      "bytes_normalized": 1430,
+      "sha256": "9ee8402f12165f145fbb9a10317e06b2c87357b24f9cc4cf2da360e7ada9851a"
+    },
+    {
+      "path": "docs/SECURITY_REVIEW_20261104.md",
+      "bytes_normalized": 8516,
+      "sha256": "16d79ad3af4929c529037390775fe8675b22e3c29d210e79b18735644b3a878f"
+    },
+    {
+      "path": "docs/VALIDACION_20261104.md",
+      "bytes_normalized": 7277,
+      "sha256": "6629011e0ca5717459d5bc2402b32e3fc11295677eff7432b905e86b8bab4714"
+    },
+    {
+      "path": "docs/action-pins.json",
+      "bytes_normalized": 722,
+      "sha256": "732d3a991ac6163d0501a46189f82791507a69ad11fffc5cbfb67f23593a2bd1"
+    },
+    {
+      "path": "docs/images/01-inicio.png",
+      "bytes_normalized": 125014,
+      "sha256": "7e173ab0fb59cc3852bd3510abfc278419f89a10da7dcf772f4ea01b5a8fc044"
+    },
+    {
+      "path": "docs/images/02-operaciones.png",
+      "bytes_normalized": 190123,
+      "sha256": "a0353a30fa7aa44d9a114d66576ef12328bd6aa3fd6c19beee107058720fe354"
+    },
+    {
+      "path": "docs/images/03-qr-movil.png",
+      "bytes_normalized": 126838,
+      "sha256": "5e853e99827f5d57563fb5e3be458994a892ef39520d1d32e6afbfb62d361e88"
+    },
+    {
+      "path": "docs/images/04-vigilancia.png",
+      "bytes_normalized": 165957,
+      "sha256": "978ab7350edab9c8c2a378a15657d3d2217f82dc17ad4a20374037cd1890bd14"
+    },
+    {
+      "path": "docs/validation/browser-chrome.json",
+      "bytes_normalized": 1576,
+      "sha256": "f2d477cb48e006eac6c65dc49e5db8031acb3e82ee4541f5d6329ac60c667331"
+    },
+    {
+      "path": "docs/validation/browser-chromium.json",
+      "bytes_normalized": 1576,
+      "sha256": "f2d477cb48e006eac6c65dc49e5db8031acb3e82ee4541f5d6329ac60c667331"
+    },
+    {
+      "path": "docs/validation/browser-versions.json",
+      "bytes_normalized": 61,
+      "sha256": "23867695eb5b484755c89a8b036f19eba98f3e8ca2eaca14ff25a3567505479a"
+    },
+    {
+      "path": "docs/validation/camera-synthetic-local.json",
+      "bytes_normalized": 328,
+      "sha256": "93dbd4bc6331db6f8e0840db7f66ce6b1e24347c00008a8a807995af6120828f"
+    },
+    {
+      "path": "docs/validation/crypto-image-compatibility.json",
+      "bytes_normalized": 521,
+      "sha256": "d470ad6ce0ecdf8125f4619b3e0862ee8427e4b87bf17c08880f94321f9e6b53"
+    },
+    {
+      "path": "docs/validation/npm-audit-all.json",
+      "bytes_normalized": 361,
+      "sha256": "319f10d08046190f5ccfa5ebe33e2705bcd657a493f07cd2aadf9cddbf926a30"
+    },
+    {
+      "path": "docs/validation/pip-audit-status.json",
+      "bytes_normalized": 346,
+      "sha256": "58047ef89a8e08ae559e9a165680b139fc29e78f6bbd5b52739939baac242ca8"
+    },
+    {
+      "path": "docs/validation/pip-audit.json",
+      "bytes_normalized": 698,
+      "sha256": "bac0cfa46834728a84ef4172063ce704ca705bcb273e136f5e7cdb7ca1251520"
+    },
+    {
+      "path": "docs/validation/powershell-syntax.json",
+      "bytes_normalized": 47,
+      "sha256": "8b8edd52ad1eb44a9e60734e30e1fd8317c3e01c61033cc6dfd4623db1068b61"
+    },
+    {
+      "path": "docs/validation/regression.json",
+      "bytes_normalized": 3288,
+      "sha256": "4962dd526976ad668ba844420c9f6fefc127a50fb6e635a5dcf050bfd16756a1"
+    },
+    {
+      "path": "docs/validation/secret-scan-summary.json",
+      "bytes_normalized": 287,
+      "sha256": "1fb848c4512381aee869bb41979f02e128475e7d30f63b6ed1c37f515b94ac28"
+    },
+    {
+      "path": "docs/validation/verified-wheels.json",
+      "bytes_normalized": 1099,
+      "sha256": "afd39f98267344a45aac67e8ee2c99f5d64344156649eaee3e4e07267bf8c628"
+    },
+    {
+      "path": "docs/validation/workflow-lint.json",
+      "bytes_normalized": 287,
+      "sha256": "629ff6af43d102d07cd61805157f252fa86c981d5f710d71c7c85b6878b2b486"
     },
     {
       "path": "features.py",
-      "bytes": 38863,
-      "sha256": "d7b18b785e893a25cc886f81fc346614e933b4eff5529f45e200220b92f0ec7f",
-      "git_blob": "68e0b1688b5bf42232dee8d4fd3835c2c2aefbe6"
+      "bytes_normalized": 39345,
+      "sha256": "c2deaf0e2c585668ec3db5576d85e841274aa0e90f1bb8b0208b6585280d83b0"
     },
     {
       "path": "four_person_access.py",
-      "bytes": 2626,
-      "sha256": "8a6db0f5030e29cf42104a77268aa72a430d1bbad729df24f221dc5022b5f2eb",
-      "git_blob": "e74b0fd58cff379daa595bee7ff1ff2ee4d85192"
+      "bytes_normalized": 2660,
+      "sha256": "e4e47ebad4be7cfde97d17b7e6e7f660bcb5e15950df7ce019a73d2d13e75db6"
     },
     {
       "path": "frontend/access-feedback.jsx",
-      "bytes": 3200,
-      "sha256": "d0370ca479867c8d84c0150729ae2af81165edaecb6cd36dbd71301b0e4052ca",
-      "git_blob": "9c90da3e99aebea9b38f0686c686b2454d03bc7b"
+      "bytes_normalized": 3157,
+      "sha256": "de1c3b9dbe1edfadc970c8e1acb8121fa5a1d4539aeb51d43fb402c65c615ae0"
     },
     {
       "path": "frontend/app.jsx",
-      "bytes": 48570,
-      "sha256": "f78f9272dc75bc8ce673f61bb1dde86faa19a848225af3f39520eed65d14c8f9",
-      "git_blob": "7577b3da082d3a4c40bc419c0c0a6596da87359d"
+      "bytes_normalized": 49769,
+      "sha256": "35e954ff82d745e3bb126a62e358c1618ccbdfc39ea087798a47a23056b1ab42"
     },
     {
       "path": "frontend/browser-cameras.jsx",
-      "bytes": 19159,
-      "sha256": "66e4cc009161167e5f05d03fc443fdc3b2045e21103548f3fb899c137b597620",
-      "git_blob": "e2640a8b3687d3f73e4663a7eb02afdb74865fea"
+      "bytes_normalized": 19159,
+      "sha256": "66e4cc009161167e5f05d03fc443fdc3b2045e21103548f3fb899c137b597620"
     },
     {
       "path": "frontend/camera-management.css",
-      "bytes": 4770,
-      "sha256": "c2cef6001edea235e0bbffb5e1114bc2aab5c0d794ab65b012f22ee23f4eb1e4",
-      "git_blob": "e455c00659efe13010519a53610d118898ddb335"
+      "bytes_normalized": 4770,
+      "sha256": "c2cef6001edea235e0bbffb5e1114bc2aab5c0d794ab65b012f22ee23f4eb1e4"
     },
     {
       "path": "frontend/camera-management.jsx",
-      "bytes": 6743,
-      "sha256": "4031c457eee7e0a4e4dc25723509d8d54e488eacb70e1ecce2d539e2efa5c1d3",
-      "git_blob": "a9c8b7e1a52a9b9e6654734e2283eccdb49d8f29"
+      "bytes_normalized": 6709,
+      "sha256": "8fcbbcb4c52fd786f468042fbb27e4c63bc49cecfb378845bf8388dbcc301670"
     },
     {
       "path": "frontend/camera-url.js",
-      "bytes": 764,
-      "sha256": "c5eeed9400885691da315d6b93e3c480faae78b65eed95d3f77f4dd422a56cc0",
-      "git_blob": "58e6bbcae378639cf74030bb837fd7aeb9e1a64b"
+      "bytes_normalized": 764,
+      "sha256": "c5eeed9400885691da315d6b93e3c480faae78b65eed95d3f77f4dd422a56cc0"
     },
     {
       "path": "frontend/features.jsx",
-      "bytes": 52258,
-      "sha256": "406229c79a9cf35f02f4a756447251ffb687a8f7f6ceb863c5aba6575e9bc240",
-      "git_blob": "f89245b4ff0c7e1f6f647fe7e536cbe45c56d40c"
+      "bytes_normalized": 51884,
+      "sha256": "c9ee8f7ef2833c75e2846ede56feee13dc7db05cc9c288de287352e75e0ef189"
     },
     {
       "path": "frontend/index.html",
-      "bytes": 460,
-      "sha256": "71d6872d08488faadf62f06ec43d0e57a09255fbff0d8ea3468143899f0fef5c",
-      "git_blob": "315879ca608af93b52df0a67ea75d072ec44c74e"
+      "bytes_normalized": 507,
+      "sha256": "2bb44b89e1b6dcdae86584d8997718355c8dba2cef3ebfadaf6b846c1d15225a"
+    },
+    {
+      "path": "frontend/motion-control.jsx",
+      "bytes_normalized": 1658,
+      "sha256": "760830a32b7e928b1e7698d662eef609feafa2b09cff468bcf264004417462ef"
+    },
+    {
+      "path": "frontend/motion-init.js",
+      "bytes_normalized": 436,
+      "sha256": "62ede531992c165244909f8e0cb86eeb65ff26e8093a52d5ceadc9d5de561c21"
     },
     {
       "path": "frontend/phone-scanner.jsx",
-      "bytes": 10350,
-      "sha256": "91292e9593e32a1325ebf2a260545b62beecc82ac5cccf80160ca003340b7bb9",
-      "git_blob": "696023c04059b6b4406fed620bca6417ec3c0ce0"
+      "bytes_normalized": 10308,
+      "sha256": "c6948d10c1c04f1a31cbcc0fa1e87321a243fffa9a641141a13273197c247bca"
+    },
+    {
+      "path": "frontend/polish.css",
+      "bytes_normalized": 8197,
+      "sha256": "1a18317160ef1ffbff7efe238de089012172c841d60169aa177e6f629fc2cbd1"
+    },
+    {
+      "path": "frontend/qr-readiness.jsx",
+      "bytes_normalized": 1118,
+      "sha256": "6862ad8cc1322b7c8fe5a45dbe236d4df9ca7b8d43d553ce07bba6a9d0a6455c"
     },
     {
       "path": "frontend/security-workflows.jsx",
-      "bytes": 7708,
-      "sha256": "bdfe83fd98548c8803d12ba3ced9dc742308c0ba4ca6fab112030d3321852f71",
-      "git_blob": "508e0746147792ae72e219d37774c8679ada1bd0"
+      "bytes_normalized": 7708,
+      "sha256": "bdfe83fd98548c8803d12ba3ced9dc742308c0ba4ca6fab112030d3321852f71"
     },
     {
       "path": "frontend/styles.css",
-      "bytes": 72146,
-      "sha256": "2509803ab44ad53f71663656bd5dce09f656dda31924b0df06befda01b79db1d",
-      "git_blob": "7700f1e51b7d93444c027a62429888591afed2ed"
+      "bytes_normalized": 71885,
+      "sha256": "a8127f96f5fd3cd96e5edd06d800c2fd8ae2f86b7fd574580b965289e1860a7d"
     },
     {
       "path": "frontend/surveillance.css",
-      "bytes": 6343,
-      "sha256": "ee9a6d29fe1223002d2196290faef609a9b468a536e92e0ff3623492636617a2",
-      "git_blob": "f340ce52bd9bd12f90fba734cdf420f43e8add99"
+      "bytes_normalized": 6337,
+      "sha256": "9d52998fb5e582adb238c849254fd70a3a8f221364736fd82ccc32a5117d0122"
     },
     {
       "path": "frontend/surveillance.jsx",
-      "bytes": 8749,
-      "sha256": "1e26e9fe788072f61cf3075b6b9d5d43a9ae3501cbc44fb5f7e9362989e7eead",
-      "git_blob": "f3567608f73109c1cf7db9ffc4db103d1670c2d0"
+      "bytes_normalized": 8717,
+      "sha256": "cf5ad943d70edfd7ad8c52f2ecd8135fe9bb855f1b27aed5d32f5822747ff237"
     },
     {
       "path": "frontend/terminal-controls.jsx",
-      "bytes": 5294,
-      "sha256": "7cd55905f7b55a16cbbd4709101883ab378f591264ad7cb749100aec143ccd6c",
-      "git_blob": "9e4e3c18dedf4c47cb55e5ec806464625ca3415f"
+      "bytes_normalized": 5245,
+      "sha256": "a15b23e35345750d7e7e0f045b07fdc8a591285df7dd2cf187babdbe785ae8a3"
     },
     {
       "path": "frontend/terminal-design.css",
-      "bytes": 24035,
-      "sha256": "f1042705ab22326060406840830b596b7a4ad226dbcee4423d3e6d2233ae3bb1",
-      "git_blob": "0175feab5aaf491f06d23136d5d37deb81796440"
+      "bytes_normalized": 24035,
+      "sha256": "f1042705ab22326060406840830b596b7a4ad226dbcee4423d3e6d2233ae3bb1"
     },
     {
       "path": "frontend/terminal-design.jsx",
-      "bytes": 4753,
-      "sha256": "523ac3f06a538887c28642e7192a0723efc0347440bd8310a0fd72220712111c",
-      "git_blob": "7e57aa4b79623bc00d771bac435bee87f26b41c4"
+      "bytes_normalized": 4732,
+      "sha256": "d71c53d77eb14a8f19e76eaa6b95f2e608dd9d1325e33a84f5b319e538affff3"
     },
     {
       "path": "frontend/terminal-sound.jsx",
-      "bytes": 3376,
-      "sha256": "47036b4383412185a5d96f9bed709473a4ca1064201a3107dce594294b264c6b",
-      "git_blob": "49ca1f484d10225926ce2ea3b5f09d160546b033"
+      "bytes_normalized": 3376,
+      "sha256": "47036b4383412185a5d96f9bed709473a4ca1064201a3107dce594294b264c6b"
     },
     {
       "path": "hardening.py",
-      "bytes": 5463,
-      "sha256": "d4ca95d5910361af05011e563f848d9698304b0cc51486d38986a2e993622e8b",
-      "git_blob": "5f46cf708c2e4b9e5ff635b7a9832ee59ce6d392"
+      "bytes_normalized": 5463,
+      "sha256": "d4ca95d5910361af05011e563f848d9698304b0cc51486d38986a2e993622e8b"
     },
     {
       "path": "import_rfid_reference.py",
-      "bytes": 3850,
-      "sha256": "85455890fb302be12ef2bfcb1603102e9ea680d140f2339528c25c44594fbda6",
-      "git_blob": "b290ddf5b1b98c3bd48c7a48361a83799a5a526f"
+      "bytes_normalized": 3850,
+      "sha256": "6be35908e198078511957710608cad2f476e817dda8eb81767bb34f0d8e4d7ad"
     },
     {
       "path": "initial_passwords.py",
-      "bytes": 6215,
-      "sha256": "13f0b5f6f701a3f7328457047d34d22de37e60f43d35c963e0e146f017e50ae6",
-      "git_blob": "da3ccea4679cdee750390b8162a912068643eb71"
+      "bytes_normalized": 6124,
+      "sha256": "04566a08a7ac6e414316f18342d37289f58f09919cc253fe72995f67224ae668"
     },
     {
       "path": "maintenance.py",
-      "bytes": 6420,
-      "sha256": "95dd36ee4a5bc5203d3075530a7a1a1373787db5b1deb498bf1edb8e0698623e",
-      "git_blob": "25c5bf543e3fee255d2772e96b8dd33e61cf33db"
+      "bytes_normalized": 7824,
+      "sha256": "aadbf5478c32ffe53036d1aa4f0cf161e58197580059c9b78915a23e8b11be3f"
     },
     {
       "path": "package-lock.json",
-      "bytes": 16823,
-      "sha256": "0dcb32c1b104a56402df22c172cf327c0f54a26469e5aea32d3146d03cf6c740",
-      "git_blob": "d01baf8a7ebcab075958dca3c4d5e776722257d4"
+      "bytes_normalized": 18202,
+      "sha256": "a1a59465f691814cef7a34e79b65e73cc0694087f43230d4de0eee0217c71de4"
     },
     {
       "path": "package.json",
-      "bytes": 381,
-      "sha256": "93c99a21b15bcdea968a66dae3bb1adc98f5e88dc68c017e612ec9b28f5da5e0",
-      "git_blob": "86be39961dd2fb09371c634bff76a4cf030395fe"
+      "bytes_normalized": 447,
+      "sha256": "6bfba27fc4d16d35471b5c9341f4e4dd5deead90a6c3e95b0eed445e7519a2cd"
     },
     {
       "path": "pass_exchange.py",
-      "bytes": 3739,
-      "sha256": "885bd7d73cd0f9ae0b578014ebad74c9a9a94eaec280949452c321fd41be7bd6",
-      "git_blob": "be289f473cde9df8d1f8db649e164342a035ccc4"
+      "bytes_normalized": 3739,
+      "sha256": "885bd7d73cd0f9ae0b578014ebad74c9a9a94eaec280949452c321fd41be7bd6"
     },
     {
       "path": "phone_links.py",
-      "bytes": 6625,
-      "sha256": "e72ad10d13b2b2d7561f5c99b819ff888ba3b21f4b9ea0d3e4c3a66139e6b08d",
-      "git_blob": "f61a44db90ec872b1648b2c447593e9140c65e7e"
+      "bytes_normalized": 6625,
+      "sha256": "e72ad10d13b2b2d7561f5c99b819ff888ba3b21f4b9ea0d3e4c3a66139e6b08d"
     },
     {
       "path": "requirements.lock.txt",
-      "bytes": 120,
-      "sha256": "e3886669608baa6133abf2d75c1e885a1d8d81e6dddbfb8b2002eae75805d708",
-      "git_blob": "780ea461249230316f48b6b3bb63a7928cf53154"
+      "bytes_normalized": 902,
+      "sha256": "d18a578c5a1bb8b051f3bcb3c2ea3c227bd3f5c6c74bd0d731f7f4f9ef5d42d1"
     },
     {
       "path": "requirements.txt",
-      "bytes": 80,
-      "sha256": "7cb09becaddd4e9a8201589452f6221cb63b0f8a568743245b31f61810c42120",
-      "git_blob": "0b8ac229ad7d0f2f444dd68f98a56076be1192d7"
+      "bytes_normalized": 84,
+      "sha256": "e6b08a1d8beb16a9c4260b77e172461d15974bed43f6db669e89a622ee24a0af"
     },
     {
       "path": "rfid_cards.py",
-      "bytes": 927,
-      "sha256": "13bbaffe9c05f332af18460f9b4432fb7fbc57a02dee46bc660dbee8e595f392",
-      "git_blob": "f68d78e510f94aee267f5a6ea04bf26fa5339a9b"
+      "bytes_normalized": 927,
+      "sha256": "13bbaffe9c05f332af18460f9b4432fb7fbc57a02dee46bc660dbee8e595f392"
+    },
+    {
+      "path": "runtime_paths.ps1",
+      "bytes_normalized": 618,
+      "sha256": "467e9dbdf68798380742b567c46066d9245712821257d1f3803c84cc0b543596"
+    },
+    {
+      "path": "runtime_paths.py",
+      "bytes_normalized": 3060,
+      "sha256": "c81bf53a5157610fce1f704e79ce5ff135d982ed5f30f61fad817b77af86d861"
     },
     {
       "path": "security.py",
-      "bytes": 28349,
-      "sha256": "7561074da0fb2f38787d81b76d07c3a3778b10017bd5d40cef8827807c0f7195",
-      "git_blob": "b402d8835865ae0d1e4217d543f7be9a935def7a"
+      "bytes_normalized": 29038,
+      "sha256": "444110f723aeb970de25ecb0806f503cee27d1c4df24c59e9762afcec4e3955e"
     },
     {
       "path": "server.py",
-      "bytes": 36677,
-      "sha256": "78e8de10a4c2d0ff1e13213a4ee0db40e297f08886c2b826b15bd0b1cac15c34",
-      "git_blob": "0964d1168af3c727f87ef95b2aac46f8e1285613"
+      "bytes_normalized": 36576,
+      "sha256": "7a3449c7f3c3ed0a261e43a370a88afd0dd59ba1d456f3f666303a94308481b3"
     },
     {
       "path": "share_cloudflare.py",
-      "bytes": 8966,
-      "sha256": "23488979a1c6b33b620d09105c81ad7c4e4ffd4a9f132b84476e43775e1006df",
-      "git_blob": "f8fff70fe76dc5390b0460ed09b7c2f9cbe2159f"
+      "bytes_normalized": 8853,
+      "sha256": "20b3e7a06b471b74b622427c95e22bb292167aa8f03d014171e0bc314b6b4e54"
     },
     {
       "path": "share_ngrok.py",
-      "bytes": 6986,
-      "sha256": "de658fefb4322d9c0307c9964e0c4de610403665a2b3c33268786b7673339bee",
-      "git_blob": "d71e53972b8fae0198791f3b31a1edffb45eea3b"
+      "bytes_normalized": 6865,
+      "sha256": "16595202563991dcf590ce63ccece9c9be1037e40b5ea03bce445269c5823636"
     },
     {
       "path": "supervise_cloudflare.py",
-      "bytes": 3253,
-      "sha256": "24516632da379c2d9c88ec78ee3aaa4cc3ebb72164805734cd3011c7bcd9e82d",
-      "git_blob": "a0b5b6b8991fdfe72e1c212843a5b2c134849692"
+      "bytes_normalized": 3321,
+      "sha256": "b8e8d55086644aba5cbb164ead0887b167d6d31a6666ece9aa7509c66ef27300"
     },
     {
       "path": "terms_policy.py",
-      "bytes": 13807,
-      "sha256": "01ddd8ea95fe86905831daebce5166955fbf4b749e1ce6e28e3279db06f78788",
-      "git_blob": "53a8e20176b8bfc22c112015dc4103c8708965e5"
+      "bytes_normalized": 13807,
+      "sha256": "01ddd8ea95fe86905831daebce5166955fbf4b749e1ce6e28e3279db06f78788"
     },
     {
       "path": "tests/browser.cjs",
-      "bytes": 10090,
-      "sha256": "fe1c05fc5d4898aa5f4fe7e13136c41c4431653037cb1b7280ae945e79bc3219",
-      "git_blob": "3718dc4c82ec837d9f0d3dc80ee4360f4bd71a9d"
+      "bytes_normalized": 10090,
+      "sha256": "fe1c05fc5d4898aa5f4fe7e13136c41c4431653037cb1b7280ae945e79bc3219"
     },
     {
       "path": "tests/browser_access_feedback.cjs",
-      "bytes": 3340,
-      "sha256": "77271e38afa5147a5bf97852aa9f5fecf9bd3d7bb645d494d8c4eb27474ac3a0",
-      "git_blob": "78b204846b191d8c67a3c7e359b98f08b645072b"
+      "bytes_normalized": 3340,
+      "sha256": "77271e38afa5147a5bf97852aa9f5fecf9bd3d7bb645d494d8c4eb27474ac3a0"
     },
     {
       "path": "tests/browser_camera_admin.cjs",
-      "bytes": 4775,
-      "sha256": "2998d93926c839f1f7e07628bc7801c17227bac84c4e06b6fa9e50e3b767cf17",
-      "git_blob": "de2e079a763bff4ddffe743628ae21a6a0c076e2"
+      "bytes_normalized": 4775,
+      "sha256": "2998d93926c839f1f7e07628bc7801c17227bac84c4e06b6fa9e50e3b767cf17"
     },
     {
       "path": "tests/browser_camera_removal.cjs",
-      "bytes": 8942,
-      "sha256": "681cf1bfde19fa4acbb7bea49aa67442058d26df64295d21ce16104dd6eb6e27",
-      "git_blob": "7a5f10692f49652743bb2153a172b8888d10736b"
+      "bytes_normalized": 8942,
+      "sha256": "681cf1bfde19fa4acbb7bea49aa67442058d26df64295d21ce16104dd6eb6e27"
     },
     {
       "path": "tests/browser_cameras.cjs",
-      "bytes": 5909,
-      "sha256": "4a4573958572bd707cf5aceeeb3af4ff240f12d5d050f5dc65c6e6c72039a9dc",
-      "git_blob": "19b75cbd4a2054e38d91262cff9e79be47f37621"
+      "bytes_normalized": 7467,
+      "sha256": "8c29ec23757f482a700009d140223cc32cdbf0d61a61f7326480df2a7de41c0f"
     },
     {
       "path": "tests/browser_features.cjs",
-      "bytes": 8772,
-      "sha256": "e8912c39c50e407bc583d676ef02d915dd092ba4e7f9069c922e39adabdd88f3",
-      "git_blob": "836117c15b2a3f8d1eb1f54f441364464bbd8b4d"
+      "bytes_normalized": 8772,
+      "sha256": "e8912c39c50e407bc583d676ef02d915dd092ba4e7f9069c922e39adabdd88f3"
     },
     {
       "path": "tests/browser_initial_password.cjs",
-      "bytes": 3796,
-      "sha256": "8587dbeea840e40e446c4210affd488bcd1ec14a7b0af442a3c890569e01303e",
-      "git_blob": "fc4f09b98d2c799398072d6109e758fccb095b51"
+      "bytes_normalized": 3796,
+      "sha256": "8587dbeea840e40e446c4210affd488bcd1ec14a7b0af442a3c890569e01303e"
+    },
+    {
+      "path": "tests/browser_next.cjs",
+      "bytes_normalized": 8142,
+      "sha256": "3d3199d10d231834f7df562bffed4a6eafeb47560dd9a2a7e008a6d1847d660f"
+    },
+    {
+      "path": "tests/browser_next.py",
+      "bytes_normalized": 1901,
+      "sha256": "1a7b970d2e532e7ccc2532425171b8f975e0adefbaeac8b13903205c8b78f488"
     },
     {
       "path": "tests/browser_phone_scanner.cjs",
-      "bytes": 3253,
-      "sha256": "289d5b20773d8b8ae7f6a7149a90441962c6f715678d1d262e3d8e11f16e482a",
-      "git_blob": "79d104c8cd32a815e33a4693f5fdd20b00a7efd4"
+      "bytes_normalized": 3253,
+      "sha256": "289d5b20773d8b8ae7f6a7149a90441962c6f715678d1d262e3d8e11f16e482a"
     },
     {
       "path": "tests/browser_surveillance.cjs",
-      "bytes": 3881,
-      "sha256": "80030f65fad8d15a603b88491c0140d968a678bf752849198af9f94eac0b1802",
-      "git_blob": "f5cfd2b7f5c147e028393e3a015600ce8d8626aa"
+      "bytes_normalized": 3979,
+      "sha256": "cba89cc7c65412bde2445dba30f7ec0b328ac098ec2f800055ba09b598c399b5"
     },
     {
       "path": "tests/browser_terminal_design.cjs",
-      "bytes": 7275,
-      "sha256": "e9695cdb55de10636cd6f40b4157ac7eea5b97272d392bd018ac1dadb97d5830",
-      "git_blob": "49dc59a8f135149349ed4aab9fcb416ae9b7f3ae"
+      "bytes_normalized": 7275,
+      "sha256": "e9695cdb55de10636cd6f40b4157ac7eea5b97272d392bd018ac1dadb97d5830"
     },
     {
       "path": "tests/browser_terminal_rfid.cjs",
-      "bytes": 4210,
-      "sha256": "0727c00a71a0d48a9f1de41b921b6bb0a62944258d15bb943a923522bb1f9bd4",
-      "git_blob": "12749cbdaadc1f1a79de8d4b2007cbc4c63b4f77"
+      "bytes_normalized": 4210,
+      "sha256": "0727c00a71a0d48a9f1de41b921b6bb0a62944258d15bb943a923522bb1f9bd4"
     },
     {
       "path": "tests/run_initial_password_browser.py",
-      "bytes": 1105,
-      "sha256": "989e6e1221296084b6aea400803bad766ddd5d3be7bb1fa74d626cb7e3f53c2b",
-      "git_blob": "d1fec03610595c9427dc15f8c655dc7e79aea21e"
+      "bytes_normalized": 1105,
+      "sha256": "989e6e1221296084b6aea400803bad766ddd5d3be7bb1fa74d626cb7e3f53c2b"
     },
     {
       "path": "tests/run_regression.py",
-      "bytes": 918,
-      "sha256": "e6b816fcc1c933c571a88ad93688208f9616d0a45205041fa2927e87dfa810d8",
-      "git_blob": "9c0f01cc20d75805847bb543b25e26de7c5fed76"
+      "bytes_normalized": 1039,
+      "sha256": "5a0a063f9aee675c86788b93af661ec353500a0519f9a84e41341474575687ca"
+    },
+    {
+      "path": "tests/test_access_capacity.py",
+      "bytes_normalized": 2128,
+      "sha256": "bb26f17755d9c93c267d3ee1e3b831cb164f3f36c5f7c5552cce29e1643be0c2"
     },
     {
       "path": "tests/test_backend.py",
-      "bytes": 26769,
-      "sha256": "50d7ef3ec6cd707b17db4bff914ec959645d3239dc9b24209105aa29ed161f06",
-      "git_blob": "e088c685db72ca96cd1fd7db47d4152acb3135a6"
+      "bytes_normalized": 26363,
+      "sha256": "a18fae836840e41c363957543eb2ce48b841ab2f987aedf408630fe751b748b9"
     },
     {
       "path": "tests/test_bootstrap.py",
-      "bytes": 2175,
-      "sha256": "492792e5b0b88e3e591685db721197ab694a787b65ac4aa091ec799ddc7bb060",
-      "git_blob": "5829074c6526f38f58dd82fe0254b7d378e5ae2d"
+      "bytes_normalized": 2145,
+      "sha256": "89f23a4ae9a9285a361ab0c670c7279f59d37404c273a80b657967ec737473b3"
     },
     {
       "path": "tests/test_browser.py",
-      "bytes": 1848,
-      "sha256": "1311f3f49ffa075422d65fff35a4ae383c684c4e8c3a1364be5fef2cdfaa7155",
-      "git_blob": "ab71c2cb6bd9636f804a0ae87f0235ab1d3ca07a"
+      "bytes_normalized": 1877,
+      "sha256": "62f387eb2bd6793862ffdca69f548f0d045db6a73cf27f674eae4135daec782d"
     },
     {
       "path": "tests/test_browser_cameras.py",
-      "bytes": 5174,
-      "sha256": "e18e40e4c0ffe41dc13119a351403a5e9b0a4133fc45d9ede4c19ac4e20c54b5",
-      "git_blob": "f381f37e0822a30188c19d8dbdd25d4bf6588b1b"
+      "bytes_normalized": 5174,
+      "sha256": "e18e40e4c0ffe41dc13119a351403a5e9b0a4133fc45d9ede4c19ac4e20c54b5"
     },
     {
       "path": "tests/test_camera.py",
-      "bytes": 4231,
-      "sha256": "952a5be77ffee3a774bf1d2c0d868ffd22b9f70c4a228d2324f31fe77b98b79b",
-      "git_blob": "2404c5fb52bd6ae0c19b0f1d33ae6459fb6ec31e"
+      "bytes_normalized": 4569,
+      "sha256": "d1542e4a4879eab9396e7bb7759d7b25106edc65dd88d61f2de538eb22724878"
     },
     {
       "path": "tests/test_camera_admin.py",
-      "bytes": 4708,
-      "sha256": "863ffc90eead3fd323d03526c3b8a1e2b35ae644b771ecad9ed037467ec539d3",
-      "git_blob": "c34c7e5ccd2719cd05d89a5c1bed607eb98dfe79"
+      "bytes_normalized": 4708,
+      "sha256": "863ffc90eead3fd323d03526c3b8a1e2b35ae644b771ecad9ed037467ec539d3"
     },
     {
       "path": "tests/test_camera_removal.py",
-      "bytes": 8807,
-      "sha256": "733daafdbb3a1dbaabfdb57e17f5a8686946ddbaf8d0af1d6875436556150e61",
-      "git_blob": "5de575cdee1cc8f874c3a6e10c41a69c75b29328"
+      "bytes_normalized": 8807,
+      "sha256": "733daafdbb3a1dbaabfdb57e17f5a8686946ddbaf8d0af1d6875436556150e61"
     },
     {
       "path": "tests/test_camera_removal_browser.py",
-      "bytes": 2523,
-      "sha256": "bbe65a7179827ba0f8437084c4c5d1b630f5c13e01f3090f318f8006cf9fa5db",
-      "git_blob": "d3cca6bd436a0cb6e0bd3e98cc96f033257c54b0"
+      "bytes_normalized": 2523,
+      "sha256": "bbe65a7179827ba0f8437084c4c5d1b630f5c13e01f3090f318f8006cf9fa5db"
     },
     {
       "path": "tests/test_camera_url.cjs",
-      "bytes": 1089,
-      "sha256": "8d48a24c611ffc80a036da1dd06c7c7bc54dce2d632bf4e75f9f67774c693204",
-      "git_blob": "8eb2b2d326920e0cbba3abc148d4e5f9d546b9a3"
+      "bytes_normalized": 1089,
+      "sha256": "8d48a24c611ffc80a036da1dd06c7c7bc54dce2d632bf4e75f9f67774c693204"
     },
     {
       "path": "tests/test_cctv_duration.py",
-      "bytes": 6547,
-      "sha256": "1ec5bc419ad71e2fdb6d9e660664a16e9faae8c3c5235638d44ab8ce5f51e4fe",
-      "git_blob": "4b18c5432f8e6964e2af99f74b13be27cd17a622"
+      "bytes_normalized": 6546,
+      "sha256": "f8f841119e3134d00c20518cef2fdca27936ec1194d219c2964e5ebbb09e5f5e"
     },
     {
       "path": "tests/test_four_person_access.py",
-      "bytes": 3947,
-      "sha256": "be493f1ba5306c3a3e8a99c915ac3bd2858cda675da3ae41cb5162b7cbd63ca9",
-      "git_blob": "dd4e3b9c532cf37247791d338f7f46702f1614a1"
+      "bytes_normalized": 3918,
+      "sha256": "3612730294b5523c5099987233fb56150d63d8ab4175e9d3d6700b59ab9bebc8"
     },
     {
       "path": "tests/test_group_onboarding.py",
-      "bytes": 6102,
-      "sha256": "c87d7cd29715dfa342953d3005746b3c566dec664c74a750b581b4c05438cc0a",
-      "git_blob": "d90871cf607ca64a3b81e592a4b439bbc4170b20"
+      "bytes_normalized": 6023,
+      "sha256": "88dd16f143e0d7dd42e39b937268b885c6f24637121bb2329a4d60eb91dc16f8"
     },
     {
       "path": "tests/test_hardening.py",
-      "bytes": 9850,
-      "sha256": "9ec2267d303c7a250b9a88a1fd22e55f0eaa678c11bb73992ffc5c0637dc2ca7",
-      "git_blob": "e373db901a79b45da6974d520f0586844b69317e"
+      "bytes_normalized": 9726,
+      "sha256": "0f45c9878ddeccef410a07c2bc98ee722e6c02e7c64eca1f54519e4744e9ed76"
     },
     {
       "path": "tests/test_initial_passwords.py",
-      "bytes": 6908,
-      "sha256": "3782d6afb4c791ba43e79501653d7c2fd89a4b20c42a21fddf650726a5f5d5a8",
-      "git_blob": "5e7c684daf4b526ef708b6ba3bdb14f686ce34e9"
+      "bytes_normalized": 6908,
+      "sha256": "3782d6afb4c791ba43e79501653d7c2fd89a4b20c42a21fddf650726a5f5d5a8"
     },
     {
       "path": "tests/test_phone_links.py",
-      "bytes": 7803,
-      "sha256": "0b7b672b720cf84540b510c470634a35d1a72a23c4b65a90ad2b1d5da6cafe98",
-      "git_blob": "de8feb576a79a294a9868bcbe60f30fc0e53d557"
+      "bytes_normalized": 7803,
+      "sha256": "0b7b672b720cf84540b510c470634a35d1a72a23c4b65a90ad2b1d5da6cafe98"
+    },
+    {
+      "path": "tests/test_private_backup.py",
+      "bytes_normalized": 2915,
+      "sha256": "60428d38e0d9053d48fc316a1c2a7774eec71b21f25b008d255ecae62e87d157"
+    },
+    {
+      "path": "tests/test_publication_guard.py",
+      "bytes_normalized": 1451,
+      "sha256": "b615e07c390a57ac55d14ffa73581e9ae75ac78908d9d802acb2cb964330348f"
+    },
+    {
+      "path": "tests/test_qr_readiness.py",
+      "bytes_normalized": 1990,
+      "sha256": "f4e9864ef20a9137c83352ab5852dbb9c3cc01c0c0b4b539c885f318d21535a0"
+    },
+    {
+      "path": "tests/test_read_transactions.py",
+      "bytes_normalized": 2474,
+      "sha256": "dfda7c3b3ef504bac145b2ab5de83dcd9a065df4b65c52e33ece24737dfe5e99"
     },
     {
       "path": "tests/test_rfid_reference_import.py",
-      "bytes": 2820,
-      "sha256": "89fc81fd64d31a1081166bcf8b13df9bfcbc8a23962eb0712dcb265f7f801862",
-      "git_blob": "acf5981c0eb02cbfdfd05786f2e1c40606c28fa7"
+      "bytes_normalized": 2820,
+      "sha256": "89fc81fd64d31a1081166bcf8b13df9bfcbc8a23962eb0712dcb265f7f801862"
+    },
+    {
+      "path": "tests/test_runtime_paths.py",
+      "bytes_normalized": 4022,
+      "sha256": "7b47e1116ba6f0fc83c90cfd6c8eda22f56ba1a98187f10714a5ec57511e1d16"
     },
     {
       "path": "tests/test_supervisor.py",
-      "bytes": 1571,
-      "sha256": "ec8cf11ef8da58811a38353bcb9af841dd5c243499ef6dd031ab51e0b2554f6f",
-      "git_blob": "7cdc6590b693d6b30dea3f02963604cdd5733bb4"
+      "bytes_normalized": 1573,
+      "sha256": "33e9d6d1818565371b438bbbb8be7d359083af635d2598d47273b1185ca1af53"
     },
     {
       "path": "tests/test_surveillance.py",
-      "bytes": 7372,
-      "sha256": "6efd233ec7170fe9ffb99cf0a1960959350206d11def5182d11bb949f86dce89",
-      "git_blob": "a483d78971727e12a4b2c77de099afc3cff43b96"
+      "bytes_normalized": 7372,
+      "sha256": "6efd233ec7170fe9ffb99cf0a1960959350206d11def5182d11bb949f86dce89"
     },
     {
       "path": "tests/test_terminal_rfid.py",
-      "bytes": 4125,
-      "sha256": "70df81b5178af9659d3089ae4a8558847efbf10f97782f9ef7c531b258e203d4",
-      "git_blob": "008c592ddccef7c7a7e82594041bc9ab912e76a9"
+      "bytes_normalized": 4125,
+      "sha256": "70df81b5178af9659d3089ae4a8558847efbf10f97782f9ef7c531b258e203d4"
     },
     {
       "path": "tests/test_terms_revision.py",
-      "bytes": 3671,
-      "sha256": "f84d6864ec78f97b2a51e032203dde1fe844b71ba9abf479c0614819b963dac9",
-      "git_blob": "c6b87a6e694d41e9929298e937d3b04a16f7dce7"
+      "bytes_normalized": 3671,
+      "sha256": "f84d6864ec78f97b2a51e032203dde1fe844b71ba9abf479c0614819b963dac9"
     },
     {
       "path": "tests/test_v130.py",
-      "bytes": 17900,
-      "sha256": "df761f5f54f20f268e28d8cd72b47430533cb435cccc8eed26e8668fc48b6408",
-      "git_blob": "c49c1755b50176f80ea0465ecd6deb3511cb0a2d"
+      "bytes_normalized": 17671,
+      "sha256": "3e1b04da165bbd2215a8241820656bbc1e485ab5bc88654348b5197e468fcfb7"
     },
     {
       "path": "tests/visual.cjs",
-      "bytes": 9289,
-      "sha256": "c258d03d4d2b79fcb7e8ac99413acfe0e515298d7d258d7f2dafcb61dfd5fab3",
-      "git_blob": "7d7abf59b5fafc477e2383d6621c27a525c096f3"
+      "bytes_normalized": 9289,
+      "sha256": "c258d03d4d2b79fcb7e8ac99413acfe0e515298d7d258d7f2dafcb61dfd5fab3"
+    },
+    {
+      "path": "tools/source_manifest.py",
+      "bytes_normalized": 3495,
+      "sha256": "87df57599e06cf2a307202249dab34b4a05a55745bb9500e0b22c7af79a86325"
     },
     {
       "path": "validation.json",
-      "bytes": 535,
-      "sha256": "d8311afeceaa7531074d3fc019aecefacbecb4a18bfc4186bd7d8a225865be95",
-      "git_blob": "cd1e2c68a669c1de0e6bad90ee15983f3f9c8dac"
+      "bytes_normalized": 1311,
+      "sha256": "3e3f3dc223bc9a1e5092a54fd237cd241b80dd0477bbc6398d4431efa2cf2a59"
     },
     {
       "path": "web/assets/Politicas_y_aceptacion_SECURITY_TEAM.pdf",
-      "bytes": 100860,
-      "sha256": "1224c01cc0c9d6ee296df63e69b16c9873196ecc48090e9b3c85ed20685b2820",
-      "git_blob": "7a438ad591fa40486cfa3c69497b732379d9f174"
+      "bytes_normalized": 100860,
+      "sha256": "1224c01cc0c9d6ee296df63e69b16c9873196ecc48090e9b3c85ed20685b2820"
     },
     {
       "path": "web/assets/app.css",
-      "bytes": 105657,
-      "sha256": "d3c43de7e7460de84c347397a554015b42b54169684f6eed59b9feafe5060af8",
-      "git_blob": "f142e2ce5b551c4eff4b63f96052550dae9f8f7e"
+      "bytes_normalized": 112902,
+      "sha256": "03649b6fa72f4d36250664ad61e1ada62c96fd636a7a9aba4f5fd2964ee9812b"
     },
     {
       "path": "web/assets/app.js",
-      "bytes": 508047,
-      "sha256": "78a6e1ee2a10b11a5edd16be89ef0d9715c98efd2caf071b55aa1984720e3977",
-      "git_blob": "2e21f77e129a032f08a78a4fae4752ecff4ce731"
+      "bytes_normalized": 512277,
+      "sha256": "67a4b95269c4ca2b153943ae60f306935c3c997aa97a8dc824fa14e1f2432c27"
     },
     {
       "path": "web/assets/firma-politicas.css",
-      "bytes": 4184,
-      "sha256": "2f96cd0b43626c3f223ecf14ec62113faf115c1e45665c626db68a1bb28190f9",
-      "git_blob": "5b83dbaf94741ae04508cc0e427b1d67d69d74a4"
+      "bytes_normalized": 4180,
+      "sha256": "8eba783bfaf83badf5dd2a5e63c46b5d55625f2c36f5020f5d06a8aa104e9b05"
     },
     {
       "path": "web/assets/firma-politicas.html",
-      "bytes": 18627,
-      "sha256": "e49e6aa5c99a43fa398f4db0c55ad14137aec0e11c6b36b8b168843d9de7a1de",
-      "git_blob": "fce2e2cad1410b26dbf86d8c074f3705aba074a0"
+      "bytes_normalized": 18608,
+      "sha256": "147751a2c49d13848b3de9b29afbf26a3a4fef789f6b02ca5acd6124b26fce05"
     },
     {
       "path": "web/assets/firma-politicas.js",
-      "bytes": 22887,
-      "sha256": "b3cfa57b58580bc373949b60c018fb0b091e645cdcf3d72143477e5238dc6abe",
-      "git_blob": "17b35ea9f2f4c89e480f0acd2dc8e28c2a03220e"
+      "bytes_normalized": 22827,
+      "sha256": "6c7ebafd11d4d5acd6bf7a63b8f105e7b897df7d88ccf600d89dc73905401861"
     },
     {
       "path": "web/assets/manrope-cyrillic-ext-wght-normal-2GMQGZDT.woff2",
-      "bytes": 2552,
-      "sha256": "de37de877dc17e4577341fa68bb5cb526b53d54cb29721e674208546a3c7849d",
-      "git_blob": "57c7c0eefb32d1c9cf8780f8c95020499bf06e9c"
+      "bytes_normalized": 2552,
+      "sha256": "de37de877dc17e4577341fa68bb5cb526b53d54cb29721e674208546a3c7849d"
     },
     {
       "path": "web/assets/manrope-cyrillic-wght-normal-F76KYTZG.woff2",
-      "bytes": 14500,
-      "sha256": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
-      "git_blob": "3a062296a1269ded5bf605334d18f3e43088c888"
+      "bytes_normalized": 14500,
+      "sha256": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914"
     },
     {
       "path": "web/assets/manrope-greek-wght-normal-NNUWM3E7.woff2",
-      "bytes": 9444,
-      "sha256": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
-      "git_blob": "e74e7189632e9be70aa32c83057e9637cce6b3df"
+      "bytes_normalized": 9444,
+      "sha256": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be"
     },
     {
       "path": "web/assets/manrope-latin-ext-wght-normal-6XGHMEDV.woff2",
-      "bytes": 15120,
-      "sha256": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
-      "git_blob": "bd24140af06f1b5897d3bbd6538a74b03748a21e"
+      "bytes_normalized": 15120,
+      "sha256": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb"
     },
     {
       "path": "web/assets/manrope-latin-wght-normal-73PUZEUA.woff2",
-      "bytes": 24836,
-      "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
-      "git_blob": "71eb731d558046199aa7f985adbf812890a093a1"
+      "bytes_normalized": 24836,
+      "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972"
     },
     {
       "path": "web/assets/manrope-vietnamese-wght-normal-HA5TFICD.woff2",
-      "bytes": 8520,
-      "sha256": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-      "git_blob": "1e4b7a4b3fb95ad762a8882885b3331cc0e073ed"
+      "bytes_normalized": 8520,
+      "sha256": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5"
+    },
+    {
+      "path": "web/assets/motion-init.js",
+      "bytes_normalized": 436,
+      "sha256": "62ede531992c165244909f8e0cb86eeb65ff26e8093a52d5ceadc9d5de561c21"
     },
     {
       "path": "web/favicon.svg",
-      "bytes": 444,
-      "sha256": "aec49281356c9cbd4e7f8ca13b1ff8137400e9aa2e18d0f7ce02315e8a0d6c14",
-      "git_blob": "756412a500a69398870f68cc6575d5862490e68c"
+      "bytes_normalized": 444,
+      "sha256": "aec49281356c9cbd4e7f8ca13b1ff8137400e9aa2e18d0f7ce02315e8a0d6c14"
     },
     {
       "path": "web/index.html",
-      "bytes": 460,
-      "sha256": "71d6872d08488faadf62f06ec43d0e57a09255fbff0d8ea3468143899f0fef5c",
-      "git_blob": "315879ca608af93b52df0a67ea75d072ec44c74e"
+      "bytes_normalized": 507,
+      "sha256": "2bb44b89e1b6dcdae86584d8997718355c8dba2cef3ebfadaf6b846c1d15225a"
     },
     {
       "path": "windows_store.py",
-      "bytes": 7635,
-      "sha256": "43440087116393b68400ef8c98d158a38ce2a46b5f63975c7371ebeaed1f5891",
-      "git_blob": "947a48de4e1136212e7c16e3374aeb6c32a4eabb"
+      "bytes_normalized": 7635,
+      "sha256": "43440087116393b68400ef8c98d158a38ce2a46b5f63975c7371ebeaed1f5891"
     }
-  ],
-  "policy_version": "v1.1"
+  ]
 }

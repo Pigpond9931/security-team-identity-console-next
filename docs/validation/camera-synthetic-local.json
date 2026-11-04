@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "transport": "WebRTC y MJPEG continuo; cámara sintética en Chrome local",
+  "sampleSeconds": 2.520240899999997,
+  "acceptedJpegFrames": 54,
+  "acceptedJpegFps": 21.4265231549889,
+  "webRtcDecodedFrames": 51,
+  "webRtcSampleSeconds": 2.5,
+  "webRtcDecodedFps": 20.4,
+  "realPhoneOrInternetBenchmark": false
+}

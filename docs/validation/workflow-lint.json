@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "tool": "actionlint",
+  "version": "1.7.12",
+  "archive_sha256": "cdc8643b2c8dc890c76ad16095da97e75f86572805cc3573cc13f31ea0f19127",
+  "workflows": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/secrets.yml"
+  ],
+  "github_actions_executed_remotely": false
+}

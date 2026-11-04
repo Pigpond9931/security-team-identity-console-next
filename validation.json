@@ -1,15 +1,38 @@
 {
-  "date": "2026-11-03",
-  "version": "1.5.4",
-  "local_tests_passed": 142,
-  "isolated_test_groups": 17,
-  "new_group_tests": 8,
-  "new_four_person_tests": 4,
-  "frontend_build": "passed in both copies",
-  "visual_check": "fictitious localhost identities; group panel and unlock action",
+  "date": "2026-11-04",
+  "version": "1.6.0-next.1",
+  "provisional_local_iteration": true,
+  "external_iteration_zip_recovered": false,
   "production_data_included": false,
-  "common_password_included": false,
-  "live_device_or_camera_test_performed": false,
-  "public_health_version": "1.5.4",
-  "ci_workflow": "17 isolated groups; check Actions for this commit"
+  "native_regression": {
+    "tests_discovered": 173,
+    "passed": 172,
+    "skipped": 1,
+    "failed": 0,
+    "isolated_groups": 24
+  },
+  "browser": {
+    "chrome": "passed",
+    "playwright_chromium": "passed",
+    "checks_each": 16,
+    "backend": "real isolated SQLite + Windows DPAPI",
+    "synthetic_camera": true,
+    "automated_wcag_screens": 6,
+    "automated_wcag_violations": 0,
+    "page_errors": 0
+  },
+  "camera_url_checks": 8,
+  "dependency_audits": {
+    "npm_all_known_findings": 0,
+    "python_osv_known_findings": 0
+  },
+  "build": "npm ci --ignore-scripts and build passed; precompiled assets included",
+  "github_ci": "prepared and linted; not executed remotely; push blocked by authentication",
+  "devices_or_production_migration_tested": false,
+  "web_asset_sha256": {
+    "app.js": "67a4b95269c4ca2b153943ae60f306935c3c997aa97a8dc824fa14e1f2432c27",
+    "app.css": "03649b6fa72f4d36250664ad61e1ada62c96fd636a7a9aba4f5fd2964ee9812b",
+    "motion-init.js": "62ede531992c165244909f8e0cb86eeb65ff26e8093a52d5ceadc9d5de561c21"
+  },
+  "evidence": "docs/validation; screenshots contain only fictitious identities"
 }
