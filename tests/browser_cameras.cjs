@@ -5,8 +5,8 @@ module.exports=async({page,context,base,browser})=>{
  await page.getByRole('heading',{name:'Mi QR de acceso',exact:true}).waitFor();
  await page.getByAltText('Gafete QR de acceso',{exact:true}).waitFor();
  const own=await(await badgeReply).json();assert.equal(own.badge.matricula,(await(await context.request.get(base+'api/session')).json()).user.username);assert.equal(await page.getByAltText('Gafete QR de acceso',{exact:true}).getAttribute('src'),'data:image/png;base64,'+own.qr_png_base64);
- await page.screenshot({path:path.join(__dirname,'../design/20-mi-qr.png'),fullPage:true});
- await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(__dirname,'../design/23-mi-qr-movil.png'),fullPage:true,animations:'disabled'});await page.setViewportSize({width:1440,height:1000});
+ await page.screenshot({path:path.join(process.env.ST_QA_OUTPUT||path.resolve(__dirname,'../../qa-browser'),'20-mi-qr.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(process.env.ST_QA_OUTPUT||path.resolve(__dirname,'../../qa-browser'),'23-mi-qr-movil.png'),fullPage:true,animations:'disabled'});await page.setViewportSize({width:1440,height:1000});
  await page.getByRole('button',{name:'Monitoreo CCTV',exact:true}).click();
  await page.getByRole('tab',{name:'Configurar cámaras',exact:true}).click();
  await page.getByText('Vincular una cámara nueva',{exact:true}).click();
@@ -26,9 +26,16 @@ module.exports=async({page,context,base,browser})=>{
   await page.waitForFunction(()=>document.querySelector('.browser-camera-card video')?.videoWidth>0,{},{timeout:25000});
   await page.locator('.browser-camera-card .camera-signal').filter({hasText:'En vivo'}).waitFor();
   assert(await page.locator('.browser-camera-card').innerText().then(t=>t.includes('Directo WebRTC')));
-  await page.screenshot({path:path.join(__dirname,'../design/21-cctv-navegador.png'),fullPage:true});
+  await page.locator('.surveillance-count').filter({hasText:'1 con señal'}).waitFor();
+  const decodedBefore=await page.locator('.browser-camera-card video').evaluate(video=>video.getVideoPlaybackQuality().totalVideoFrames);
+  await page.waitForTimeout(2500);
+  const decodedAfter=await page.locator('.browser-camera-card video').evaluate(video=>video.getVideoPlaybackQuality().totalVideoFrames);
+  require('node:fs').writeFileSync(path.join(process.env.ST_QA_OUTPUT||path.resolve(__dirname,'../../qa-browser'),'webrtc-decoder.json'),JSON.stringify({decodedBefore,decodedAfter},null,2));
+  assert(decodedAfter-decodedBefore>=10,'WebRTC debe decodificar cuadros nuevos, no solo mostrar una imagen');
+  const rtcFrames=decodedAfter-decodedBefore;
+  await page.screenshot({path:path.join(process.env.ST_QA_OUTPUT||path.resolve(__dirname,'../../qa-browser'),'21-cctv-navegador.png'),fullPage:true});
   await require('./browser_surveillance.cjs')({page,context,base,browser});
-  await phone.screenshot({path:path.join(__dirname,'../design/22-camara-telefono.png'),fullPage:true});
+  await phone.screenshot({path:path.join(process.env.ST_QA_OUTPUT||path.resolve(__dirname,'../../qa-browser'),'22-camara-telefono.png'),fullPage:true});
   assert(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   assert.equal((await mobile.request.get(base+'api/data')).status(),401);
   await phone.getByRole('button',{name:'Detener transmisión',exact:true}).click();await page.locator('.browser-camera-card .camera-signal').filter({hasText:'Sin señal'}).waitFor();await phone.getByRole('button',{name:'Transmitir cámara',exact:true}).click();await page.locator('.browser-camera-card .camera-signal').filter({hasText:'En vivo'}).waitFor();
@@ -38,8 +45,10 @@ module.exports=async({page,context,base,browser})=>{
   assert(await page.locator('.browser-camera-card').innerText().then(t=>t.includes('Compatible HTTPS')));
   assert((await page.locator('.browser-camera-card img').getAttribute('src')).startsWith('/api/browser-camera/stream?'));
   await page.waitForFunction(()=>document.querySelector('.browser-camera-card img')?.naturalWidth>0);
-  let uploaded=0;const counted=r=>{if(r.url().endsWith('/api/browser-camera/upload-frame')&&r.status()===200)uploaded++};phone.on('response',counted);await phone.waitForTimeout(2500);phone.off('response',counted);assert(uploaded>=20,'HTTPS continuo debe entregar al menos 20 cuadros en 2.5 s en la prueba local: '+uploaded);
-  require('node:fs').writeFileSync(path.join(__dirname,'resultado-cctv-fluidez.json'),JSON.stringify({ok:true,transport:'MJPEG continuo, JPEG binario, cámara simulada en Chrome local',seconds:2.5,uploadedFrames:uploaded,uploadFps:uploaded/2.5,realPhoneOrInternetBenchmark:false},null,2));
+  const streamUrl=new URL(await page.locator('.browser-camera-card img').getAttribute('src'),base),session=await(await context.request.get(base+'api/session')).json();
+  async function sequence(){const r=await context.request.post(base+'api/browser-camera/frame',{headers:{Origin:new URL(base).origin,'X-CSRF-Token':session.csrf},data:{id:streamUrl.searchParams.get('id'),peer:streamUrl.searchParams.get('peer'),seq:-1}});assert.equal(r.status(),200);return(await r.json()).seq}
+  const sequenceBefore=await sequence(),started=performance.now();await phone.waitForTimeout(2500);const uploaded=(await sequence())-sequenceBefore,seconds=(performance.now()-started)/1000;assert(uploaded>=20,'HTTPS continuo debe aceptar al menos 20 cuadros durante la muestra local: '+uploaded);
+  require('node:fs').writeFileSync(path.join(process.env.ST_QA_OUTPUT||path.resolve(__dirname,'../../qa-browser'),'resultado-cctv-fluidez.json'),JSON.stringify({ok:true,transport:'WebRTC y MJPEG continuo; cámara sintética en Chrome local',sampleSeconds:seconds,acceptedJpegFrames:uploaded,acceptedJpegFps:uploaded/seconds,webRtcDecodedFrames:rtcFrames,webRtcSampleSeconds:2.5,webRtcDecodedFps:rtcFrames/2.5,realPhoneOrInternetBenchmark:false},null,2));
   await phone.getByRole('button',{name:'Desvincular este dispositivo',exact:true}).click();
   await phone.getByRole('alert').filter({hasText:'Cámara desvinculada'}).waitFor();
   await page.locator('.browser-camera-card').waitFor({state:'detached'});assert.deepEqual(errors,[]);
