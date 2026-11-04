@@ -40,9 +40,9 @@ class Features(unittest.TestCase):
         admin,user=self.setup_pair()
         with db.get_connection() as c:c.execute('UPDATE users SET terms_accepted=0 WHERE id=?',(self.user['id'],))
         with self.assertRaises(PermissionError):self.req(user,'/api/licenses')
-        for b in ({},{'accepted':False,'version':'v1.0'},{'accepted':True,'version':'v0'}):
+        for b in ({},{'accepted':False,'version':db.TERMS_VERSION},{'accepted':True,'version':'v0'}):
             with self.assertRaises(ValueError):self.req(user,'/api/auth/accept-terms',b)
-        self.req(user,'/api/auth/accept-terms',{'accepted':True,'version':'v1.0'})
+        self.req(user,'/api/auth/accept-terms',{'accepted':True,'version':db.TERMS_VERSION})
         self.assertEqual(len(self.req(user,'/api/licenses')['licenses']),5)
     def test_03_qr_signature_purpose_expiration_and_security_version(self):
         admin,user=self.setup_pair();token=self.badge(user)
@@ -218,8 +218,8 @@ class Features(unittest.TestCase):
                 if state.get('challenge'):state['challenge']['issued_at']-=301
             status,v=request('/api/auth/mfa',{'code':'123456'},s['csrf']);self.assertEqual(status,401);self.assertEqual(v['code'],'CHALLENGE_EXPIRED');self.assertEqual(v['stage'],'login')
             _,terms=request('/api/terms')
-            self.assertEqual(request('/api/public-pass/accept-terms',{'token':'bad','accepted':True,'version':'v1.0'},'bad')[0],403)
-            self.assertEqual(request('/api/public-pass/accept-terms',{'token':'bad','accepted':True,'version':'v1.0'},terms['csrf'],'https://evil.invalid')[0],403)
+            self.assertEqual(request('/api/public-pass/accept-terms',{'token':'bad','accepted':True,'version':db.TERMS_VERSION},'bad')[0],403)
+            self.assertEqual(request('/api/public-pass/accept-terms',{'token':'bad','accepted':True,'version':db.TERMS_VERSION},terms['csrf'],'https://evil.invalid')[0],403)
             self.assertEqual(request('/api/public-pass?token=bad')[0],400)
             self.assertEqual(request('/api/access/latest')[0],401)
         finally:httpd.shutdown();httpd.server_close();thread.join()

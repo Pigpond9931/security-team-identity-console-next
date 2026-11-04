@@ -1,6 +1,6 @@
 {
   "version": "1.5.4",
-  "prepared": "2026-11-03",
+  "prepared": "2026-11-04",
   "files": [
     {
       "path": ".gitattributes",
@@ -261,6 +261,24 @@
       "git_blob": "b93be90515ccd0b9daedaa589e42bf5929693f1f"
     },
     {
+      "path": "PLANTILLA_FIRMA_TABLET.md",
+      "bytes": 2248,
+      "sha256": "da855be801bff88997201ce5349adfb6534b1c35ef5fc7f7f376b09088878886",
+      "git_blob": "2a5adc3750efe4208f158cd02b6f7c7940ec9295"
+    },
+    {
+      "path": "POLITICAS_V11_CAMBIOS.md",
+      "bytes": 3375,
+      "sha256": "ee6e51d448b3b86f8dfa47770a5ff8eb1b0698e868818c6a7c388d64ee8f3e20",
+      "git_blob": "ddfd6a60681096adfc7c5259e9c6a9b8b92e25c4"
+    },
+    {
+      "path": "POLITICAS_v1.1.md",
+      "bytes": 13618,
+      "sha256": "233de61e6cb98c33bf16dd955154cac2c2179d018098cde79e50424a4303bb9e",
+      "git_blob": "68c104319961be0b8d39e26f280c612b9d119f17"
+    },
+    {
       "path": "PRIMER_INGRESO_GRUPAL.md",
       "bytes": 1884,
       "sha256": "7124f31390abff6074482a4913b08efe259a429287d46cb5edbe79c3aae700d4",
@@ -289,6 +307,12 @@
       "bytes": 13240,
       "sha256": "4d84d347445cea8940a9198464ed79a58b503f9612237c8350c6dde94a32ee51",
       "git_blob": "3d6f8f53db39cbd2be532986909f0116b7268d6f"
+    },
+    {
+      "path": "REVISION_RBAC_SCIM_RFID.md",
+      "bytes": 5723,
+      "sha256": "5bccf4aa9be9df15e7e2030b9c7515621df29f1b2a9cba57df2975a3c9d99329",
+      "git_blob": "cc2c8655714b99e8b5a41eec1bd1e5770b00dffc"
     },
     {
       "path": "SECURITY.md",
@@ -346,15 +370,15 @@
     },
     {
       "path": "db_manager.py",
-      "bytes": 21123,
-      "sha256": "5be6c0e0ec296e329e085e1f0453351e2b8bcd6d35dcd69a7ea8ac17542098a0",
-      "git_blob": "83b48e4108cb3fcd1356b1a0533433a8a122fa0c"
+      "bytes": 21741,
+      "sha256": "ae16b33d23f15af130a268b75a0a5056c4a2472208cb372c3af2941e547f7f1e",
+      "git_blob": "4de29e7f4750a5e971f3379d1f985183d9b2ec64"
     },
     {
       "path": "features.py",
-      "bytes": 40031,
-      "sha256": "a48467b75eac1b4468c501a8074bb9833df7a2a1996147c9c842a21ec6eb2a0c",
-      "git_blob": "dad3332978c2c484bd8f32ae331e622aa11e0373"
+      "bytes": 38863,
+      "sha256": "d7b18b785e893a25cc886f81fc346614e933b4eff5529f45e200220b92f0ec7f",
+      "git_blob": "68e0b1688b5bf42232dee8d4fd3835c2c2aefbe6"
     },
     {
       "path": "four_person_access.py",
@@ -370,9 +394,9 @@
     },
     {
       "path": "frontend/app.jsx",
-      "bytes": 47971,
-      "sha256": "b4e533797112535640e989873b35f4702a306647b4b67b129fc561bd1a96a2e6",
-      "git_blob": "ad8059b35fb3a5157532ffd9f7befd83d66a72de"
+      "bytes": 48570,
+      "sha256": "f78f9272dc75bc8ce673f61bb1dde86faa19a848225af3f39520eed65d14c8f9",
+      "git_blob": "7577b3da082d3a4c40bc419c0c0a6596da87359d"
     },
     {
       "path": "frontend/browser-cameras.jsx",
@@ -400,9 +424,9 @@
     },
     {
       "path": "frontend/features.jsx",
-      "bytes": 51942,
-      "sha256": "5cb7857dfea91d0bacf20060745704e84fcb7e19262131450ca36e15b5dd669f",
-      "git_blob": "ab36ff1e59cbe427b34acb4a6773d5569633081e"
+      "bytes": 52258,
+      "sha256": "406229c79a9cf35f02f4a756447251ffb687a8f7f6ceb863c5aba6575e9bc240",
+      "git_blob": "f89245b4ff0c7e1f6f647fe7e536cbe45c56d40c"
     },
     {
       "path": "frontend/index.html",
@@ -424,9 +448,9 @@
     },
     {
       "path": "frontend/styles.css",
-      "bytes": 71071,
-      "sha256": "9bb23602db6b8d83396ec4038b57a00164407050649acddc64b8d438967b095f",
-      "git_blob": "c54343aa0fc4eb2c26d974714d97775cfe6938fa"
+      "bytes": 72146,
+      "sha256": "2509803ab44ad53f71663656bd5dce09f656dda31924b0df06befda01b79db1d",
+      "git_blob": "7700f1e51b7d93444c027a62429888591afed2ed"
     },
     {
       "path": "frontend/surveillance.css",
@@ -454,9 +478,15 @@
     },
     {
       "path": "frontend/terminal-design.jsx",
-      "bytes": 4652,
-      "sha256": "9142e04d426ff66654329b7d0e1b6b8aae498ccc1d5d3202294009b1aec9f82c",
-      "git_blob": "8041ae8de498a8348694ff5a5c02cc36c162ae49"
+      "bytes": 4753,
+      "sha256": "523ac3f06a538887c28642e7192a0723efc0347440bd8310a0fd72220712111c",
+      "git_blob": "7e57aa4b79623bc00d771bac435bee87f26b41c4"
+    },
+    {
+      "path": "frontend/terminal-sound.jsx",
+      "bytes": 3376,
+      "sha256": "47036b4383412185a5d96f9bed709473a4ca1064201a3107dce594294b264c6b",
+      "git_blob": "49ca1f484d10225926ce2ea3b5f09d160546b033"
     },
     {
       "path": "hardening.py",
@@ -555,6 +585,12 @@
       "git_blob": "a0b5b6b8991fdfe72e1c212843a5b2c134849692"
     },
     {
+      "path": "terms_policy.py",
+      "bytes": 13807,
+      "sha256": "01ddd8ea95fe86905831daebce5166955fbf4b749e1ce6e28e3279db06f78788",
+      "git_blob": "53a8e20176b8bfc22c112015dc4103c8708965e5"
+    },
+    {
       "path": "tests/browser.cjs",
       "bytes": 10090,
       "sha256": "fe1c05fc5d4898aa5f4fe7e13136c41c4431653037cb1b7280ae945e79bc3219",
@@ -628,15 +664,15 @@
     },
     {
       "path": "tests/run_regression.py",
-      "bytes": 896,
-      "sha256": "176a867310149f4387b960edd73855dfff50b64f33d8586c416944876a8abdd6",
-      "git_blob": "25ef42bd2d298ed5d37b63b04e6ee023faa6b0cd"
+      "bytes": 918,
+      "sha256": "e6b816fcc1c933c571a88ad93688208f9616d0a45205041fa2927e87dfa810d8",
+      "git_blob": "9c0f01cc20d75805847bb543b25e26de7c5fed76"
     },
     {
       "path": "tests/test_backend.py",
-      "bytes": 26381,
-      "sha256": "4d6ce868a3f185bf24bb509713117112e3ac8ac96978fe5af05e5400882d171a",
-      "git_blob": "e51de2a09a8fd52494987b271ddf33f17f0f33d4"
+      "bytes": 26769,
+      "sha256": "50d7ef3ec6cd707b17db4bff914ec959645d3239dc9b24209105aa29ed161f06",
+      "git_blob": "e088c685db72ca96cd1fd7db47d4152acb3135a6"
     },
     {
       "path": "tests/test_bootstrap.py",
@@ -694,9 +730,9 @@
     },
     {
       "path": "tests/test_four_person_access.py",
-      "bytes": 3915,
-      "sha256": "4b1f7f65f62e4c2b65c0a877db59007b5ec45ea34d8228fd6b6088f6f90128a1",
-      "git_blob": "12b8275b20a87f164f67310e653d9f7d60934415"
+      "bytes": 3947,
+      "sha256": "be493f1ba5306c3a3e8a99c915ac3bd2858cda675da3ae41cb5162b7cbd63ca9",
+      "git_blob": "dd4e3b9c532cf37247791d338f7f46702f1614a1"
     },
     {
       "path": "tests/test_group_onboarding.py",
@@ -747,10 +783,16 @@
       "git_blob": "008c592ddccef7c7a7e82594041bc9ab912e76a9"
     },
     {
+      "path": "tests/test_terms_revision.py",
+      "bytes": 3671,
+      "sha256": "f84d6864ec78f97b2a51e032203dde1fe844b71ba9abf479c0614819b963dac9",
+      "git_blob": "c6b87a6e694d41e9929298e937d3b04a16f7dce7"
+    },
+    {
       "path": "tests/test_v130.py",
-      "bytes": 17631,
-      "sha256": "de6c9779f8424905782ad965e3a887e62f7975da78474f20569b726502ab07c2",
-      "git_blob": "19f170b77ea6f03fd4d5804c7e8c659fb466683a"
+      "bytes": 17900,
+      "sha256": "df761f5f54f20f268e28d8cd72b47430533cb435cccc8eed26e8668fc48b6408",
+      "git_blob": "c49c1755b50176f80ea0465ecd6deb3511cb0a2d"
     },
     {
       "path": "tests/visual.cjs",
@@ -765,16 +807,40 @@
       "git_blob": "cd1e2c68a669c1de0e6bad90ee15983f3f9c8dac"
     },
     {
+      "path": "web/assets/Politicas_y_aceptacion_SECURITY_TEAM.pdf",
+      "bytes": 100860,
+      "sha256": "1224c01cc0c9d6ee296df63e69b16c9873196ecc48090e9b3c85ed20685b2820",
+      "git_blob": "7a438ad591fa40486cfa3c69497b732379d9f174"
+    },
+    {
       "path": "web/assets/app.css",
-      "bytes": 104585,
-      "sha256": "ecda91e0d56e8a347e8944c0448c12f4853f2cf84055b10361dfa6edd9b761e1",
-      "git_blob": "f038972fae16511fea48914fbb172ba83b13a154"
+      "bytes": 105657,
+      "sha256": "d3c43de7e7460de84c347397a554015b42b54169684f6eed59b9feafe5060af8",
+      "git_blob": "f142e2ce5b551c4eff4b63f96052550dae9f8f7e"
     },
     {
       "path": "web/assets/app.js",
-      "bytes": 504033,
-      "sha256": "c75d755cd52f9604e3a2cb2cd7153ccb1298b40ba21b09a8718e571ee483bec1",
-      "git_blob": "9f099c4144738e96de87b2b73867d28d7b189f24"
+      "bytes": 508047,
+      "sha256": "78a6e1ee2a10b11a5edd16be89ef0d9715c98efd2caf071b55aa1984720e3977",
+      "git_blob": "2e21f77e129a032f08a78a4fae4752ecff4ce731"
+    },
+    {
+      "path": "web/assets/firma-politicas.css",
+      "bytes": 4184,
+      "sha256": "2f96cd0b43626c3f223ecf14ec62113faf115c1e45665c626db68a1bb28190f9",
+      "git_blob": "5b83dbaf94741ae04508cc0e427b1d67d69d74a4"
+    },
+    {
+      "path": "web/assets/firma-politicas.html",
+      "bytes": 18627,
+      "sha256": "e49e6aa5c99a43fa398f4db0c55ad14137aec0e11c6b36b8b168843d9de7a1de",
+      "git_blob": "fce2e2cad1410b26dbf86d8c074f3705aba074a0"
+    },
+    {
+      "path": "web/assets/firma-politicas.js",
+      "bytes": 22887,
+      "sha256": "b3cfa57b58580bc373949b60c018fb0b091e645cdcf3d72143477e5238dc6abe",
+      "git_blob": "17b35ea9f2f4c89e480f0acd2dc8e28c2a03220e"
     },
     {
       "path": "web/assets/manrope-cyrillic-ext-wght-normal-2GMQGZDT.woff2",
@@ -830,5 +896,6 @@
       "sha256": "43440087116393b68400ef8c98d158a38ce2a46b5f63975c7371ebeaed1f5891",
       "git_blob": "947a48de4e1136212e7c16e3374aeb6c32a4eabb"
     }
-  ]
+  ],
+  "policy_version": "v1.1"
 }

@@ -41,7 +41,7 @@ class FourPersons(unittest.TestCase):
         out=f.dispatch(self.admin,'POST','/api/visitors/create',{},dict(full_name='Invitado de prueba',organization='Prueba',purpose='Ensayo',host_matricula=self.dpo['username'],allowed_zone=four.ZONE,duration='2h',terms_accepted=True))
         with db.get_connection() as c:
             visitor=c.execute('SELECT * FROM visitors ORDER BY rowid DESC LIMIT 1').fetchone()
-            c.execute('UPDATE visitors SET terms_accepted=1 WHERE visitor_id=?',(visitor['visitor_id'],))
+            c.execute('UPDATE visitors SET terms_accepted=1,terms_version=? WHERE visitor_id=?',(db.TERMS_VERSION,visitor['visitor_id']))
             visitor=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(visitor['visitor_id'],)).fetchone()
             badge=f.badge(c,'VISITOR',visitor)
         result=f.dispatch(self.admin,'POST','/api/access/verify',{},dict(zone=four.ZONE,method='QR_BADGE',direction='AUTO',ref=badge['token']))['result']

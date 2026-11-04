@@ -161,7 +161,7 @@ class Backend(unittest.TestCase):
             self.assertEqual(len(s['recovery_codes']),8)
             status,s=request('auth/backup-saved',{},s['csrf']);self.assertEqual(s['stage'],'terms')
             self.assertEqual(request('data')[0],403)
-            status,s=request('auth/accept-terms',{'accepted':True,'version':'v1.0'},s['csrf']);self.assertEqual(s['stage'],'dashboard')
+            status,s=request('auth/accept-terms',{'accepted':True,'version':db.TERMS_VERSION},s['csrf']);self.assertEqual(s['stage'],'dashboard')
             self.assertNotIn('recovery_codes',s)
             status,data=request('data');self.assertEqual(status,200);self.assertEqual(len(data['users']),33)
             self.assertEqual(data['accesses_today'],1)
@@ -308,13 +308,11 @@ class Backend(unittest.TestCase):
     def test_26_dacl_privada_sin_herencia(self):
         result=secure.store.directory_acl(TEMP.name)
         self.assertTrue(result['protected'])
-        owner_sid=secure.store.user_sid()
-        aliases={'SY':'S-1-5-18'}
-        # Windows puede representar la cuenta local RID 500 mediante el alias LA.
-        # Solo se acepta ese alias cuando corresponde al administrador esperado.
-        if owner_sid.endswith('-500'):aliases['LA']=owner_sid
-        identities={aliases.get(s,s) for s in re.findall(r';;;([^;)]+)\)',result['sddl'])}
-        self.assertEqual(identities,{'S-1-5-18',owner_sid})
+        identities={s.replace('SY','S-1-5-18') for s in re.findall(r';;;([^;)]+)\)',result['sddl'])}
+        # En Windows, SDDL puede abreviar al administrador local como LA.
+        if secure.store.user_sid().endswith('-500'):
+            identities={secure.store.user_sid() if sid=='LA' else sid for sid in identities}
+        self.assertEqual(identities,{'S-1-5-18',secure.store.user_sid()})
 
     def test_27_respaldo_incluye_base_y_clave_protegida(self):
         import maintenance

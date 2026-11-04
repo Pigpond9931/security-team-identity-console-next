@@ -1,3 +1,4 @@
+import {useTerminalSound} from './terminal-sound.jsx';
 import {CameraInventory} from './camera-management.jsx';
 import {TerminalClock,TerminalDecision,TerminalQuickEvents,TerminalPresence} from './terminal-design.jsx';
 import {SurveillanceCenter} from './surveillance.jsx';
@@ -38,14 +39,29 @@ export function BatchDeliveries({api}){
  return <article className="v130-panel"><div className="v130-panel-head"><Smartphone/><h3>Entregas móviles del equipo</h3></div><p className="v130-muted">Si cambia el enlace del túnel, prepara las entregas de las cuentas habilitadas y los invitados vigentes en un paso. Las credenciales ya descargadas conservan su vigencia.</p><div className="v130-row wrap"><button className="v130-btn" disabled={busy} onClick={renew}>{busy?'Preparando enlaces…':'Renovar entregas móviles'}</button>{data&&<><button className="v130-btn" onClick={download}>Descargar lista privada CSV</button><button className="v130-btn" onClick={()=>setData(null)}>Ocultar entregas</button></>}</div>{error&&<p role="alert">{error}</p>}{data&&<><p role="status">{data.deliveries.length} enlaces preparados · {data.skipped.length} cuentas pendientes de habilitación.</p><p className="v130-muted">Entrega cada enlace únicamente a su titular. Este archivo contiene pases privados; no lo publiques en el grupo. Vigencia de entrega: cinco minutos.</p><details><summary>Ver entregas y pendientes</summary>{data.deliveries.map(v=><p key={v.id}>{v.id} · {v.name} · <a href={v.pass_url} target="_blank" rel="noreferrer">Abrir entrega privada</a></p>)}{data.skipped.map(v=><p key={v.id}>{v.id} · {v.name}: {v.reason}</p>)}</details></>}</article>;
 }
 export function QRBadgePanel({matricula,api,toast}){
- const[data,setData]=useState(null),[delivery,setDelivery]=useState(null),[error,setError]=useState(''),[busy,setBusy]=useState(false);
+ const[data,setData]=useState(null),[delivery,setDelivery]=useState(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[refreshing,setRefreshing]=useState(false),[updated,setUpdated]=useState(null);
+ const mounted=useRef(false),request=useRef(0);
  const query='?matricula='+encodeURIComponent(matricula);
- useEffect(()=>{let active=true;setError('');setData(null);api('/api/users/qr-badge'+query).then(v=>active&&setData(v)).catch(e=>active&&setError(e.message));return()=>{active=false};},[matricula,api]);
+ const load=useCallback(async()=>{
+  const id=++request.current;setRefreshing(true);setError('');
+  try{const value=await api('/api/users/qr-badge'+query);if(mounted.current&&id===request.current){setData(value);setUpdated(new Date());}}
+  catch(e){if(mounted.current&&id===request.current){setData(null);setDelivery(null);setError(e.message);}}
+  finally{if(mounted.current&&id===request.current)setRefreshing(false);}
+ },[api,query]);
+ useEffect(()=>{
+  mounted.current=true;setData(null);setDelivery(null);setUpdated(null);load();
+  const focus=()=>{if(document.visibilityState==='visible')load();};
+  window.addEventListener('focus',focus);document.addEventListener('visibilitychange',focus);
+  return()=>{mounted.current=false;request.current++;window.removeEventListener('focus',focus);document.removeEventListener('visibilitychange',focus);};
+ },[load]);
  async function png(share=false){try{const r=await api('/api/users/qr-badge.png'+query);await shareFile(r,share);}catch(e){setError(e.message);}}
  async function issue(){setBusy(true);try{setDelivery(await api('/api/users/mobile-pass',{body:{matricula}}));}catch(e){setError(e.message);}finally{setBusy(false);}}
- return <article className="v130-panel"><div className="v130-panel-head"><IdCard/><h3>Gafete Digital QR</h3></div>{error&&<p role="status" className="v130-muted">{error}</p>}
- {data&&<div className="v130-badge-card"><div className="v130-badge-top">SECURITY TEAM</div><img className="v130-qr" src={'data:image/png;base64,'+data.qr_png_base64} alt="Gafete QR de acceso"/><h3>{data.badge.full_name}</h3><p>{data.badge.matricula} · {data.badge.role}</p><p>{data.badge.zones_labels.join(' · ')}</p><small>{data.badge.valid_hint}</small></div>}
- <div className="v130-row wrap">{data&&<><button className="v130-btn" onClick={()=>png()}>Descargar Credencial PNG</button><button className="v130-btn" onClick={()=>png(true)}>Compartir a Celular / WhatsApp</button></>}<button className="v130-btn primary" disabled={busy} onClick={issue}>Preparar entrega al celular</button></div>
+ return <article className="v130-panel qr-live-panel" aria-busy={refreshing}><div className="v130-panel-head qr-live-heading"><IdCard/><h3>Gafete Digital QR</h3><button className="v130-btn" disabled={refreshing||busy} onClick={load}><RefreshCw size={16}/>{refreshing?'Actualizando QR…':'Actualizar QR'}</button></div>
+ <p className="v130-muted">Consulta aquí el gafete vigente y las zonas de esta cuenta. Después de un cambio de equipo o un restablecimiento, actualiza el QR y sustituye la imagen anterior.</p>
+ {error&&<p role="alert" className="terminal-error">{error}</p>}
+ {data&&<><dl className="qr-live-details"><div><dt>Equipo registrado</dt><dd>{data.badge.area}</dd></div><div><dt>Matrícula</dt><dd>{data.badge.matricula}</dd></div><div className="qr-live-zones"><dt>Zonas asignadas</dt><dd>{data.badge.zones_labels.map(z=><span key={z}><CheckCircle2 size={14}/>{z}</span>)}</dd></div></dl><div className="v130-badge-card"><div className="v130-badge-top">SECURITY TEAM</div><img className="v130-qr" src={'data:image/png;base64,'+data.qr_png_base64} alt="Gafete QR de acceso"/><h3>{data.badge.full_name}</h3><p>{data.badge.matricula} · {data.badge.area}</p><p>{data.badge.zones_labels.join(' · ')}</p><small>{data.badge.valid_hint}</small></div></>}
+ <div className="v130-row wrap">{data&&<><button className="v130-btn primary" onClick={()=>png()} disabled={refreshing}>Descargar Credencial PNG</button><button className="v130-btn" onClick={()=>png(true)} disabled={refreshing}>Compartir a Celular / WhatsApp</button><button className="v130-btn" disabled={busy||refreshing} onClick={issue}>Preparar entrega al celular</button></>}</div>
+ {updated&&<p className="v130-muted v130-small" role="status">Consultado a las {updated.toLocaleTimeString('es-MX',{timeZone:'America/Mexico_City',hour:'2-digit',minute:'2-digit',second:'2-digit'})} · Ciudad de México</p>}
  {delivery&&<Delivery data={delivery}/>}<p className="v130-muted v130-small">La firma protege la integridad; una fotografía puede copiarse. La terminal consulta vigencia, estado y permisos en cada lectura.</p></article>;
 }
 async function shareFile(r,share){const file=base64ToFile(r.png_base64,r.filename||'credencial.png');if(share&&navigator.canShare?.({files:[file]})){try{await navigator.share({files:[file],title:'Credencial SECURITY TEAM'});}catch(e){if(e.name!=='AbortError')throw e;}}else{await downloadBase64Png(r.png_base64,r.filename);if(share)window.open('https://wa.me/?text='+encodeURIComponent('Te enviaré mi credencial SECURITY TEAM como imagen adjunta.'),'_blank','noopener,noreferrer');}}
@@ -105,7 +121,7 @@ export function AccessTerminal({api,toast}){
  async function checkout(id){if(reading.current)return;reading.current=true;setProcessing(true);try{show((await api('/api/access/checkout',{body:{event_id:id}})).result);setError('')}catch(e){setError(e.message)}finally{reading.current=false;setProcessing(false)}}
  return <div className={'v130-terminal terminal-console '+(kiosk?'terminal-kiosk':'')}>
  {flash&&<AccessFeedback key={flash.id} event={flash} zoneLabel={ZONE_LABEL(flash.zone)} onClose={dismissFeedback} onScan={value=>verify(value,'RFID_125KHZ')}/>}
- <header className="terminal-banner"><div><span className="terminal-eyebrow">SECURITY TEAM / CONTROL DE ACCESO</span><h2>Terminal de Acceso</h2><p>Una credencial. Una decisión. Un registro.</p></div><TerminalClock/><div className="terminal-banner-actions"><span className={'terminal-online '+(online===true?'connected':'')} role="status"><i/>{online===null?'Conectando terminal':online?'Terminal conectada':'Sin conexión confirmada'}</span><div><button className="v130-btn terminal-sound" aria-pressed={sound.enabled} onClick={()=>sound.setEnabled(!sound.enabled)}>{sound.enabled?<Volume2 size={16}/>:<VolumeX size={16}/>}Sonido de Terminal: {sound.enabled?'Activo':'Silencio'}</button><button className="v130-btn" onClick={()=>{stopCamera();setRfid('');setKiosk(!kiosk);if(kiosk)requestAnimationFrame(()=>input.current?.focus({preventScroll:true}))}}>{kiosk?'Salir de pantalla de kiosco':'Pantalla de kiosco'}</button></div></div></header>
+ <header className="terminal-banner"><div><span className="terminal-eyebrow">SECURITY TEAM / CONTROL DE ACCESO</span><h2>Terminal de Acceso</h2><p>Una credencial. Una decisión. Un registro.</p></div><TerminalClock/><div className="terminal-banner-actions"><span className={'terminal-online '+(online===true?'connected':'')} role="status"><i/>{online===null?'Conectando terminal':online?'Terminal conectada':'Sin conexión confirmada'}</span><div><button className="v130-btn terminal-sound" disabled={!sound.available} onClick={sound.testSound} title="Alertas siempre habilitadas. Pulsa para activar o probar el audio.">{sound.ready?<Volume2 size={16}/>:<VolumeX size={16}/>} {sound.available?(sound.ready?'Sonido activo · Probar':'Activar sonido'):'Audio no disponible'}</button><button className="v130-btn" onClick={()=>{stopCamera();setRfid('');setKiosk(!kiosk);if(kiosk)requestAnimationFrame(()=>input.current?.focus({preventScroll:true}))}}>{kiosk?'Salir de pantalla de kiosco':'Pantalla de kiosco'}</button></div></div></header>
  <div className="terminal-tabs" role="tablist" aria-label="Secciones de la terminal" hidden={kiosk}>{tabs.map(([id,label])=><button key={id} id={'terminal-tab-'+id} type="button" role="tab" tabIndex={tab===id?0:-1} aria-selected={tab===id} aria-controls={'terminal-panel-'+id} onKeyDown={tabKey} onClick={()=>selectTab(id)}>{id==='operate'?<ScanLine size={17}/>:id==='activity'?<Activity size={17}/>:<KeyRound size={17}/>} {label}</button>)}</div>
  {error&&<p className="terminal-error" role="alert"><AlertTriangle size={18}/>{error}</p>}
  <div id="terminal-panel-operate" role="tabpanel" aria-labelledby="terminal-tab-operate" hidden={tab!=='operate'||kiosk}>
@@ -238,46 +254,6 @@ export function TermsStatusChip({ accepted, acceptedAt }) {
 /* ====================================================================
  * MÓDULO 2 · Gafete QR (usuario) + compartir/descargar
  * ==================================================================*/
-export function useTerminalSound() {
-  const ctxRef = useRef(null);
-  const [enabled, setEnabled] = useState(false);
-  const enabledRef = useRef(false);
-  useEffect(() => { enabledRef.current = enabled; }, [enabled]);
-
-  const ensure = useCallback(() => {
-    if (!ctxRef.current) {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (AC) ctxRef.current = new AC();
-    }
-    return ctxRef.current;
-  }, []);
-
-  const beep = useCallback((freqs, dur = 0.14, gap = 0.06) => {
-    if (!enabledRef.current) return;
-    const ac = ensure(); if (!ac) return;
-    let t = ac.currentTime;
-    freqs.forEach((f) => {
-      const osc = ac.createOscillator(); const gain = ac.createGain();
-      osc.type = "sine"; osc.frequency.value = f;
-      gain.gain.setValueAtTime(0.0001, t);
-      gain.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      osc.connect(gain); gain.connect(ac.destination);
-      osc.start(t); osc.stop(t + dur + 0.02);
-      t += dur + gap;
-    });
-  }, [ensure]);
-
-  const playGranted = useCallback(() => beep([880, 1320]), [beep]);
-  const playDenied = useCallback(() => beep([220, 165], 0.2, 0.08), [beep]);
-
-  // Identidad estable: evita re-disparar el intervalo de polling en cada render.
-  const toggle=useCallback((value)=>{const ac=ensure();if(value)ac?.resume();setEnabled(value);},[ensure]);
-  useEffect(()=>()=>{ctxRef.current?.close();},[]);
-  return useMemo(() => ({ enabled, setEnabled:toggle, playGranted, playDenied }),
-                   [enabled, playGranted, playDenied]);
-}
-
 /* ====================================================================
  * MÓDULO 3 · Terminal de Acceso (kiosco + escáner móvil)
  * ==================================================================*/

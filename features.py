@@ -17,12 +17,7 @@ import security as sec
 import windows_store as store
 import camera_hub
 
-TERMS_TITLE='Carta Responsiva, Términos de Seguridad y Aviso de Privacidad (Data Center)'
-TERMS_BODY={'intro':'Proyecto académico SECURITY TEAM. Lee las condiciones antes de activar el acceso. La aceptación queda registrada con fecha, versión y vía.',
- 'puntos':[['Transmisión de cámaras','La consola transmite imágenes en vivo cuando los dispositivos están conectados. No incluye grabación persistente, audio ni reconocimiento facial. Los cuadros temporales se procesan en memoria.'],
- ['RFID de 125 kHz y gafete QR','Las credenciales son personales e intransferibles. Resguarda tus pases y reporta su pérdida; una fotografía del QR puede ser copiada.'],
- ['Confidencialidad y privacidad','Se registran identidad, permisos y movimientos con fines de seguridad y demostración académica. El DPO supervisa el tratamiento y atiende consultas sobre estos registros. No se deben introducir datos sensibles innecesarios. Identidades, permisos, visitantes y eventos se conservan en SQLite en la laptop del proyecto; el acceso depende del rol. El plazo de conservación aún no está definido: el responsable y el DPO deben acordarlo. No se aplica borrado automático de estos registros. Cloudflare transporta la conexión pública; la laptop y su red deben permanecer disponibles.']],
- 'footer':'Aceptación electrónica simple del proyecto. No equivale a una firma electrónica avanzada ni acredita cumplimiento legal certificado.'}
+from terms_policy import TITLE as TERMS_TITLE, BODY as TERMS_BODY
 ZONE_LICENSE={'DATA_CENTER_VAULT':'LIC-DC-VAULT','SERVER_ROOM':'LIC-SRV-CRIT','MONITORING_CCTV':'LIC-CCTV-MON'}
 
 class Conflict(ValueError):pass
@@ -91,7 +86,7 @@ def badge(c,kind,subject):
     ref=subject['visitor_id'] if visitor else subject['username']
     zs=[subject['allowed_zone']] if visitor else zones(subject)
     signed={'purpose':'BADGE','tipo':kind,'ref':ref,'sv':0 if visitor else subject['security_version'],'exp':exp}
-    terms=bool(subject['terms_accepted']) if visitor else accepted(subject)
+    terms=accepted(subject)
     return {'tipo':kind,'matricula':ref,'full_name':subject['full_name'],'role':'VISITOR' if visitor else subject['role'],
         'area':subject['organization'] if visitor else subject['area'] or 'Administración global','zones':zs,
         'zones_labels':[db.ZONES[z] for z in zs],'terms_accepted':terms,'token':sign(signed) if terms else None,
@@ -113,8 +108,8 @@ def pass_payload(c,data,accept_terms=False):
     subject=valid_subject(c,data)
     if accept_terms:
         if data['tipo']=='USER':accept(c,subject,'MOBILE_PASS');subject=row_user(c,data['ref'])
-        elif not subject['terms_accepted']:
-            c.execute('UPDATE visitors SET terms_accepted=1,terms_accepted_at=? WHERE visitor_id=?',(now(),data['ref']))
+        elif not accepted(subject):
+            c.execute('UPDATE visitors SET terms_accepted=1,terms_accepted_at=?,terms_version=? WHERE visitor_id=?',(now(),db.TERMS_VERSION,data['ref']))
             audit(c,data['ref'],'TERMS_ACCEPTED',data['ref'],'via=MOBILE_PASS version='+db.TERMS_VERSION)
             subject=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(data['ref'],)).fetchone()
     b=badge(c,data['tipo'],subject)
@@ -172,7 +167,7 @@ def access(c,u,body):
             lic=ZONE_LICENSE.get(zone)
             if lic and not c.execute('SELECT 1 FROM user_licenses WHERE matricula=? AND license_id=?',(sid,lic)).fetchone():raise ValueError('Licencia de zona pendiente o fuera de cupo.')
         else:
-            if not subject['terms_accepted']:raise ValueError('Términos pendientes del invitado.')
+            if not accepted(subject):raise ValueError('Términos pendientes del invitado.')
             if zone!=subject['allowed_zone']:raise ValueError('Sin permiso para esta zona.')
         last=c.execute("SELECT * FROM access_events WHERE subject_type=? AND subject_id=? AND zone=? AND verdict='VERIFIED' ORDER BY id DESC LIMIT 1",(kind,sid,zone)).fetchone()
         inside=bool(last and last['direction']=='CHECK_IN')
@@ -326,7 +321,7 @@ def dispatch(session,method,path,q,body):
                     if len(str(body.get(key,'')))>300:raise ValueError('Texto demasiado largo.')
                 vid='VIS-'+secrets.token_hex(8).upper();until=datetime.fromtimestamp(time.time()+int(duration[:-1])*3600,timezone.utc).isoformat(timespec='seconds')
                 terms=body.get('terms_accepted') is True
-                c.execute('INSERT INTO visitors VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',(vid,name,str(body.get('organization','')),str(body.get('visit_reason','')),u['username'],z,until,int(terms),now() if terms else None,'ACTIVE',None,now()))
+                c.execute('INSERT INTO visitors(visitor_id,full_name,organization,visit_reason,host_matricula,allowed_zone,valid_until,terms_accepted,terms_accepted_at,status,qr_token_hash,created_at,terms_version) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',(vid,name,str(body.get('organization','')),str(body.get('visit_reason','')),u['username'],z,until,int(terms),now() if terms else None,'ACTIVE',None,now(),db.TERMS_VERSION if terms else None))
                 v=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(vid,)).fetchone();b=badge(c,'VISITOR',v)
                 if b['token']:c.execute('UPDATE visitors SET qr_token_hash=? WHERE visitor_id=?',(hashlib.sha256(b['token'].encode()).hexdigest(),vid))
                 audit(c,u,'VISITOR_CREATED',vid)
@@ -336,7 +331,7 @@ def dispatch(session,method,path,q,body):
                 v=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(body.get('visitor_id'),)).fetchone()
                 if not v or (not global_admin(u) and v['host_matricula']!=u['username']):raise PermissionError('Invitado fuera de alcance.')
                 c.execute("UPDATE visitors SET status='REVOKED' WHERE visitor_id=?",(v['visitor_id'],));audit(c,u,'VISITOR_REVOKED',v['visitor_id']);return {'ok':True}
-            return {'visitors':[dict(v) for v in c.execute('SELECT * FROM visitors ORDER BY created_at DESC LIMIT 250') if global_admin(u) or v['host_matricula']==u['username']], 'pending_devices':[dict(r) for r in c.execute("SELECT r.id,r.confirmation,r.subject_id,v.full_name,v.host_matricula FROM pass_receipts r JOIN visitors v ON v.visitor_id=r.subject_id WHERE r.subject_type='VISITOR' AND r.status='pending' AND r.expires>?",(time.time(),)) if global_admin(u) or r['host_matricula']==u['username']]}
+            return {'visitors':[{**dict(v),'terms_accepted':int(accepted(v))} for v in c.execute('SELECT * FROM visitors ORDER BY created_at DESC LIMIT 250') if global_admin(u) or v['host_matricula']==u['username']], 'pending_devices':[dict(r) for r in c.execute("SELECT r.id,r.confirmation,r.subject_id,v.full_name,v.host_matricula FROM pass_receipts r JOIN visitors v ON v.visitor_id=r.subject_id WHERE r.subject_type='VISITOR' AND r.status='pending' AND r.expires>?",(time.time(),)) if global_admin(u) or r['host_matricula']==u['username']]}
         if path=='/api/threats':return {'findings':threats(c,u),'window_hours':24,'generated_at':now()}
         if path=='/api/users/initial-password-group':
             if not global_admin(u):raise PermissionError('Solo administración global habilita el ingreso grupal.')

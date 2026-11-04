@@ -3,7 +3,7 @@ from pathlib import Path
 import subprocess,sys
 
 GROUPS=['test_backend','test_v130','test_hardening','test_initial_passwords','test_terminal_rfid','test_rfid_reference_import',
-        'test_browser_cameras','test_phone_links','test_camera','test_camera_admin','test_camera_removal','test_surveillance','test_supervisor','test_bootstrap','test_cctv_duration','test_group_onboarding','test_four_person_access']
+        'test_browser_cameras','test_phone_links','test_camera','test_camera_admin','test_camera_removal','test_surveillance','test_supervisor','test_bootstrap','test_cctv_duration','test_group_onboarding','test_four_person_access','test_terms_revision']
 if __name__=='__main__':
     root=Path(__file__).resolve().parent
     failed=[]

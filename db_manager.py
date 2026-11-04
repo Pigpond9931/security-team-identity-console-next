@@ -283,7 +283,8 @@ def seed_users():
 
 
 # Migraciones aditivas v1.3.0
-TERMS_VERSION = os.getenv("TERMS_VERSION", "v1.0")
+from terms_policy import VERSION as POLICY_VERSION
+TERMS_VERSION = os.getenv("TERMS_VERSION", POLICY_VERSION)
 
 # Roles (respetar la separación de privilegios existente).
 ROLE_SYSTEM_ADMIN = "system_admin"
@@ -411,6 +412,8 @@ def apply_v130_migrations(conn):
         )
         """
     )
+
+    _add_column(conn, "visitors", "terms_version", "TEXT")
 
     # ---- 4) Catálogo y asignación de licencias --------------------------
     conn.execute(
