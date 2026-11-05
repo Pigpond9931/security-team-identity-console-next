@@ -27,13 +27,69 @@ const contrast=(a,b)=>{
   await early.route('**/assets/app.js',route=>route.abort());
   await early.goto(base);assert.equal(await early.locator('html').getAttribute('data-motion'),'reduced');checks.push('OS reduced motion is applied before React loads');
   await reduced.close();
-  const context=await browser.newContext({viewport:{width:1440,height:1000},locale:'es-MX'});
+  const context=await browser.newContext({viewport:{width:1440,height:1000},locale:'es-MX',reducedMotion:'no-preference'});
   page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base);await page.getByRole('heading',{name:/Un espacio seguro/}).waitFor();
   await audit(page,'login');
   await page.screenshot({path:path.join(output,'01-inicio-next.png'),fullPage:true});
+  const legal=await context.newPage();await legal.goto(base+'assets/condiciones.html');
+  assert.equal(await legal.locator('.policy-clause').count(),21);
+  assert.equal(await legal.locator('.policy-references article').count(),6);
+  await audit(legal,'legal-document');
+  await legal.setViewportSize({width:320,height:900});
+  assert(await legal.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await audit(legal,'legal-mobile');
+  await legal.screenshot({path:path.join(output,'legal-mobile.png'),fullPage:true});
+  await legal.close();checks.push('Current legal document contains all clauses and references and fits mobile');
   const motion=page.getByLabel('Preferencia de movimiento',{exact:true});
+  const canvas=page.locator('.scene-art canvas');
+  const canvasFrame=()=>canvas.evaluate(element=>{
+   const pixels=element.getContext('2d').getImageData(0,0,element.width,element.height).data;
+   let painted=0,hash=2166136261;
+   for(let i=0;i<pixels.length;i+=4){
+    if(pixels[i+3])painted++;
+    hash=Math.imul(hash^pixels[i],16777619);hash=Math.imul(hash^pixels[i+1],16777619);
+    hash=Math.imul(hash^pixels[i+2],16777619);hash=Math.imul(hash^pixels[i+3],16777619);
+   }
+   return {width:element.width,height:element.height,painted,hash:hash>>>0};
+  });
+  await page.locator('.scene-art canvas[data-animation="running"]').waitFor();
+  const movingFrame=await canvasFrame();
+  assert(movingFrame.width>0&&movingFrame.height>0&&movingFrame.painted>100,'Login artwork must contain rendered pixels');
+  await page.waitForTimeout(180);
+  assert.notEqual((await canvasFrame()).hash,movingFrame.hash,'Running artwork must visibly animate');
+  checks.push('Local cinematic artwork contains real pixels and changes while running');
+  await page.getByRole('button',{name:'Pausar animación',exact:true}).click();
+  await page.locator('.scene-art canvas[data-animation="paused"]').waitFor();
+  await page.waitForTimeout(80);
+  const pausedFrame=await canvasFrame();
+  await page.waitForTimeout(180);
+  assert.equal((await canvasFrame()).hash,pausedFrame.hash,'Paused artwork must stop changing');
+  await page.getByRole('button',{name:'Reanudar animación',exact:true}).click();
+  await page.locator('.scene-art canvas[data-animation="running"]').waitFor();
+  const resumedFrame=await canvasFrame();
+  await page.waitForTimeout(180);
+  assert.notEqual((await canvasFrame()).hash,resumedFrame.hash,'Resumed artwork must animate again');
+  checks.push('Visible pause and resume controls stop and restart the artwork');
+  for(const width of [320,390,768]){
+   await page.setViewportSize({width,height:900});
+   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`login overflow at ${width}`);
+   assert(await page.getByRole('textbox',{name:'Matrícula',exact:true}).isVisible());
+   assert(await page.getByLabel('Contraseña',{exact:true}).isVisible());
+   assert(await page.getByRole('button',{name:'Continuar',exact:true}).isVisible());
+   await audit(page,`login-${width}`);
+   await page.screenshot({path:path.join(output,`00-login-${width}.png`),fullPage:true});
+  }
+  checks.push('Login remains accessible and free of horizontal overflow at 320, 390 and 768 px');
+  await page.setViewportSize({width:1440,height:1000});
   await motion.selectOption('reduced');assert.equal(await page.locator('html').getAttribute('data-motion'),'reduced');
+  await page.locator('.scene-art canvas[data-animation="paused"]').waitFor();
+  assert.equal(await page.getByRole('button',{name:'Animación detenida por movimiento reducido',exact:true}).isEnabled(),false);
+  await page.waitForTimeout(80);
+  const reducedFrame=await canvasFrame();
+  await page.waitForTimeout(180);
+  assert.equal((await canvasFrame()).hash,reducedFrame.hash,'Reduced motion must stop canvas rendering');
+  checks.push('Reduced motion stops canvas pixels as well as CSS animation');
   await page.reload();await page.getByRole('heading',{name:/Un espacio seguro/}).waitFor();
   assert.equal(await motion.inputValue(),'reduced');checks.push('Motion preference persists across reloads');
   await page.getByRole('textbox',{name:'Matrícula',exact:true}).fill(process.env.ST_TEST_ACCOUNT);
@@ -51,7 +107,7 @@ const contrast=(a,b)=>{
   assert.equal(await page.locator('.recovery-grid code').count(),8);
   await page.getByRole('checkbox',{name:'Guardé mis códigos en un lugar privado'}).check();
   await page.getByRole('button',{name:'Entrar a mi espacio'}).click();
-  await page.getByRole('checkbox',{name:/He leído y acepto/}).check();
+  await page.getByRole('checkbox',{name:/He leído/}).check();
   await page.getByRole('button',{name:'Acepto Términos y Activar mi Gafete'}).click();
   await page.getByRole('heading',{name:'Centro de operaciones',exact:true}).waitFor();checks.push('Real individual-password, private-password, MFA, recovery and current-policy onboarding');
   assert.equal(await page.locator('.metric-card').count(),4);
@@ -89,7 +145,7 @@ const contrast=(a,b)=>{
   await page.setViewportSize({width:1440,height:1000});
   checks.push(...await require('./browser_cameras.cjs')({page,context,base,browser}));
   await audit(page,'surveillance');
-  checks.push('Automated WCAG 2.1 AA checks on six fixture screens');
+  checks.push(`Automated WCAG 2.1 AA checks on ${accessibility.length} fixture screens`);
   assert.deepEqual(errors,[]);
   const report={ok:true,checks,pageErrors:errors,accessibility,backend:'real isolated SQLite + Windows DPAPI',productionDataUsed:false};
   fs.writeFileSync(path.join(output,'validation.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));

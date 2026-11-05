@@ -1,4 +1,5 @@
 import {QrZoneReadiness,QrExpiry} from './qr-readiness.jsx';
+import {PolicyDocument} from './legal-document.jsx';
 import {useTerminalSound} from './terminal-sound.jsx';
 import {CameraInventory} from './camera-management.jsx';
 import {TerminalClock,TerminalDecision,TerminalQuickEvents,TerminalPresence} from './terminal-design.jsx';
@@ -88,12 +89,12 @@ export function UserAccess({target,actor,api,toast,readonly=false}){
  return <><div className="v130-panel"><h3>Permisos de zonas</h3>{error&&<p role="alert">{error}</p>}{ZONES.map(z=><label className="v130-check" key={z.id}><input type="checkbox" disabled={readonly} checked={selected.includes(z.id)} onChange={e=>setSelected(e.target.checked?[...selected,z.id]:selected.filter(x=>x!==z.id))}/>{z.label}</label>)}{!readonly&&<button className="v130-btn" onClick={save}>Guardar zonas</button>}{!target.mfa_configured&&['system_admin','dpo'].includes(actor.role)&&!readonly&&<ActivationIssuer api={api} matricula={target.username}/>}<TermsStatusChip accepted={!!target.terms_accepted} acceptedAt={humanTime(target.terms_accepted_at)}/></div><LicensesPanel api={api} matricula={target.username} toast={toast} readonly={readonly&&actor.role!=='system_admin'}/><QRBadgePanel matricula={target.username} api={api} toast={toast}/></>;
 }
 export function VisitorsPanel({api,toast}){
- const[terms,setTerms]=useState(null);useEffect(()=>{api('/api/terms').then(setTerms).catch(()=>{})},[api]);
+ const[terms,setTerms]=useState(null),[termsError,setTermsError]=useState('');async function loadTerms(){try{setTerms(await api('/api/terms'));setTermsError('')}catch(e){setTerms(null);setTermsError(e.message)}}useEffect(()=>{loadTerms()},[api]);
  const[list,setList]=useState([]),[pending,setPending]=useState([]),[created,setCreated]=useState(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[form,setForm]=useState({full_name:'',organization:'',visit_reason:'',allowed_zone:'GENERAL_ACCESS',duration:'4h',terms_accepted:false});
  const load=useCallback(()=>api('/api/visitors').then(r=>{setList(r.visitors);setPending(r.pending_devices||[])}).catch(e=>setError(e.message)),[api]);useEffect(()=>{load();const t=setInterval(load,2000);return()=>clearInterval(t)},[load]);
  const change=(k,v)=>setForm(f=>({...f,[k]:v}));
- async function create(e){e.preventDefault();setBusy(true);try{setCreated(await api('/api/visitors/create',{body:form}));await load();setError('');}catch(e){setError(e.message)}finally{setBusy(false)}}
- return <article className="v130-panel"><div className="v130-panel-head"><Users/><h2>Gestión de Invitados</h2></div>{error&&<p role="alert">{error}</p>}<form onSubmit={create}><div className="v130-row wrap">{[['full_name','Nombre completo'],['organization','Organización'],['visit_reason','Motivo de visita']].map(([key,label])=><label key={key}>{label}<input required={key==='full_name'} value={form[key]} maxLength={key==='full_name'?120:300} onChange={e=>change(key,e.target.value)}/></label>)}</div><div className="v130-row wrap"><label>Zona permitida<select value={form.allowed_zone} onChange={e=>change('allowed_zone',e.target.value)}>{ZONES.map(z=><option key={z.id} value={z.id}>{z.label}</option>)}</select></label><label>Duración<select value={form.duration} onChange={e=>change('duration',e.target.value)}>{['2h','4h','8h','24h'].map(d=><option key={d}>{d}</option>)}</select></label></div><p className="v130-muted">El invitado puede leer los términos desde el pase móvil. Marca la casilla solo si acaba de leerlos y aceptarlos presencialmente; queda registrado que tú lo atestiguaste.</p><label className="v130-check"><input type="checkbox" checked={form.terms_accepted} onChange={e=>change('terms_accepted',e.target.checked)}/>El titular aceptó presencialmente los términos mostrados</label><details><summary>Leer términos para aceptación presencial</summary>{terms?.body.puntos.map(([title,text])=><p key={title}><strong>{title}. </strong>{text}</p>)}</details><button className="v130-btn primary" disabled={busy}>Crear pase de invitado</button></form>
+ async function create(e){e.preventDefault();setBusy(true);try{setCreated(await api('/api/visitors/create',{body:{...form,terms_version:form.terms_accepted?terms?.version:undefined}}));await load();setForm({full_name:'',organization:'',visit_reason:'',allowed_zone:'GENERAL_ACCESS',duration:'4h',terms_accepted:false});setError('');}catch(e){setError(e.message)}finally{setBusy(false)}}
+ return <article className="v130-panel"><div className="v130-panel-head"><Users/><h2>Gestión de Invitados</h2></div>{error&&<p role="alert">{error}</p>}<form onSubmit={create}><div className="v130-row wrap">{[['full_name','Nombre completo'],['organization','Organización'],['visit_reason','Motivo de visita']].map(([key,label])=><label key={key}>{label}<input required={key==='full_name'} value={form[key]} maxLength={key==='full_name'?120:300} onChange={e=>change(key,e.target.value)}/></label>)}</div><div className="v130-row wrap"><label>Zona permitida<select value={form.allowed_zone} onChange={e=>change('allowed_zone',e.target.value)}>{ZONES.map(z=><option key={z.id} value={z.id}>{z.label}</option>)}</select></label><label>Duración<select value={form.duration} onChange={e=>change('duration',e.target.value)}>{['2h','4h','8h','24h'].map(d=><option key={d}>{d}</option>)}</select></label></div><p className="v130-muted">El invitado puede leer los términos desde el pase móvil. Marca la casilla solo si acaba de leerlos y aceptarlos presencialmente; queda registrado que tú lo atestiguaste.</p><label className="v130-check"><input type="checkbox" disabled={!terms} checked={form.terms_accepted} onChange={e=>change('terms_accepted',e.target.checked)}/>El titular aceptó presencialmente los términos mostrados</label><details className="visitor-terms"><summary>Leer términos para aceptación presencial{terms?` · ${terms.version}`:""}</summary>{terms?<PolicyDocument body={terms.body} version={terms.version} idPrefix="visitor-policy"/>:<p>No se ha podido cargar el documento. Puedes crear el pase con aceptación pendiente.</p>}{termsError&&<p role="alert">{termsError}</p>}<button className="v130-btn" type="button" onClick={()=>{change("terms_accepted",false);loadTerms()}}>Actualizar documento</button></details><button className="v130-btn primary" disabled={busy}>Crear pase de invitado</button></form>
  {pending.map(d=><section className="phone-confirm" key={d.id}><h3>Confirmar teléfono de {d.full_name}</h3><strong className="phone-confirm-code">{d.confirmation}</strong><p>Comprueba presencialmente que este es el código del teléfono del invitado.</p><button className="v130-btn primary" onClick={async()=>{try{await api('/api/visitors/approve-device',{body:{id:d.id,confirmation:d.confirmation}});await load()}catch(e){setError(e.message)}}}>Confirmar teléfono del invitado</button></section>)}
  {created&&<div className="v130-created"><h3>{created.visitor.full_name}</h3>{created.qr_png_base64&&<><img className="v130-qr" src={'data:image/png;base64,'+created.qr_png_base64} alt="QR temporal del invitado"/><div className="v130-row wrap"><button className="v130-btn" onClick={()=>shareFile({...created,filename:'invitado.png'},false)}>Descargar Credencial PNG</button><button className="v130-btn" onClick={()=>shareFile({...created,filename:'invitado.png'},true)}>Compartir a Celular / WhatsApp</button></div></>}<Delivery data={created}/></div>}
  <div className="table-scroll"><table className="v130-table"><thead><tr><th>Invitado</th><th>Zona</th><th>Vigencia</th><th>Términos</th><th>Estado</th><th>Acción</th></tr></thead><tbody>{list.map(v=><tr key={v.visitor_id}><td>{v.full_name}<small>{v.visitor_id} · {v.organization}</small></td><td>{ZONE_LABEL(v.allowed_zone)}</td><td>{humanTime(v.valid_until)}</td><td>{v.terms_accepted?'Aceptados':'Pendientes'}</td><td>{v.status}</td><td>{v.status==='ACTIVE'&&<><button className="v130-btn" onClick={async()=>{try{setCreated(await api('/api/visitors/delivery',{body:{visitor_id:v.visitor_id}}));await load();setError('')}catch(e){setError(e.message)}}}>Renovar entrega</button><button className="v130-btn" onClick={async()=>{try{await api('/api/visitors/revoke',{body:{visitor_id:v.visitor_id}});await load();}catch(e){setError(e.message)}}}>Revocar pase</button></>}</td></tr>)}</tbody></table></div></article>;
@@ -213,35 +214,16 @@ function base64ToFile(b64, filename) {
 /* ====================================================================
  * MÓDULO 1 · Términos y Condiciones
  * ==================================================================*/
-export function TermsModal({ title, body, version, onAccept, busy, compact }) {
-  const [consent,setConsent]=useState(false);
-  if (!body) return null;
-  return (
-    <div className={"v130-overlay" + (compact ? " compact" : "")}>
-      <div className="v130-modal">
-        <div className="v130-modal-head">
-          <ShieldCheck size={22} />
-          <h3>{title || "Términos y Condiciones"}</h3>
-          <span className="v130-chip">{version}</span>
-        </div>
-        <div className="v130-modal-body">
-          <p className="v130-muted">{body.intro}</p>
-          {body.puntos.map(([t, d]) => (
-            <div className="v130-term" key={t}>
-              <CheckCircle2 size={18} />
-              <div><strong>{t}</strong><p>{d}</p></div>
-            </div>
-          ))}
-          <p className="v130-muted v130-small">{body.footer}</p>
-        </div>
-        <div className="v130-modal-foot"><label className="v130-check"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)}/>He leído y acepto las condiciones y el aviso de privacidad.</label>
-          <button className="v130-btn primary" disabled={busy||!consent} onClick={onAccept}>
-            <ShieldCheck size={16} /> Acepto Términos y Activar mi Gafete
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+export function TermsModal({title,body,version,onAccept,onDecline,busy,error,compact}) {
+ const [consent,setConsent]=useState(false),[pending,setPending]=useState(false),[failure,setFailure]=useState('');
+ useEffect(()=>{setConsent(false);setFailure('')},[version]);
+ if(!body)return null;
+ async function accept(){if(!consent||pending||busy)return;setPending(true);setFailure('');try{await onAccept()}catch(e){setFailure(e.message||'No se pudo guardar la aceptación. Intenta otra vez.')}finally{setPending(false)}}
+ return <main className={'policy-gate'+(compact?' compact':'')}><article className="policy-gate-card"><header className="policy-gate-head"><ShieldCheck size={28}/><div><span className="policy-kicker">SECURITY TEAM · CONDICIONES · {version}</span><h1>{title||'Términos y condiciones'}</h1></div></header><PolicyDocument body={body} version={version}/><footer className="policy-gate-actions">
+ {(error||failure)&&<p className="policy-gate-error" role="alert">{error||failure}</p>}
+ <label className="v130-check"><input type="checkbox" checked={consent} disabled={busy||pending} onChange={e=>setConsent(e.target.checked)}/>{body.acceptance||'He leído y acepto las condiciones y el aviso de privacidad.'}</label>
+ <div className="policy-gate-buttons"><button className="v130-btn primary" disabled={busy||pending||!consent} onClick={accept}><ShieldCheck size={16}/>{busy||pending?'Guardando aceptación…':'Acepto Términos y Activar mi Gafete'}</button>{onDecline?<button className="v130-btn" disabled={busy||pending} onClick={onDecline}>Salir sin aceptar</button>:<a className="v130-btn" href="/">Volver al inicio</a>}<a className="v130-btn" href="/assets/condiciones.html" target="_blank" rel="noopener noreferrer">Consultar e imprimir</a></div>
+ </footer></article></main>;
 }
 
 export function TermsStatusChip({ accepted, acceptedAt }) {

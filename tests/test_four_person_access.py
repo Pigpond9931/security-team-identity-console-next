@@ -38,7 +38,7 @@ class FourPersons(unittest.TestCase):
             with self.assertRaises(ValueError):four.configure(c,[u['username'] for u in self.selected][:3]+['UNKNOWN'])
     def test_guest_cannot_bypass_four_identity_restriction(self):
         # Un pase de invitado válido no se convierte en la quinta identidad de F1.
-        out=f.dispatch(self.admin,'POST','/api/visitors/create',{},dict(full_name='Invitado de prueba',organization='Prueba',purpose='Ensayo',host_matricula=self.dpo['username'],allowed_zone=four.ZONE,duration='2h',terms_accepted=True))
+        out=f.dispatch(self.admin,'POST','/api/visitors/create',{},dict(full_name='Invitado de prueba',organization='Prueba',purpose='Ensayo',host_matricula=self.dpo['username'],allowed_zone=four.ZONE,duration='2h',terms_accepted=True,terms_version=db.TERMS_VERSION))
         with db.get_connection() as c:
             visitor=c.execute('SELECT * FROM visitors ORDER BY rowid DESC LIMIT 1').fetchone()
             c.execute('UPDATE visitors SET terms_accepted=1,terms_version=? WHERE visitor_id=?',(db.TERMS_VERSION,visitor['visitor_id']))

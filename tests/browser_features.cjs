@@ -16,10 +16,10 @@ module.exports=async({page,context,base,browser})=>{
  await phone.getByRole('heading',{name:'Confirma tu teléfono con el anfitrión'}).waitFor();
  await phone.reload();await phone.getByRole('heading',{name:'Confirma tu teléfono con el anfitrión'}).waitFor();
  await page.getByRole('button',{name:'Confirmar teléfono del invitado',exact:true}).click();
- await phone.getByRole('checkbox',{name:/He leído y acepto/}).waitFor();
+ await phone.getByRole('checkbox',{name:/He leído/}).waitFor();
  await phone.screenshot({path:path.join(out,'10-terminos-movil.png'),fullPage:true});
  assert(await phone.getByRole('button',{name:'Acepto Términos y Activar mi Gafete'}).isDisabled());
- await phone.getByRole('checkbox',{name:/He leído y acepto/}).check();await phone.getByRole('button',{name:'Acepto Términos y Activar mi Gafete'}).click();
+ await phone.getByRole('checkbox',{name:/He leído/}).check();await phone.getByRole('button',{name:'Acepto Términos y Activar mi Gafete'}).click();
  await phone.getByAltText('Gafete QR activado').waitFor();
  assert(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await phone.screenshot({path:path.join(out,'13-pase-invitado-movil.png'),fullPage:true});

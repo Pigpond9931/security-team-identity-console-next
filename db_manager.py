@@ -286,7 +286,7 @@ def seed_users():
 
 # Migraciones aditivas v1.3.0
 from terms_policy import VERSION as POLICY_VERSION
-TERMS_VERSION = os.getenv("TERMS_VERSION", POLICY_VERSION)
+TERMS_VERSION = POLICY_VERSION
 
 # Roles (respetar la separación de privilegios existente).
 ROLE_SYSTEM_ADMIN = "system_admin"

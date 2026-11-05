@@ -34,8 +34,8 @@ const assert=require('node:assert/strict');
   await page.evaluate(()=>document.body.classList.remove('redact-private'));
   await page.getByRole('checkbox',{name:'Guardé mis códigos en un lugar privado'}).check();
   await page.getByRole('button',{name:'Entrar a mi espacio'}).click();
-  await page.getByRole('checkbox',{name:/He leído y acepto/}).waitFor();
-  await page.getByRole('checkbox',{name:/He leído y acepto/}).check();await page.getByRole('button',{name:'Acepto Términos y Activar mi Gafete'}).click();
+  await page.getByRole('checkbox',{name:/He leído/}).waitFor();
+  await page.getByRole('checkbox',{name:/He leído/}).check();await page.getByRole('button',{name:'Acepto Términos y Activar mi Gafete'}).click();
 
   await page.getByRole('heading',{name:'Centro de identidad'}).waitFor();
   assert.equal(await page.locator('.role-chip').innerText(),systemAdmin?'Admin del sistema':'DPO');

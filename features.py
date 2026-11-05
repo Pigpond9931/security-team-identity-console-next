@@ -332,8 +332,10 @@ def dispatch(session,method,path,q,body):
                 if z not in operator_zones(u) or duration not in ('2h','4h','8h','24h') or not name or len(name)>120:raise ValueError('Datos de invitado inválidos.')
                 for key in ('organization','visit_reason'):
                     if len(str(body.get(key,'')))>300:raise ValueError('Texto demasiado largo.')
+                terms=body.get('terms_accepted',False)
+                if not isinstance(terms,bool):raise ValueError('La aceptación presencial debe indicarse expresamente con verdadero o falso.')
+                if terms and body.get('terms_version')!=db.TERMS_VERSION:raise ValueError('Vuelve a mostrar los términos vigentes al titular y confirma la versión que aceptó presencialmente.')
                 vid='VIS-'+secrets.token_hex(8).upper();until=datetime.fromtimestamp(time.time()+int(duration[:-1])*3600,timezone.utc).isoformat(timespec='seconds')
-                terms=body.get('terms_accepted') is True
                 c.execute('INSERT INTO visitors(visitor_id,full_name,organization,visit_reason,host_matricula,allowed_zone,valid_until,terms_accepted,terms_accepted_at,status,qr_token_hash,created_at,terms_version) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)',(vid,name,str(body.get('organization','')),str(body.get('visit_reason','')),u['username'],z,until,int(terms),now() if terms else None,'ACTIVE',None,now(),db.TERMS_VERSION if terms else None))
                 v=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(vid,)).fetchone();b=badge(c,'VISITOR',v)
                 if b['token']:c.execute('UPDATE visitors SET qr_token_hash=? WHERE visitor_id=?',(hashlib.sha256(b['token'].encode()).hexdigest(),vid))

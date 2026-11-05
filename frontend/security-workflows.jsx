@@ -1,9 +1,8 @@
 import React,{useEffect,useState} from 'react';
 import {ShieldCheck,Link2,Camera} from 'lucide-react';
 
-export function PrivacyNotice({api}){
- const[data,setData]=useState(null),[error,setError]=useState('');
- return <details className="privacy-notice" onToggle={e=>{if(e.currentTarget.open&&!data)api('/api/terms').then(setData).catch(e=>setError(e.message))}}><summary>Aviso de privacidad del proyecto</summary>{error&&<p role="alert">{error}</p>}{data&&<><p>{data.body.intro}</p>{data.body.puntos.map(([title,text])=><p key={title}><strong>{title}. </strong>{text}</p>)}<p>{data.body.footer}</p></>}</details>
+export function PrivacyNotice(){
+ return <a className="privacy-notice-link" href="/assets/condiciones.html" target="_blank" rel="noopener noreferrer"><ShieldCheck size={15}/>Condiciones de uso y protección de datos</a>;
 }
 
 export function ActivationPage({api}){

@@ -251,6 +251,11 @@
       "sha256": "a2ecad25387496bb560614f81a2114ef233bf005752d2833d85db517bdea63d0"
     },
     {
+      "path": "POLITICAS_v1.2.md",
+      "bytes_normalized": 20585,
+      "sha256": "a171e603eca6f01acc4cc226cbca089eafb9e85187b08dadd6fb3a7d487d69fc"
+    },
+    {
       "path": "PRIMER_INGRESO_GRUPAL.md",
       "bytes_normalized": 1871,
       "sha256": "962070200123aba4feb2c5172b3850c7b67d34da925d9bf833f2f05a7e42b02f"
@@ -267,8 +272,8 @@
     },
     {
       "path": "README.md",
-      "bytes_normalized": 8442,
-      "sha256": "e3fe02787133dfa6f9ba8114ede673ddeb1babf5ba3be371cb0ebed39a10c0ce"
+      "bytes_normalized": 8667,
+      "sha256": "1abd64fc98406a4dee40f7d35b684fe520efdfb1af6241a2fae333cead807ca4"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
@@ -322,8 +327,8 @@
     },
     {
       "path": "build.mjs",
-      "bytes_normalized": 1342,
-      "sha256": "de2e656abee8e2733fee4f2057e6c84fceb822674e2f59f869056713b5c6bb6b"
+      "bytes_normalized": 1680,
+      "sha256": "92ce6873d2f4f49648f833931ae7c1e049a9699b70ecc58e4201b49ad5b16707"
     },
     {
       "path": "camera_hub.py",
@@ -332,13 +337,18 @@
     },
     {
       "path": "db_manager.py",
-      "bytes_normalized": 21416,
-      "sha256": "b4b648eee6a18c16256b7db0cea46d7a305190d43b350a651e538f1c25ba5181"
+      "bytes_normalized": 21388,
+      "sha256": "c281f46eeccd5fc5502440ff4c38a64bb7b247428f07c82dc1871b32e9eb4d37"
     },
     {
       "path": "docs/BENCHMARK_LOCAL.md",
       "bytes_normalized": 4107,
       "sha256": "9a5fa803a5f9b9b56f08e2b5051fb25fee078b90181dfc8205389637b3b3b2e3"
+    },
+    {
+      "path": "docs/DISENO_CINEMATICO_20261104.md",
+      "bytes_normalized": 2898,
+      "sha256": "95d2e2b2e6596530a512474385c70404aa036884fb6bc579b2ad5a7abca38aa8"
     },
     {
       "path": "docs/GALERIA_NEXT.md",
@@ -359,6 +369,11 @@
       "path": "docs/ITERATION_02_LOCAL.md",
       "bytes_normalized": 6205,
       "sha256": "0473f9c73d116b6dee2750565bd5b04201c9da14d7b098180a536f75489fd915"
+    },
+    {
+      "path": "docs/NEXT_ESTADO_20261104.md",
+      "bytes_normalized": 4819,
+      "sha256": "c72ddf8e976c229869a1f0aaa3359056694b508138eebb7e1873a845f076c357"
     },
     {
       "path": "docs/POST_REVIEW_20261104.md",
@@ -414,6 +429,11 @@
       "path": "docs/images/04-vigilancia.png",
       "bytes_normalized": 166014,
       "sha256": "3ec57debd956954edc40869d99f4e413b0cc374311eee3c9ee8aec1bdb1fc745"
+    },
+    {
+      "path": "docs/legal/politica-v1.1.json",
+      "bytes_normalized": 14169,
+      "sha256": "700f3aa91e211dba72f4ec4003fb04a5138f9dd4852e0a800ef5907d80667e7f"
     },
     {
       "path": "docs/validation/browser-chrome.json",
@@ -497,8 +517,8 @@
     },
     {
       "path": "features.py",
-      "bytes_normalized": 39566,
-      "sha256": "122fa8502437402da1c35c0714be06253d0ce76f483fd767b1ecad11b9b6958f"
+      "bytes_normalized": 39903,
+      "sha256": "f4fe10cf829eb7660608faa00c97873ff5e794f40d7512b2c603144a3aad27a2"
     },
     {
       "path": "four_person_access.py",
@@ -511,9 +531,14 @@
       "sha256": "de1c3b9dbe1edfadc970c8e1acb8121fa5a1d4539aeb51d43fb402c65c615ae0"
     },
     {
+      "path": "frontend/access-scene.jsx",
+      "bytes_normalized": 5564,
+      "sha256": "37c7fd6c81b2e25d880ded49a7ff12f989ac9b0e30975470df3b954676896dff"
+    },
+    {
       "path": "frontend/app.jsx",
-      "bytes_normalized": 49769,
-      "sha256": "35e954ff82d745e3bb126a62e358c1618ccbdfc39ea087798a47a23056b1ab42"
+      "bytes_normalized": 48940,
+      "sha256": "9098fd0081d80c407c791f59ceb992e4fb8fea628dcb5df01c28bc5f9e5249be"
     },
     {
       "path": "frontend/browser-cameras.jsx",
@@ -536,14 +561,34 @@
       "sha256": "c5eeed9400885691da315d6b93e3c480faae78b65eed95d3f77f4dd422a56cc0"
     },
     {
+      "path": "frontend/cinematic.css",
+      "bytes_normalized": 9545,
+      "sha256": "544302a57ee6fc31adb432bad03352c11ffd5321f1d43346c10293e61818ee56"
+    },
+    {
+      "path": "frontend/console-refinement.css",
+      "bytes_normalized": 21476,
+      "sha256": "3e6f4629f7e29929c0308df11443a3a1bb953c65be342008400f37b3b468d981"
+    },
+    {
       "path": "frontend/features.jsx",
-      "bytes_normalized": 51884,
-      "sha256": "c9ee8f7ef2833c75e2846ede56feee13dc7db05cc9c288de287352e75e0ef189"
+      "bytes_normalized": 53081,
+      "sha256": "7bb79d2f217b1011490785a1d933086738997189435a5999aaae5f8075fd0b59"
     },
     {
       "path": "frontend/index.html",
       "bytes_normalized": 507,
-      "sha256": "2bb44b89e1b6dcdae86584d8997718355c8dba2cef3ebfadaf6b846c1d15225a"
+      "sha256": "d6dec84fb8fb46b5b1acd8432f5fa663fdff95908acc58df9400774afdd1bdf0"
+    },
+    {
+      "path": "frontend/legal-document.jsx",
+      "bytes_normalized": 1639,
+      "sha256": "4558c8073a0fa3ea0b30989a1099db0f6d128576e7551dc8157b614848c0340a"
+    },
+    {
+      "path": "frontend/legal.css",
+      "bytes_normalized": 5078,
+      "sha256": "c79555e56a97c0ac96751c55029b01c057b0a6e6902d732e39edac17e642fa4e"
     },
     {
       "path": "frontend/motion-control.jsx",
@@ -572,8 +617,8 @@
     },
     {
       "path": "frontend/security-workflows.jsx",
-      "bytes_normalized": 7708,
-      "sha256": "bdfe83fd98548c8803d12ba3ced9dc742308c0ba4ca6fab112030d3321852f71"
+      "bytes_normalized": 7420,
+      "sha256": "c1cfbf74ca5a02669433ab569eb89db6e0da7829caad645d7c82ae28e98d0798"
     },
     {
       "path": "frontend/styles.css",
@@ -687,8 +732,8 @@
     },
     {
       "path": "share_cloudflare.py",
-      "bytes_normalized": 8897,
-      "sha256": "9a43af39b6e0f07844087f580ae8c7985fc8e84a0bbc4d3a8c18b10fca922ab0"
+      "bytes_normalized": 9209,
+      "sha256": "78d104f64650078a0a003036a89d95dbc96389dc8c73b4438cdd73e2eed47cab"
     },
     {
       "path": "share_ngrok.py",
@@ -697,13 +742,13 @@
     },
     {
       "path": "supervise_cloudflare.py",
-      "bytes_normalized": 3342,
-      "sha256": "1299c7ac323b226d62b1b7b004c4b9c6366d37b43fc300df73fea369eb105711"
+      "bytes_normalized": 3418,
+      "sha256": "fd688bcaa826055e59a3eed1adc25b7edd62ce1a3ebf2d49a2c19e8a909fb824"
     },
     {
       "path": "terms_policy.py",
-      "bytes_normalized": 13807,
-      "sha256": "01ddd8ea95fe86905831daebce5166955fbf4b749e1ce6e28e3279db06f78788"
+      "bytes_normalized": 25846,
+      "sha256": "a9e993e945cc80ebdfcb05008b51e670ebaca89d45e8fe01ad39f887abec2c0b"
     },
     {
       "path": "tests/benchmark_local_clients.py",
@@ -712,8 +757,8 @@
     },
     {
       "path": "tests/browser.cjs",
-      "bytes_normalized": 10090,
-      "sha256": "fe1c05fc5d4898aa5f4fe7e13136c41c4431653037cb1b7280ae945e79bc3219"
+      "bytes_normalized": 10072,
+      "sha256": "f3c39265f5d36852c26a4ce339d6725ee4bc2f8ffd7591287ceb260ad3831b48"
     },
     {
       "path": "tests/browser_access_feedback.cjs",
@@ -737,8 +782,8 @@
     },
     {
       "path": "tests/browser_features.cjs",
-      "bytes_normalized": 8772,
-      "sha256": "e8912c39c50e407bc583d676ef02d915dd092ba4e7f9069c922e39adabdd88f3"
+      "bytes_normalized": 8754,
+      "sha256": "b0da80e6093d56bfbbcb498a820a9f125888130354a4a8d61cfb7692a9f699cd"
     },
     {
       "path": "tests/browser_initial_password.cjs",
@@ -747,8 +792,8 @@
     },
     {
       "path": "tests/browser_next.cjs",
-      "bytes_normalized": 8142,
-      "sha256": "3d3199d10d231834f7df562bffed4a6eafeb47560dd9a2a7e008a6d1847d660f"
+      "bytes_normalized": 11879,
+      "sha256": "4b40496a551d466e3953f52c35bdfc4e46f457f528693b42e1a1762897fa450d"
     },
     {
       "path": "tests/browser_next.py",
@@ -782,8 +827,8 @@
     },
     {
       "path": "tests/run_regression.py",
-      "bytes_normalized": 1071,
-      "sha256": "9086d5b31cf9bbbcd2fe121d8ae8548b51786640b0c0c456a4c795ca5d11b668"
+      "bytes_normalized": 1092,
+      "sha256": "02e0eaf461ea195613700bc70b5b681f1a327540d04dc6bffed2c313cfb21a5d"
     },
     {
       "path": "tests/test_access_capacity.py",
@@ -847,8 +892,8 @@
     },
     {
       "path": "tests/test_four_person_access.py",
-      "bytes_normalized": 3918,
-      "sha256": "3612730294b5523c5099987233fb56150d63d8ab4175e9d3d6700b59ab9bebc8"
+      "bytes_normalized": 3949,
+      "sha256": "86bf8f61965aa2f6d448c3abe0a50ae40660dc8e9e02cdecb25389446f90a132"
     },
     {
       "path": "tests/test_group_onboarding.py",
@@ -869,6 +914,11 @@
       "path": "tests/test_phone_links.py",
       "bytes_normalized": 7803,
       "sha256": "0b7b672b720cf84540b510c470634a35d1a72a23c4b65a90ad2b1d5da6cafe98"
+    },
+    {
+      "path": "tests/test_policy_assets.py",
+      "bytes_normalized": 2119,
+      "sha256": "58fefcae8c121f4fbe9aa7d15a94b1d56c1083a0b5a08a50f1f7a392c4faa954"
     },
     {
       "path": "tests/test_private_backup.py",
@@ -917,8 +967,8 @@
     },
     {
       "path": "tests/test_terms_revision.py",
-      "bytes_normalized": 3671,
-      "sha256": "f84d6864ec78f97b2a51e032203dde1fe844b71ba9abf479c0614819b963dac9"
+      "bytes_normalized": 5318,
+      "sha256": "be2a5317e6530d6b7112cf7f4928758fe605cb53141488a2b6ec180114f75579"
     },
     {
       "path": "tests/test_v130.py",
@@ -929,6 +979,11 @@
       "path": "tests/visual.cjs",
       "bytes_normalized": 9289,
       "sha256": "c258d03d4d2b79fcb7e8ac99413acfe0e515298d7d258d7f2dafcb61dfd5fab3"
+    },
+    {
+      "path": "tools/build_policy.py",
+      "bytes_normalized": 7959,
+      "sha256": "bed2e7b4056036af936c3fe1246942ec9cb93f76f6ac73388c1275152ed2d2f6"
     },
     {
       "path": "tools/source_manifest.py",
@@ -947,28 +1002,38 @@
     },
     {
       "path": "web/assets/app.css",
-      "bytes_normalized": 112902,
-      "sha256": "03649b6fa72f4d36250664ad61e1ada62c96fd636a7a9aba4f5fd2964ee9812b"
+      "bytes_normalized": 146876,
+      "sha256": "996a58548a6f3ae474cfdd6dcd75882bd675f6302f829738494e55c9e02740d9"
     },
     {
       "path": "web/assets/app.js",
-      "bytes_normalized": 512277,
-      "sha256": "67a4b95269c4ca2b153943ae60f306935c3c997aa97a8dc824fa14e1f2432c27"
+      "bytes_normalized": 518380,
+      "sha256": "00b0357b624dd1339449b08745adc96543294aff3c8a9d19dd7e521aa9e2a8e7"
+    },
+    {
+      "path": "web/assets/condiciones.html",
+      "bytes_normalized": 26101,
+      "sha256": "a1579434d60363b1ea70f36e1e5509d7ae789e905c686a54aa705ca1d9f00b39"
     },
     {
       "path": "web/assets/firma-politicas.css",
-      "bytes_normalized": 4180,
-      "sha256": "8eba783bfaf83badf5dd2a5e63c46b5d55625f2c36f5020f5d06a8aa104e9b05"
+      "bytes_normalized": 4808,
+      "sha256": "3cbf73174f6a74a5ed32459168d70dde1a4a2a955c97e4551c626e33ae1e5992"
     },
     {
       "path": "web/assets/firma-politicas.html",
-      "bytes_normalized": 18608,
-      "sha256": "147751a2c49d13848b3de9b29afbf26a3a4fef789f6b02ca5acd6124b26fce05"
+      "bytes_normalized": 29329,
+      "sha256": "8850efe9dd79d4af224d091278d5edf284b746cd9e35e5283271326d4c808440"
     },
     {
       "path": "web/assets/firma-politicas.js",
-      "bytes_normalized": 22827,
-      "sha256": "6c7ebafd11d4d5acd6bf7a63b8f105e7b897df7d88ccf600d89dc73905401861"
+      "bytes_normalized": 31393,
+      "sha256": "5bb5cc2a98aa99beb55e846832bf6aba291841962058d0a3d55de3ca928647fa"
+    },
+    {
+      "path": "web/assets/legal.css",
+      "bytes_normalized": 6673,
+      "sha256": "173606b560199296e08ac02c130a5eff9457c72e9e6d093c128ece930e84fad1"
     },
     {
       "path": "web/assets/manrope-cyrillic-ext-wght-normal-2GMQGZDT.woff2",
@@ -1006,19 +1071,29 @@
       "sha256": "62ede531992c165244909f8e0cb86eeb65ff26e8093a52d5ceadc9d5de561c21"
     },
     {
+      "path": "web/assets/policy-page.js",
+      "bytes_normalized": 86,
+      "sha256": "93551c05bfed27ac75d4b3d9e65d26871de218a966f404d46f60d15a24d7e822"
+    },
+    {
+      "path": "web/assets/politica-vigente.json",
+      "bytes_normalized": 22750,
+      "sha256": "75ce7326e287b9761ec85a265dabb64a3c871118ed5b787e9571fa5f36b770c5"
+    },
+    {
       "path": "web/assets/third-party-notices.txt",
       "bytes_normalized": 20952,
       "sha256": "cf058b0e623736ed3ee874e0f3844e172626152551cea84e591f4b6cad92d5ea"
     },
     {
       "path": "web/favicon.svg",
-      "bytes_normalized": 444,
-      "sha256": "aec49281356c9cbd4e7f8ca13b1ff8137400e9aa2e18d0f7ce02315e8a0d6c14"
+      "bytes_normalized": 447,
+      "sha256": "24bf0d8b1409f62f4d1715a926e6ff52ec3da3b84ef80887f198c172b3fe8471"
     },
     {
       "path": "web/index.html",
       "bytes_normalized": 507,
-      "sha256": "2bb44b89e1b6dcdae86584d8997718355c8dba2cef3ebfadaf6b846c1d15225a"
+      "sha256": "d6dec84fb8fb46b5b1acd8432f5fa663fdff95908acc58df9400774afdd1bdf0"
     },
     {
       "path": "windows_store.py",

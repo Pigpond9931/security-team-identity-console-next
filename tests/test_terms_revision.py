@@ -12,19 +12,19 @@ class TermsRevision(unittest.TestCase):
   base.Backend.setUp(self);self.admin,_=self.login(self.dpo);self.person,_=self.login(self.user)
  def test_account_must_explicitly_accept_current_revision(self):
   with db.get_connection() as c:
-   c.execute('UPDATE users SET terms_version=? WHERE id=?',('v1.0',self.user['id']))
+   c.execute('UPDATE users SET terms_version=? WHERE id=?',('v1.1',self.user['id']))
    before=dict(c.execute('SELECT * FROM users WHERE id=?',(self.user['id'],)).fetchone())
   with self.assertRaises(PermissionError):f.dispatch(self.person,'GET','/api/licenses',{}, {})
-  with self.assertRaises(ValueError):f.dispatch(self.person,'POST','/api/auth/accept-terms',{}, {'accepted':True,'version':'v1.0'})
+  with self.assertRaises(ValueError):f.dispatch(self.person,'POST','/api/auth/accept-terms',{}, {'accepted':True,'version':'v1.1'})
   f.dispatch(self.person,'POST','/api/auth/accept-terms',{}, {'accepted':True,'version':db.TERMS_VERSION})
   with db.get_connection() as c:
    after=c.execute('SELECT * FROM users WHERE id=?',(self.user['id'],)).fetchone();self.assertTrue(f.accepted(after))
    for name in ('role','area','password_hash','mfa_secret','rfid_uid','security_version'):self.assertEqual(before[name],after[name])
    self.assertTrue(c.execute("SELECT 1 FROM audit_log WHERE action='TERMS_ACCEPTED' AND target=? AND details LIKE ?",(self.user['username'],'%version='+db.TERMS_VERSION+'%')).fetchone())
  def test_old_visitor_acceptance_cannot_issue_or_use_current_badge(self):
-  out=f.dispatch(self.admin,'POST','/api/visitors/create',{}, {'full_name':'Invitado de prueba','allowed_zone':'GENERAL_ACCESS','duration':'2h','terms_accepted':True})
+  out=f.dispatch(self.admin,'POST','/api/visitors/create',{}, {'full_name':'Invitado de prueba','allowed_zone':'GENERAL_ACCESS','duration':'2h','terms_accepted':True,'terms_version':db.TERMS_VERSION})
   vid=out['visitor']['visitor_id'];token=out['badge']['token'];self.assertTrue(token)
-  with db.get_connection() as c:c.execute('UPDATE visitors SET terms_version=? WHERE visitor_id=?',('v1.0',vid))
+  with db.get_connection() as c:c.execute('UPDATE visitors SET terms_version=? WHERE visitor_id=?',('v1.1',vid))
   body={'ref':token,'zone':'GENERAL_ACCESS','method':'QR_BADGE','direction':'AUTO'}
   denied=f.dispatch(self.admin,'POST','/api/access/verify',{},body)['result'];self.assertEqual(denied['verdict'],'DENIED')
   with sec.write_transaction() as c:
@@ -33,7 +33,7 @@ class TermsRevision(unittest.TestCase):
    visitor=c.execute('SELECT * FROM visitors WHERE visitor_id=?',(vid,)).fetchone();self.assertEqual(visitor['terms_version'],db.TERMS_VERSION)
   rows=f.dispatch(self.admin,'GET','/api/visitors',{}, {})['visitors'];self.assertEqual(next(v for v in rows if v['visitor_id']==vid)['terms_accepted'],1)
  def test_migration_preserves_legacy_acceptance_without_upgrading_it(self):
-  out=f.dispatch(self.admin,'POST','/api/visitors/create',{}, {'full_name':'Invitado antiguo','allowed_zone':'GENERAL_ACCESS','duration':'2h','terms_accepted':True})
+  out=f.dispatch(self.admin,'POST','/api/visitors/create',{}, {'full_name':'Invitado antiguo','allowed_zone':'GENERAL_ACCESS','duration':'2h','terms_accepted':True,'terms_version':db.TERMS_VERSION})
   vid=out['visitor']['visitor_id']
   with db.get_connection() as c:
    c.execute('UPDATE visitors SET terms_version=NULL WHERE visitor_id=?',(vid,));before=dict(c.execute('SELECT * FROM visitors WHERE visitor_id=?',(vid,)).fetchone())
@@ -41,5 +41,25 @@ class TermsRevision(unittest.TestCase):
   with db.get_connection() as c:
    after=dict(c.execute('SELECT * FROM visitors WHERE visitor_id=?',(vid,)).fetchone());self.assertEqual(before,after);self.assertFalse(f.accepted(after))
   rows=f.dispatch(self.admin,'GET','/api/visitors',{}, {})['visitors'];self.assertEqual(next(v for v in rows if v['visitor_id']==vid)['terms_accepted'],0)
+
+ def test_attested_visitor_rejects_missing_stale_or_non_boolean_consent(self):
+  with db.get_connection() as c:before=c.execute('SELECT COUNT(*) FROM visitors').fetchone()[0]
+  data={'full_name':'Visitante ficticio','allowed_zone':'GENERAL_ACCESS','duration':'2h'}
+  for changes in ({'terms_accepted':True},{'terms_accepted':True,'terms_version':'v1.1'},
+                  {'terms_accepted':'true','terms_version':db.TERMS_VERSION},
+                  {'terms_accepted':1,'terms_version':db.TERMS_VERSION}):
+   with self.subTest(changes=changes),self.assertRaises(ValueError):
+    f.dispatch(self.admin,'POST','/api/visitors/create',{},dict(data,**changes))
+  with db.get_connection() as c:self.assertEqual(c.execute('SELECT COUNT(*) FROM visitors').fetchone()[0],before)
+  out=f.dispatch(self.admin,'POST','/api/visitors/create',{},dict(data,terms_accepted=False))
+  self.assertIsNone(out['badge']['token'])
+  self.assertFalse(out['visitor']['terms_accepted'])
+
+ def test_current_attestation_records_actor_and_version(self):
+  out=f.dispatch(self.admin,'POST','/api/visitors/create',{},dict(full_name='Visita de prueba',allowed_zone='GENERAL_ACCESS',duration='2h',terms_accepted=True,terms_version=db.TERMS_VERSION))
+  self.assertEqual(out['visitor']['terms_version'],db.TERMS_VERSION)
+  with db.get_connection() as c:
+   event=c.execute("SELECT actor,details FROM audit_log WHERE action='TERMS_ACCEPTED' AND target=?",(out['visitor']['visitor_id'],)).fetchone()
+   self.assertEqual(event['actor'],self.dpo['username']);self.assertIn('version='+db.TERMS_VERSION,event['details'])
 
 if __name__=='__main__':unittest.main()

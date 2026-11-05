@@ -1,10 +1,10 @@
 # SECURITY TEAM · Identity Console Next
 
-**1.6.0-next.1 · evaluación local para Windows.** React, Python y SQLite; gestión de identidades, roles y áreas, MFA, RFID/QR, invitados, auditoría y vigilancia con teléfonos. La instalación existente se conserva por separado. Esta copia no importa ni contiene su base, cuentas reales, claves, sesiones o constancias firmadas.
+**1.6.0-next.1 · evaluación local para Windows.** React, Python y SQLite; gestión de identidades, roles y áreas, MFA, RFID/QR, invitados, auditoría y vigilancia con teléfonos. La instalación existente se conserva por separado. El repositorio distribuye solo código y documentación. Por solicitud del propietario se preparó un almacén privado independiente con los datos anteriores; ese almacén, sus claves y sus constancias están fuera de Git.
 
 El código y el historial completo están subidos a [security-team-identity-console-next](https://github.com/Pigpond9931/security-team-identity-console-next), público temporalmente por autorización del propietario para revisión externa. El original y el portal siguen separados y privados. La CI remota se consulta en la pestaña Actions; los resultados locales y los límites del avance externo se documentan abajo.
 
-Consulta la [integración selectiva de IA A y validación Windows](docs/INTEGRACION_IA_A_20261104.md). La [revisión posterior de 185 pruebas](docs/POST_REVIEW_20261104.md) y los demás informes anteriores se conservan como evidencia de su etapa.
+Consulta el [estado del diseño, política v1.2 y copia independiente](docs/NEXT_ESTADO_20261104.md). Consulta la [integración selectiva de IA A y validación Windows](docs/INTEGRACION_IA_A_20261104.md). La [revisión posterior de 185 pruebas](docs/POST_REVIEW_20261104.md) y los demás informes anteriores se conservan como evidencia de su etapa.
 
 ## Procedencia
 

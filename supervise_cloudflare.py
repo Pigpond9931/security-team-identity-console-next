@@ -6,6 +6,7 @@ import windows_store as store
 ROOT=Path(__file__).resolve().parent
 from runtime_paths import data_dir, prepare_private_store
 DATA=data_dir()
+CONSOLE_PORT=int(os.environ.get('ST_CONSOLE_PORT','8876'))
 STOP=DATA/'cloudflare-supervisor.stop'
 
 def main(open_browser=False):
@@ -25,7 +26,7 @@ def main(open_browser=False):
                     time.sleep(5)
                     if time.monotonic()-started<65:continue
                     try:
-                        request=urllib.request.Request('http://127.0.0.1:8876/api/health')
+                        request=urllib.request.Request('http://127.0.0.1:'+str(CONSOLE_PORT)+'/api/health')
                         with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request,timeout=5) as response:
                             if not json.load(response).get('ok'):raise ValueError('health')
                         failures=0

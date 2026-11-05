@@ -7,6 +7,10 @@ import windows_store as store
 from runtime_paths import prepare_private_store
 
 SETTINGS=server.DATA/'cloudflare.dpapi'
+CONSOLE_PORT=int(os.environ.get('ST_CONSOLE_PORT','8876'))
+PASS_PORT=int(os.environ.get('ST_PASS_PORT','8877'))
+if not 1024<=CONSOLE_PORT<=65535 or not 1024<=PASS_PORT<=65535 or CONSOLE_PORT==PASS_PORT:
+    raise ValueError('Define dos puertos distintos entre 1024 y 65535 para Next.')
 PUBLIC_GET={'/pass','/scanner','/camera','/activate','/api/terms','/api/public-pass','/favicon.svg'}
 
 class PassOnlyHandler(server.Handler):
@@ -70,13 +74,13 @@ def run(open_browser=False):
             ready=server.secure.publication_ready(c)
         if not ready:raise ValueError('Completa primero acceso, MFA y políticas de un administrador global en modo local.')
         # Reservar los puertos antes de publicar evita servir otra aplicación.
-        console=server.ThreadingHTTPServer(('127.0.0.1',8876),server.Handler);servers.append(console)
+        console=server.ThreadingHTTPServer(('127.0.0.1',CONSOLE_PORT),server.Handler);servers.append(console)
         portal=None
-        if pin:portal=server.ThreadingHTTPServer(('127.0.0.1',8877),PassOnlyHandler);servers.append(portal)
+        if pin:portal=server.ThreadingHTTPServer(('127.0.0.1',PASS_PORT),PassOnlyHandler);servers.append(portal)
         started=[]
         try:
             urls=[]
-            specifications=[('console',8876,settings['emails'] if pin else None)]+([('passes',8877,None)] if pin else [])
+            specifications=[('console',CONSOLE_PORT,settings['emails'] if pin else None)]+([('passes',PASS_PORT,None)] if pin else [])
             for name,port,emails in specifications:
                 log=server.DATA/('cloudflare-'+name+'.log');log.unlink(missing_ok=True)
                 agent=subprocess.Popen(command(port,log,emails),cwd=server.ROOT,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
