@@ -89,6 +89,6 @@ export function AccessScene({children}){
   <div className="scene-brand">{children}<span className="scene-edition">NEXT / 01</span></div>
   <div className="scene-art" ref={surfaceRef}><div className="scene-halo"/><canvas ref={canvasRef} aria-hidden="true"/><span className="scene-coordinate" aria-hidden="true">ST — 01 / CONTINUIDAD</span></div>
   <div className="auth-story-content"><span className="eyebrow light">IDENTIDAD. ACCESO. CONFIANZA.</span><h1>La confianza<br/>empieza <em>contigo.</em></h1><p>Personas, permisos y espacios.<br/>Todo conectado, bajo tu control.</p></div>
-  <div className="auth-story-footer"><span>SECURITY TEAM <i/> UPY <ArrowUpRight size={13}/></span><button type="button" className="scene-pause" disabled={reduced} aria-pressed={paused||reduced} onClick={()=>setPaused(v=>!v)} aria-label={reduced?'Animación detenida por movimiento reducido':paused?'Reanudar animación':'Pausar animación'}>{paused||reduced?<Play size={12}/>:<Pause size={12}/>}<span>{reduced?'Movimiento reducido':paused?'Reanudar escena':'Pausar escena'}</span></button></div>
+  <div className="auth-story-footer"><span>SECURITY TEAM <i/> UPY <ArrowUpRight size={13}/></span><button type="button" className="scene-pause" disabled={reduced} aria-pressed={paused||reduced} onClick={()=>setPaused(v=>!v)}>{paused||reduced?<Play size={12}/>:<Pause size={12}/>}<span>{reduced?'Movimiento reducido':paused?'Reanudar animación':'Pausar animación'}</span></button></div>
  </section>;
 }

@@ -41,7 +41,38 @@ aplicación y exige un administrador con contraseña privada, MFA y política vi
 El túnel es temporal y cambia de URL al reiniciar. La preparación del lanzador no
 acredita que exista un túnel activo ni que el sitio ya esté publicado.
 
-## Evidencia y pendientes
+## Puesta en marcha verificada
+
+El titular completó el acceso con contraseña y MFA y aceptó personalmente v1.2.
+Cloudflare se inició con el almacén independiente y supervisor de reconexión.
+Se comprobó HTTPS desde el navegador y desde un cliente externo sin sesión:
+portada y estado 200, modo compartido, términos v1.2, `/api/data` y
+`/api/access/events` con 401. La URL temporal se entrega fuera del repositorio.
+El equipo debe permanecer encendido, conectado y sin suspensión para servirla.
+
+Antes de publicar se creó un respaldo privado completo; integridad SQLite correcta,
+conteos de 17 tablas coincidentes y archivos de claves iguales al origen de Next.
+No se ejecutó todavía una restauración completa en otro entorno operativo.
+Se verificaron las 33 cuentas en ambas instalaciones: el colaborador conserva
+`area_admin` en la anterior y `system_admin` en Next.
+
+El [CI de a06d6a4](https://github.com/Pigpond9931/security-team-identity-console-next/actions/runs/41965502981)
+completó 203 pruebas de servidor en 26 grupos sin fallos ni omisiones, ocho
+comprobaciones de direcciones de cámara y auditoría npm sin vulnerabilidades.
+La [revisión de seguridad](https://github.com/Pigpond9931/security-team-identity-console-next/actions/runs/41965502995)
+pasó Gitleaks y la auditoría de dependencias Python. El recorrido de navegador de
+ese primer CI detectó el nombre accesible del botón de animación; la revisión local
+posterior también detectó el contraste de la cabecera del gafete. Ambos se corrigieron.
+
+Sobre las correcciones finales, Chrome en Windows y SQLite/DPAPI aislados completaron
+21 comprobaciones: contraseña privada, MFA, recuperación, aceptación vigente, QR,
+terminal móvil y cámaras simuladas WebRTC/JPEG. Hubo cero errores JavaScript y cero
+infracciones axe WCAG 2.1 AA en 11 pantallas. El control de animación conserva texto
+visible y nombre accesible coincidentes; el encabezado del gafete usa blanco sobre
+azul oscuro. Estas pruebas utilizaron exclusivamente identidades ficticias.
+El resultado del nuevo CI debe consultarse por separado; no se presupone su éxito.
+
+## Evidencia y pendientes de la preparación
 
 - Compilación React y generación documental verificadas localmente.
 - Los grupos de política, revisión de términos, acceso de cuatro personas y
@@ -52,8 +83,8 @@ acredita que exista un túnel activo ni que el sitio ya esté publicado.
 - El centro legal se revisó visualmente en escritorio y a 320 px: 21 cláusulas,
   seis referencias y sin desbordamiento horizontal. El navegador automatizado
   completo queda sujeto al resultado de CI sobre la revisión publicada.
-- La aceptación v1.2 del administrador en la copia real y la publicación de
-  Cloudflare deben comprobarse operativamente; no se aceptan términos por terceros.
+- La aceptación v1.2 y publicación, pendientes durante la preparación, quedaron
+  comprobadas en la puesta en marcha descrita arriba.
 - Las pruebas físicas de RFID, teléfonos, Wi-Fi y cámaras prolongadas siguen pendientes.
 
 ## Registro inicial de riesgos operativos
@@ -61,10 +92,10 @@ acredita que exista un túnel activo ni que el sitio ya esté publicado.
 | Riesgo | Medida y evidencia requerida | Responsable propuesto | Estado |
 |---|---|---|---|
 | Responsable legal indefinido | Identificar operador, domicilio, canal ARCO y régimen aplicable | Dirección del proyecto | Pendiente |
-| Confusión entre versiones | Almacenes, puertos y claves independientes; probar acceso por URL correcta | Administradores Next | Preparado; recorrido real pendiente |
+| Confusión entre versiones | Almacenes, puertos y claves independientes; probar acceso por URL correcta | Administradores Next | Acceso con MFA y aceptación local comprobados |
 | Enlaces heredados | Reemitir pases y QR en Next | Administradores Next | Pendiente de entrega |
-| Exposición pública | Comprobar MFA, roles, términos y URL HTTPS antes de compartir | Administradores Next | Publicación pendiente |
+| Exposición pública | Comprobar MFA, roles, términos y URL HTTPS antes de compartir | Administradores Next | Publicación y denegación sin sesión verificadas |
 | Conservación excesiva | Revisar y ejecutar retención justificada; registrar excepciones | Operador y contacto de privacidad | Procedimiento manual propuesto |
-| Incidente o pérdida local | Respaldo privado completo; probar restauración y documentar respuesta | Operador | Ensayo de restauración de esta copia pendiente |
+| Incidente o pérdida local | Respaldo privado completo; probar restauración y documentar respuesta | Operador | Respaldo verificado; restauración operativa pendiente |
 
 Estos controles reducen riesgos; no constituyen certificación de cumplimiento.

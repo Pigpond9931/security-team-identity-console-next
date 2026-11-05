@@ -84,7 +84,7 @@ const contrast=(a,b)=>{
   await page.setViewportSize({width:1440,height:1000});
   await motion.selectOption('reduced');assert.equal(await page.locator('html').getAttribute('data-motion'),'reduced');
   await page.locator('.scene-art canvas[data-animation="paused"]').waitFor();
-  assert.equal(await page.getByRole('button',{name:'Animación detenida por movimiento reducido',exact:true}).isEnabled(),false);
+  assert.equal(await page.getByRole('button',{name:'Movimiento reducido',exact:true}).isEnabled(),false);
   await page.waitForTimeout(80);
   const reducedFrame=await canvasFrame();
   await page.waitForTimeout(180);

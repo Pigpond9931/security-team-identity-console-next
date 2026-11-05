@@ -146,7 +146,7 @@
 .app-shell .v130-info { background:#f1f5ff; color:#3c557f; border-color:#d2ddf1; }
 .app-shell .v130-license { border-color:#dce3ef; background:#fff; }
 .app-shell .v130-badge-card { background:#fff; border-color:#d4dff0; }
-.app-shell .v130-badge-top { color:#27477e; }
+.app-shell .v130-badge-top { background:#142744; color:#fff; }
 .app-shell .v130-badge-name { color:#15243e; }
 .app-shell .v130-badge-zones { color:#405b83; }
 .app-shell .terminal-console { --terminal-line:#dce3ef; --terminal-muted:#56657a; }

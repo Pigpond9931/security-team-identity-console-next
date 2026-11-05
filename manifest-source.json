@@ -272,8 +272,8 @@
     },
     {
       "path": "README.md",
-      "bytes_normalized": 8667,
-      "sha256": "1abd64fc98406a4dee40f7d35b684fe520efdfb1af6241a2fae333cead807ca4"
+      "bytes_normalized": 8842,
+      "sha256": "14b1d2c62b971540d670da3adf380f6a7f019c97e25fb2316f1242f81b4297d1"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
@@ -372,8 +372,8 @@
     },
     {
       "path": "docs/NEXT_ESTADO_20261104.md",
-      "bytes_normalized": 4819,
-      "sha256": "c72ddf8e976c229869a1f0aaa3359056694b508138eebb7e1873a845f076c357"
+      "bytes_normalized": 6980,
+      "sha256": "e5a4ebfd22442babe7d025523f8952bc8a4cf7546231d8813a8feb643ccb325c"
     },
     {
       "path": "docs/POST_REVIEW_20261104.md",
@@ -532,8 +532,8 @@
     },
     {
       "path": "frontend/access-scene.jsx",
-      "bytes_normalized": 5564,
-      "sha256": "37c7fd6c81b2e25d880ded49a7ff12f989ac9b0e30975470df3b954676896dff"
+      "bytes_normalized": 5456,
+      "sha256": "859c83225a666a844175e4ddc89cc965994e12f1175906b359055ce4387762a1"
     },
     {
       "path": "frontend/app.jsx",
@@ -567,8 +567,8 @@
     },
     {
       "path": "frontend/console-refinement.css",
-      "bytes_normalized": 21476,
-      "sha256": "3e6f4629f7e29929c0308df11443a3a1bb953c65be342008400f37b3b468d981"
+      "bytes_normalized": 21493,
+      "sha256": "380975b083cebbb5e3c16dd88564b9da25d4ced50cd90dce78907d089ff7abbf"
     },
     {
       "path": "frontend/features.jsx",
@@ -792,8 +792,8 @@
     },
     {
       "path": "tests/browser_next.cjs",
-      "bytes_normalized": 11879,
-      "sha256": "4b40496a551d466e3953f52c35bdfc4e46f457f528693b42e1a1762897fa450d"
+      "bytes_normalized": 11855,
+      "sha256": "57e1c0ef872f066c52fc6656e0215a1776fa601ab724ffc7437209c94a8edf48"
     },
     {
       "path": "tests/browser_next.py",
@@ -1002,13 +1002,13 @@
     },
     {
       "path": "web/assets/app.css",
-      "bytes_normalized": 146876,
-      "sha256": "996a58548a6f3ae474cfdd6dcd75882bd675f6302f829738494e55c9e02740d9"
+      "bytes_normalized": 146892,
+      "sha256": "693bfa141c526c87eb584d06b0880a17afb0a41134ea17a0fe50b74c508814b5"
     },
     {
       "path": "web/assets/app.js",
-      "bytes_normalized": 518380,
-      "sha256": "00b0357b624dd1339449b08745adc96543294aff3c8a9d19dd7e521aa9e2a8e7"
+      "bytes_normalized": 518281,
+      "sha256": "0d20737222f4053fc2a5d4844818bb66adf7f23a2cc0dcc77c16f835e2cda5d0"
     },
     {
       "path": "web/assets/condiciones.html",
