@@ -75,6 +75,104 @@ class Hardening(unittest.TestCase):
         self.assertTrue(h.rate_check(buckets,[('c',1),('global',3)]))
         self.assertFalse(h.rate_check(buckets,[('d',1),('global',3)]))
         buckets={str(i):[time.monotonic()] for i in range(4097)};self.assertFalse(h.rate_check(buckets,[('new',1)]))
+    def test_per_second_budget_for_video_frames_is_separate(self):
+        buckets={}
+        self.assertTrue(h.rate_check(buckets,[('frame:token',2)],window=1))
+        self.assertTrue(h.rate_check(buckets,[('frame:token',2)],window=1))
+        self.assertFalse(h.rate_check(buckets,[('frame:token',2)],window=1))
+        buckets['old']=[time.monotonic()-2]
+        self.assertTrue(h.rate_check(buckets,[('fresh',1)],window=1))
+        self.assertNotIn('old',buckets)
+    def test_idle_sessions_are_recycled_before_authenticated_ones(self):
+        server.SESSIONS.clear();now=time.time()
+        for index in range(server.IDLE_SESSION_CAP):
+            server.SESSIONS['idle-'+str(index)]={'stage':'login','created':now+index/1000,'csrf':'fixture'}
+        server.SESSIONS['access']={'stage':'dashboard','created':now,'csrf':'fixture','auth':{'user_id':1,'issued_at':now}}
+        protected={
+            'mfa':{'challenge':{'user_id':1}},
+            'activation':{'activation':{'expires':now+300}},
+            'camera':{'cctv_until':now+14400},
+            'capability':{'capability_until':now+900},
+        }
+        for key,extra in protected.items():
+            server.SESSIONS[key]={'stage':'login','created':now-100,'csrf':'fixture',**extra}
+        sid,_=server.make_session()
+        self.assertIn('access',server.SESSIONS);self.assertIn(sid,server.SESSIONS)
+        for key in protected:self.assertIn(key,server.SESSIONS)
+        self.assertLess(len(server.SESSIONS),server.IDLE_SESSION_CAP+2)
+
+    def capability_request(self,path,body):
+        handler=SimpleNamespace(client_address=('127.0.0.1',10),public_request=lambda:False)
+        return server.Handler.public_capability_allowed(handler,path,body)
+
+    def test_video_traffic_cannot_reset_auth_or_claim_budgets(self):
+        with patch.object(h.time,'monotonic',return_value=100):
+            self.assertTrue(h.rate_check(server.RATE,[('account:fixture',1)]))
+            for _ in range(server.PUBLIC_CLAIM_TOKEN_LIMIT):
+                self.assertTrue(self.capability_request('/api/scanner/claim',{'ticket':'fixture-ticket'}))
+        with patch.object(h.time,'monotonic',return_value=102):
+            self.assertTrue(self.capability_request('/api/browser-camera/upload-frame',{'phone_token':'camera'}))
+            self.assertFalse(h.rate_check(server.RATE,[('account:fixture',1)]))
+            self.assertFalse(self.capability_request('/api/scanner/claim',{'ticket':'fixture-ticket'}))
+
+    def test_eight_camera_publishers_share_one_ip_without_spending_minute_budget(self):
+        with patch.object(h.time,'monotonic',return_value=100):
+            for camera in range(8):
+                for _ in range(25):
+                    self.assertTrue(self.capability_request('/api/browser-camera/upload-frame',{'phone_token':str(camera)}))
+            self.assertEqual(server.RATE,{})
+            for _ in range(server.FRAME_TOKEN_LIMIT-25):
+                self.assertTrue(self.capability_request('/api/browser-camera/upload',{'phone_token':'0'}))
+            self.assertFalse(self.capability_request('/api/browser-camera/upload',{'phone_token':'0'}))
+
+    def test_private_camera_queries_do_not_spend_public_budget(self):
+        for path in server.browser_cameras.PRIVATE|server.phone_links.PRIVATE:
+            for _ in range(610):self.assertTrue(self.capability_request(path,{}))
+        self.assertEqual(server.RATE,{})
+        self.assertEqual(server.FRAME_RATE,{})
+
+    def test_classroom_polling_budget_can_share_one_ip(self):
+        with patch.object(h.time,'monotonic',return_value=100):
+            for scanner in range(35):
+                for _ in range(40):
+                    self.assertTrue(self.capability_request('/api/scanner/poll',{'phone_token':'scanner-'+str(scanner)}))
+            for camera in range(8):
+                for _ in range(150):
+                    self.assertTrue(self.capability_request('/api/browser-camera/poll',{'phone_token':'camera-'+str(camera)}))
+    def test_new_session_flood_is_rate_limited(self):
+        server.SESSIONS.clear();server.RATE.clear()
+        httpd=server.ThreadingHTTPServer(('127.0.0.1',0),server.Handler)
+        threading.Thread(target=httpd.serve_forever,daemon=True).start()
+        host='127.0.0.1:'+str(httpd.server_port)
+        def request():
+            connection=http.client.HTTPConnection('127.0.0.1',httpd.server_port,timeout=8)
+            connection.request('GET','/api/session',headers={'Host':host})
+            response=connection.getresponse();response.read();connection.close();return response.status
+        try:
+            for _ in range(server.NEW_SESSION_IP_LIMIT):self.assertEqual(request(),200)
+            self.assertEqual(request(),429)
+        finally:
+            httpd.shutdown();httpd.server_close();server.SESSIONS.clear();server.RATE.clear()
+    def test_public_claim_endpoints_limit_attempts_before_validation(self):
+        server.SESSIONS.clear();server.RATE.clear()
+        httpd=server.ThreadingHTTPServer(('127.0.0.1',0),server.Handler)
+        threading.Thread(target=httpd.serve_forever,daemon=True).start()
+        host='127.0.0.1:'+str(httpd.server_port)
+        server.SESSIONS['rate']={'stage':'login','created':time.time(),'csrf':'rate-csrf'}
+        def claim(path,ticket):
+            connection=http.client.HTTPConnection('127.0.0.1',httpd.server_port,timeout=8)
+            connection.request('POST',path,json.dumps({'ticket':ticket}),{
+                'Host':host,'Origin':'http://'+host,'Cookie':'st_session=rate',
+                'X-CSRF-Token':'rate-csrf','Content-Type':'application/json'})
+            response=connection.getresponse();response.read();connection.close();return response.status
+        try:
+            for path in ('/api/scanner/claim','/api/browser-camera/claim'):
+                server.RATE.clear()
+                statuses=[claim(path,('A'*28)+str(index).zfill(4)) for index in range(server.PUBLIC_CLAIM_IP_LIMIT)]
+                self.assertTrue(all(status!=429 for status in statuses),path)
+                self.assertEqual(claim(path,('A'*28)+'final'),429,path)
+        finally:
+            httpd.shutdown();httpd.server_close();server.SESSIONS.clear();server.RATE.clear()
     def test_proxy_headers_trusted_only_for_configured_local_connector(self):
         request=SimpleNamespace(public_request=lambda:True,server=SimpleNamespace(trusted_proxy='cloudflare'),client_address=('127.0.0.1',10),headers={'CF-Connecting-IP':'203.0.113.20'})
         self.assertEqual(h.client_key(request),'203.0.113.20')

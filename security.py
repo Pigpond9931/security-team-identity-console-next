@@ -401,6 +401,10 @@ def reset_mfa(session, target_id):
         db.write_audit(conn, actor['username'], 'MFA_RESET', target=target['username'])
 
 def reset_password(session, target_id):
+    # Autorizar antes de gastar bcrypt: una cuenta sin permiso no debe poder
+    # provocar trabajo de hash con solo conocer un id.
+    with db.get_connection() as conn:
+        require_manager(conn, session, target_id)
     temporary = secrets.token_urlsafe(24)
     hashed = hash_password(temporary)
     with write_transaction() as conn:
@@ -424,6 +428,14 @@ def create_user(session, username, full_name, role, area, is_guard=0):
     if role not in db.GLOBAL_ROLES and area is None:
         raise ValueError('El usuario debe tener área.')
     if role in db.GLOBAL_ROLES:area=None
+    # Misma autorización previa al hash; se repite dentro de la escritura para
+    # que un cambio de rol concurrente no permita crear fuera de alcance.
+    with db.get_connection() as conn:
+        actor = session_user(conn, session)
+        if not actor or actor['role'] not in db.GLOBAL_ROLES:
+            raise PermissionError('Solo la administración global crea usuarios.')
+        if role == db.ROLE_SYSTEM_ADMIN and actor['role'] != db.ROLE_SYSTEM_ADMIN:
+            raise PermissionError('Solo un administrador del sistema asigna ese rol.')
     temporary = secrets.token_urlsafe(24)
     hashed = hash_password(temporary)
     with write_transaction() as conn:
@@ -492,6 +504,9 @@ def dashboard_data(session):
         return {'users':users,'audit':[dict(r) for r in logs],'accesses_today':accesses,'updated_at':db._now()}
 
 def change_password(session,current,new,code):
+    # Una sesión inválida no debe costar un hash bcrypt nuevo.
+    with db.get_connection() as conn:
+        if not session_user(conn,session): raise PermissionError('La sesión caducó.')
     hashed=hash_password(new)
     with write_transaction() as conn:
         user=session_user(conn,session)

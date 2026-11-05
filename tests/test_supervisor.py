@@ -1,9 +1,13 @@
-import tempfile,unittest
+import os,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch,Mock
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-import supervise_cloudflare as supervisor
+# El supervisor valida su carpeta privada al importarse. En Linux/CI se usa una
+# ruta temporal externa; las pruebas sustituyen DATA y no tocan almacén real.
+_import_data=tempfile.TemporaryDirectory(prefix='SecurityTeamSupervisorImport-')
+with patch.dict(os.environ,{'ST_DATA_DIR':_import_data.name}):
+    import supervise_cloudflare as supervisor
 
 class Supervisor(unittest.TestCase):
     def test_failed_child_is_restarted_and_stop_marker_prevents_respawn(self):

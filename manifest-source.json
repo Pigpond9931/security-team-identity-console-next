@@ -267,8 +267,8 @@
     },
     {
       "path": "README.md",
-      "bytes_normalized": 8307,
-      "sha256": "62cbb46bc9a1744d1d56a10645539d63db2ac6e1a465a6df7c0c6b55d5f5fc98"
+      "bytes_normalized": 8442,
+      "sha256": "e3fe02787133dfa6f9ba8114ede673ddeb1babf5ba3be371cb0ebed39a10c0ce"
     },
     {
       "path": "REVISION_AUDITORIA_2026-10-20.md",
@@ -351,6 +351,11 @@
       "sha256": "7b26b74d47766c28427273ec69b0bce0ba7e7a9bac37e109fb164268224e4233"
     },
     {
+      "path": "docs/INTEGRACION_IA_A_20261104.md",
+      "bytes_normalized": 5718,
+      "sha256": "218926bf0a1f3cd5d1754bb5a0524e719591f2783f9cb522002edeeefbd0bb4c"
+    },
+    {
       "path": "docs/ITERATION_02_LOCAL.md",
       "bytes_normalized": 6205,
       "sha256": "0473f9c73d116b6dee2750565bd5b04201c9da14d7b098180a536f75489fd915"
@@ -369,6 +374,11 @@
       "path": "docs/PROVENANCE.md",
       "bytes_normalized": 1692,
       "sha256": "f8ea876c6745e0155d96a11e6566d209d99321dbb295a66b1a9bb5be64a179e5"
+    },
+    {
+      "path": "docs/REVISION_IA_A_20261104.md",
+      "bytes_normalized": 14794,
+      "sha256": "b711dd7b66049cdff7f6bf2338f0e0ec697880a0a9f6234cbaeae2ae45a39c28"
     },
     {
       "path": "docs/SECURITY_REVIEW_20261104.md",
@@ -602,8 +612,8 @@
     },
     {
       "path": "hardening.py",
-      "bytes_normalized": 5463,
-      "sha256": "d4ca95d5910361af05011e563f848d9698304b0cc51486d38986a2e993622e8b"
+      "bytes_normalized": 5954,
+      "sha256": "2ae2005558388fc714196f329a4619da3d277fc93e6c09d2a82430ff48defd54"
     },
     {
       "path": "import_rfid_reference.py",
@@ -667,13 +677,13 @@
     },
     {
       "path": "security.py",
-      "bytes_normalized": 29038,
-      "sha256": "444110f723aeb970de25ecb0806f503cee27d1c4df24c59e9762afcec4e3955e"
+      "bytes_normalized": 30000,
+      "sha256": "53ea2c3c171d27efb5a9b0c154de221b367bad747437c0ef0c3a7c059a10b344"
     },
     {
       "path": "server.py",
-      "bytes_normalized": 37262,
-      "sha256": "2f35741905c5fa50dc2d66c0560a5fd6b4790ca3e6580f5f4e96accd0554a04c"
+      "bytes_normalized": 40781,
+      "sha256": "b4a85b0e47ffdeb88700c3646c34bb541716617aca2f799a0eb16c53dcf0ccdf"
     },
     {
       "path": "share_cloudflare.py",
@@ -782,8 +792,8 @@
     },
     {
       "path": "tests/test_backend.py",
-      "bytes_normalized": 26363,
-      "sha256": "a18fae836840e41c363957543eb2ce48b841ab2f987aedf408630fe751b748b9"
+      "bytes_normalized": 26944,
+      "sha256": "438ee5731091d718637f68f437175b48b4f7921a378a2b74df4ca28fff528cec"
     },
     {
       "path": "tests/test_bootstrap.py",
@@ -847,8 +857,8 @@
     },
     {
       "path": "tests/test_hardening.py",
-      "bytes_normalized": 9726,
-      "sha256": "0f45c9878ddeccef410a07c2bc98ee722e6c02e7c64eca1f54519e4744e9ed76"
+      "bytes_normalized": 15924,
+      "sha256": "f3bd00a06f8b02aeda294862a9e9e7658bb8bc9989d2ad5ea2280457bd569fee"
     },
     {
       "path": "tests/test_initial_passwords.py",
@@ -877,8 +887,8 @@
     },
     {
       "path": "tests/test_read_transactions.py",
-      "bytes_normalized": 2474,
-      "sha256": "dfda7c3b3ef504bac145b2ab5de83dcd9a065df4b65c52e33ece24737dfe5e99"
+      "bytes_normalized": 5082,
+      "sha256": "f8b8841179ce7e6a7aaa2bdf3f0595045a6521c8ad04e755e9db7143f6ae77c9"
     },
     {
       "path": "tests/test_rfid_reference_import.py",
@@ -887,13 +897,13 @@
     },
     {
       "path": "tests/test_runtime_paths.py",
-      "bytes_normalized": 7556,
-      "sha256": "416491cc5f7597c7046510874f372f7eafafda48906b3eb6c17a01aa7aa54c00"
+      "bytes_normalized": 8153,
+      "sha256": "714964f051c8d1aabe607c11dbf3c225e0b9bdecc2c724e88808b0e58357ab4b"
     },
     {
       "path": "tests/test_supervisor.py",
-      "bytes_normalized": 1573,
-      "sha256": "33e9d6d1818565371b438bbbb8be7d359083af635d2598d47273b1185ca1af53"
+      "bytes_normalized": 1883,
+      "sha256": "4b711f709b576949299c208c79354ec62dc3599e02913ff91dd20a3cbe948e76"
     },
     {
       "path": "tests/test_surveillance.py",

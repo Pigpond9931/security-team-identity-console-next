@@ -35,8 +35,22 @@ import pass_exchange
 SESSIONS={}
 SESSION_LOCK=threading.RLock()
 RATE={}
+FRAME_RATE={}
 RATE_LOCK=threading.Lock()
 PUBLIC_ORIGIN=''
+SESSION_CAP=4096
+IDLE_SESSION_CAP=512
+NEW_SESSION_IP_LIMIT=120
+NEW_SESSION_GLOBAL_LIMIT=2048
+PUBLIC_CLAIM_TOKEN_LIMIT=12
+PUBLIC_CLAIM_IP_LIMIT=60
+PUBLIC_CLAIM_GLOBAL_LIMIT=300
+PUBLIC_TOKEN_LIMIT=600
+PUBLIC_IP_LIMIT=4096
+PUBLIC_GLOBAL_LIMIT=8192
+FRAME_TOKEN_LIMIT=45
+FRAME_IP_LIMIT=240
+FRAME_GLOBAL_LIMIT=400
 
 def configure_public(url):
     global PUBLIC_ORIGIN
@@ -85,11 +99,25 @@ def state_deadline(state):
     deadline=secure.session_deadline(state["auth"]) if state.get("auth") else state["created"]+secure.SESSION_SECONDS
     return max(deadline,state.get("cctv_until",0))
 
+def idle_session(state):
+    """Sesión anónima sin ningún paso iniciado: descartable sin afectar acceso."""
+    return (not state.get('auth') and not state.get('challenge')
+        and state.get('activation',{}).get('expires',0)<=time.time()
+        and max(state.get('capability_until',0),state.get('cctv_until',0))<=time.time()
+        and state.get('stage')=='login')
+
 def make_session():
-    # Cota de memoria: no desplaza sesiones autenticadas para admitir desconocidos.
+    # Cota de memoria: no desplaza sesiones autenticadas ni desafíos en curso.
+    # Las sesiones anónimas ociosas (por ejemplo, sondeos a /api/session) tienen
+    # un cupo aparte y se reciclan por antigüedad; los accesos reales conservan
+    # su sitio hasta caducar.
     now=time.time()
     for key in [k for k,v in SESSIONS.items() if now>=state_deadline(v)]:SESSIONS.pop(key,None)
-    if len(SESSIONS)>=4096:raise SessionCapacity()
+    idle=[(v.get('created',0),k) for k,v in SESSIONS.items() if idle_session(v)]
+    if len(idle)>=IDLE_SESSION_CAP:
+        idle.sort()
+        for _,key in idle[:max(1,len(idle)//4)]:SESSIONS.pop(key,None)
+    if len(SESSIONS)>=SESSION_CAP:raise SessionCapacity()
     sid=secrets.token_urlsafe(32)
     state={'csrf':secrets.token_urlsafe(32),'created':time.time(),'stage':'login'}
     SESSIONS[sid]=state
@@ -97,12 +125,17 @@ def make_session():
 
 class SessionCapacity(Exception):pass
 
+class SessionRateLimited(Exception):pass
+
 class Handler(BaseHTTPRequestHandler):
     def handle_one_request(self):
         try:return super().handle_one_request()
         except SessionCapacity:
             self.close_connection=True
             return self.response(503,{'error':'Capacidad temporal de sesiones alcanzada. Intenta más tarde.'})
+        except SessionRateLimited:
+            self.close_connection=True
+            return self.response(429,{'error':'Demasiadas sesiones nuevas desde esta dirección. Espera un minuto.'})
 
     server_version='IdentityConsole'
     sys_version=''
@@ -171,7 +204,12 @@ class Handler(BaseHTTPRequestHandler):
         with SESSION_LOCK:
             now=time.time()
             for token in [k for k,v in SESSIONS.items() if now>=state_deadline(v)]: SESSIONS.pop(token,None)
-            if sid not in SESSIONS: return make_session()
+            if sid not in SESSIONS:
+                with RATE_LOCK:
+                    allowed=hardening.rate_check(RATE,[('new-session-ip:'+hardening.client_key(self),NEW_SESSION_IP_LIMIT),
+                        ('new-session-all',NEW_SESSION_GLOBAL_LIMIT)])
+                if not allowed:raise SessionRateLimited()
+                return make_session()
             return sid,SESSIONS[sid]
 
     def allowed_host(self):
@@ -224,7 +262,7 @@ class Handler(BaseHTTPRequestHandler):
             sid,state=self.session()
             if path=='/api/terms':return self.response(200,{'title':features.TERMS_TITLE,'body':features.TERMS_BODY,'version':db.TERMS_VERSION,'csrf':state['csrf']},sid)
             try:
-                with secure.write_transaction() as conn:
+                with secure.read_transaction() as conn:
                     if q.get('token'):result=pass_exchange.preview(conn,q['token'])
                     else:result=pass_exchange.read(conn,self.capability_cookie('st_pass'),sid,state.get('auth'),download=q.get('download')=='1')
                 return self.response(200,dict(result,csrf=state['csrf']),sid)
@@ -344,6 +382,32 @@ class Handler(BaseHTTPRequestHandler):
                 except (PermissionError,ValueError):pass
             self.server.video_slots.release()
 
+    def public_capability_allowed(self,path,body):
+        """Presupuesto de los enlaces efímeros antes de tocar la base o la cámara.
+
+        El token se reduce a un hash truncado: los contadores no guardan el
+        secreto. Los cuadros usan ventana de un segundo porque publican a 24-25
+        fps; el resto usa el presupuesto normal de un minuto.
+        """
+        # Los RPC privados conservan su autorización y no comparten el cupo
+        # anónimo: varios espectadores pueden consultar cuadros simultáneamente.
+        if path not in phone_links.PUBLIC|browser_cameras.PUBLIC:return True
+        token=body.get('phone_token') or body.get('ticket') or ''
+        key=hardening.capability_key(token)
+        ip=hardening.client_key(self)
+        if path.endswith(('/upload-frame','/upload')):
+            checks=[('frame:'+key,FRAME_TOKEN_LIMIT),('frame-ip:'+ip,FRAME_IP_LIMIT),('frame-all',FRAME_GLOBAL_LIMIT)]
+            window=1
+        elif path.endswith('/claim'):
+            checks=[('claim:'+key,PUBLIC_CLAIM_TOKEN_LIMIT),('claim-ip:'+ip,PUBLIC_CLAIM_IP_LIMIT),('claim-all',PUBLIC_CLAIM_GLOBAL_LIMIT)]
+            window=60
+        else:
+            checks=[('public:'+key,PUBLIC_TOKEN_LIMIT),('public-ip:'+ip,PUBLIC_IP_LIMIT),('public-all',PUBLIC_GLOBAL_LIMIT)]
+            window=60
+        with RATE_LOCK:
+            # La purga de una ventana de 1 s nunca debe borrar límites de 60 s.
+            return hardening.rate_check(FRAME_RATE if window==1 else RATE,checks,window)
+
     def do_POST(self):
         if self.allowed_host() and self.redirect_https():return
         origin=self.headers.get('Origin','')
@@ -372,10 +436,13 @@ class Handler(BaseHTTPRequestHandler):
                 capability=None
                 name,cap_path=('st_camera','/api/browser-camera') if service is browser_cameras else ('st_scan','/api/scanner')
                 if path in service.PUBLIC and not path.endswith('/claim'):body['phone_token']=self.capability_cookie(name)
+                if not self.public_capability_allowed(path,body):
+                    return self.response(429,{'error':'Demasiadas solicitudes de este enlace. Espera un momento.'},sid)
                 try:result=service.dispatch(path,body,sid,state,owner_alive)
                 except PermissionError as error:return self.response(403,{'error':str(error)},sid)
                 if result.get('phone_token'):
                     capability=(name,result.pop('phone_token'),cap_path)
+                    state['capability_until']=max(state.get('capability_until',0),time.time()+1800)
                     if service is browser_cameras:state['cctv_until']=time.time()+secure.CCTV_SESSION_SECONDS
                 if path.endswith('/disconnect'):capability=(name,'',cap_path)
                 if result.get('ticket'):
@@ -399,6 +466,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.response(200,dict(result,csrf=state['csrf']),sid)
             if path=='/api/public-pass/claim':
                 with secure.write_transaction() as conn:receipt=pass_exchange.claim(conn,body.get('token'),sid,state.get('auth'))
+                state['capability_until']=max(state.get('capability_until',0),time.time()+900)
                 return self.response(200,{'ok':True,'csrf':state['csrf']},sid,('st_pass',receipt,'/api/public-pass'))
             if path=='/api/public-pass/accept-terms':
                 if body.get('accepted') is not True or body.get('version')!=db.TERMS_VERSION:raise ValueError('Aceptación explícita requerida.')

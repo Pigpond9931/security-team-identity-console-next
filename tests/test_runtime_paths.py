@@ -15,7 +15,7 @@ import runtime_paths as paths
 class RuntimePaths(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='SecurityTeamPaths-')
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         self.repo = self.root/'repo'
         self.repo.mkdir()
         self.outside = self.root/'private'
@@ -33,6 +33,18 @@ class RuntimePaths(unittest.TestCase):
 
     def test_absolute_external_override_is_not_created(self):
         self.assertEqual(self.resolve({'ST_DATA_DIR':str(self.outside)}), self.outside)
+        self.assertFalse(self.outside.exists())
+
+    @unittest.skipUnless(os.name=='nt','Windows short path aliases')
+    def test_short_path_alias_resolves_to_same_external_directory(self):
+        import ctypes
+        buffer=ctypes.create_unicode_buffer(32768)
+        get_short=ctypes.windll.kernel32.GetShortPathNameW
+        length=get_short(str(self.root),buffer,len(buffer))
+        self.assertGreater(length,0)
+        self.assertLess(length,len(buffer))
+        alias=Path(buffer.value)/'private'
+        self.assertEqual(self.resolve({'ST_DATA_DIR':str(alias)}),self.outside)
         self.assertFalse(self.outside.exists())
 
     def test_relative_empty_internal_root_and_ancestor_are_rejected(self):

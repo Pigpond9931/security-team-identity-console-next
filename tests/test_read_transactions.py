@@ -1,5 +1,6 @@
-import concurrent.futures,sqlite3,threading,unittest
+import concurrent.futures,http.client,sqlite3,threading,unittest,json,secrets
 from pathlib import Path
+from urllib.parse import quote
 from unittest.mock import patch
 import test_backend as base
 import features as f
@@ -43,6 +44,44 @@ class ReadTransactions(unittest.TestCase):
         with patch.object(base.db,'DB_PATH',str(missing)),self.assertRaises(sqlite3.OperationalError):
             with base.secure.read_transaction():pass
         self.assertFalse(missing.exists())
+
+    def test_public_pass_get_preview_never_reserves_the_writer(self):
+        user,_=self.login(self.user)
+        issued=f.dispatch(user,'POST','/api/users/mobile-pass',{}, {})
+        token=issued['pass_token']
+        httpd=base.server.ThreadingHTTPServer(('127.0.0.1',0),base.server.Handler)
+        threading.Thread(target=httpd.serve_forever,daemon=True).start()
+        host='127.0.0.1:'+str(httpd.server_port)
+        try:
+            with patch.object(base.secure,'write_transaction',side_effect=AssertionError('GET reservó el escritor')):
+                connection=http.client.HTTPConnection('127.0.0.1',httpd.server_port,timeout=8)
+                connection.request('GET','/api/public-pass?token='+quote(token),headers={'Host':host})
+                response=connection.getresponse();payload=json.loads(response.read());connection.close()
+            self.assertEqual(response.status,200)
+            self.assertTrue(payload['requires_claim']);self.assertTrue(payload['requires_login'])
+        finally:httpd.shutdown();httpd.server_close();base.server.SESSIONS.clear()
+
+    def test_public_pass_receipt_and_download_never_reserve_the_writer(self):
+        import pass_exchange
+        user,_=self.login(self.user)
+        issued=f.dispatch(user,'POST','/api/users/mobile-pass',{}, {})
+        sid=secrets.token_urlsafe(32)
+        with base.secure.write_transaction() as c:
+            receipt=pass_exchange.claim(c,issued['pass_token'],sid,user)
+        base.server.SESSIONS[sid]={'created':base.time.time(),'stage':'dashboard','auth':user,'csrf':'fixture'}
+        httpd=base.server.ThreadingHTTPServer(('127.0.0.1',0),base.server.Handler)
+        threading.Thread(target=httpd.serve_forever,daemon=True).start()
+        try:
+            with patch.object(base.secure,'write_transaction',side_effect=AssertionError('GET reserved writer')):
+                for suffix in ('','?download=1'):
+                    connection=http.client.HTTPConnection('127.0.0.1',httpd.server_port,timeout=8)
+                    connection.request('GET','/api/public-pass'+suffix,headers={
+                        'Cookie':'st_session='+sid+'; st_pass='+receipt})
+                    response=connection.getresponse();payload=json.loads(response.read());connection.close()
+                    self.assertEqual(response.status,200,payload)
+                    self.assertTrue(payload['badge']['token'])
+                    if suffix:self.assertTrue(payload['png_base64'])
+        finally:httpd.shutdown();httpd.server_close();base.server.SESSIONS.clear()
 
 
 if __name__=='__main__':unittest.main()

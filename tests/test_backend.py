@@ -43,7 +43,7 @@ class Backend(unittest.TestCase):
         shutil.copyfile(db.DB_PATH,cls.base)
     def setUp(self):
         shutil.copyfile(self.base,db.DB_PATH)
-        server.SESSIONS.clear();server.RATE.clear()
+        server.SESSIONS.clear();server.RATE.clear();server.FRAME_RATE.clear()
         self.users=records()
         self.dpo=next(u for u in self.users if u['role']=='dpo')
         self.user=next(u for u in self.users if u['role']=='user' and u['area']==db.AREA_AC)
@@ -433,6 +433,13 @@ class Backend(unittest.TestCase):
         with self.assertRaises(ValueError):maintenance.assign_system_admin(self.dpo['username'])
         server.initialize()
         self.assertEqual(record(self.user['id'])['role'],db.ROLE_SYSTEM_ADMIN)
+
+    def test_36_authorization_precedes_password_hashing(self):
+        reader,_=self.login(self.user)
+        with patch.object(secure,'hash_password',side_effect=AssertionError('hash antes de autorizar')):
+            with self.assertRaises(PermissionError):secure.create_user(reader,'SIN-PERMISO','Intento',db.ROLE_USER,db.AREA_AC)
+            with self.assertRaises(PermissionError):secure.reset_password(reader,self.dpo['id'])
+            with self.assertRaises(PermissionError):secure.change_password({},'ClaveActual123!','ClaveNueva123!','000000')
 
 if __name__=='__main__':
     try: unittest.main(verbosity=2)

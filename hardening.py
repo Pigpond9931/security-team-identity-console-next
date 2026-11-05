@@ -72,15 +72,25 @@ def client_key(handler):
         except ValueError:pass
     return handler.client_address[0]
 
-def rate_check(buckets,checks):
+def rate_check(buckets,checks,window=60):
+    """Presupuesto deslizante por clave; `window` permite límites por segundo.
+
+    Cada diccionario debe usar una sola ventana: la purga recorre todas sus
+    claves. El servidor mantiene separados los cuadros y los límites por minuto.
+    """
     now=time.monotonic()
     for key in list(buckets):
-        if not buckets[key] or buckets[key][-1]<now-60:buckets.pop(key,None)
+        if not buckets[key] or buckets[key][-1]<now-window:buckets.pop(key,None)
     if len(buckets)>4096:return False
     current=[]
     for key,limit in checks:
-        values=[t for t in buckets.get(key,[]) if t>now-60]
+        values=[t for t in buckets.get(key,[]) if t>now-window]
         if len(values)>=limit:return False
         current.append((key,values))
     for key,values in current:buckets[key]=values+[now]
     return True
+
+def capability_key(value):
+    """Identificador opaco para limitar sin guardar el token en memoria."""
+    if not isinstance(value,str) or not value:return 'missing'
+    return hashlib.sha256(value.encode()).hexdigest()[:24]
