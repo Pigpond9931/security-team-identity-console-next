@@ -154,10 +154,28 @@ class Backend(unittest.TestCase):
             import hardening
             with secure.write_transaction() as conn:activation=hardening.activation_issue(conn,self.dpo['username'],'operador_prueba')
             status,s=request('auth/activate',{'ticket':activation},s['csrf']);self.assertEqual(status,200)
+            before_password=next(c.value for c in jar if c.name=='st_session')
+            before_csrf=s['csrf']
             status,s=request('auth/login',{'username':self.dpo['username'],'password':db.TEMP_PASSWORD},s['csrf']);self.assertEqual(status,200);self.assertEqual(s['stage'],'password')
+            before_mfa=next(c.value for c in jar if c.name=='st_session')
+            self.assertNotEqual(before_mfa,before_password)
+            self.assertNotEqual(s['csrf'],before_csrf)
+            # Una copia de la solicitud anterior no hereda el reto ni el acceso.
+            replay=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+            old_cookie={'Cookie':'st_session='+before_password}
+            with replay.open(urllib.request.Request(origin+'/api/session',headers=old_cookie),timeout=8) as response:
+                retired=json.load(response)
+            self.assertEqual(retired['stage'],'login')
+            self.assertNotIn('enrollment_key',retired)
+            self.assertIsNone(retired['user'])
+            old_post=urllib.request.Request(origin+'/api/auth/password',data=b'{}',headers={
+                **old_cookie,'Origin':origin,'X-CSRF-Token':before_csrf,'Content-Type':'application/json'})
+            with self.assertRaises(urllib.error.HTTPError) as error:replay.open(old_post,timeout=8)
+            self.assertEqual(error.exception.code,403)
             status,s=request('auth/password',{'password':'PrivadaDePrueba123!'},s['csrf']);self.assertEqual(s['stage'],'enroll')
             code=pyotp.TOTP(s['enrollment_key']).now()
             status,s=request('auth/mfa',{'code':code},s['csrf']);self.assertEqual(s['stage'],'backup')
+            self.assertNotEqual(next(c.value for c in jar if c.name=='st_session'),before_mfa)
             self.assertEqual(len(s['recovery_codes']),8)
             status,s=request('auth/backup-saved',{},s['csrf']);self.assertEqual(s['stage'],'terms')
             self.assertEqual(request('data')[0],403)

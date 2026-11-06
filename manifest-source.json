@@ -727,8 +727,8 @@
     },
     {
       "path": "server.py",
-      "bytes_normalized": 40781,
-      "sha256": "b4a85b0e47ffdeb88700c3646c34bb541716617aca2f799a0eb16c53dcf0ccdf"
+      "bytes_normalized": 41516,
+      "sha256": "fd7a9c5629007531346abce33d6c46453ecd5f35dc8eef1217451d4c19f83a46"
     },
     {
       "path": "share_cloudflare.py",
@@ -792,8 +792,8 @@
     },
     {
       "path": "tests/browser_next.cjs",
-      "bytes_normalized": 11855,
-      "sha256": "57e1c0ef872f066c52fc6656e0215a1776fa601ab724ffc7437209c94a8edf48"
+      "bytes_normalized": 11887,
+      "sha256": "c207fb8ed5a1d35f7ea11d5e8697ad5a8b8d66c27a594f33277c46057553d26a"
     },
     {
       "path": "tests/browser_next.py",
@@ -837,8 +837,8 @@
     },
     {
       "path": "tests/test_backend.py",
-      "bytes_normalized": 26944,
-      "sha256": "438ee5731091d718637f68f437175b48b4f7921a378a2b74df4ca28fff528cec"
+      "bytes_normalized": 28241,
+      "sha256": "642680aa7d0b2c2873fe3b5c914122c975fef830f0bed9207519402292106f02"
     },
     {
       "path": "tests/test_bootstrap.py",
@@ -902,8 +902,8 @@
     },
     {
       "path": "tests/test_hardening.py",
-      "bytes_normalized": 15924,
-      "sha256": "f3bd00a06f8b02aeda294862a9e9e7658bb8bc9989d2ad5ea2280457bd569fee"
+      "bytes_normalized": 16455,
+      "sha256": "07739a710c145110e6a77a73eebdcbb06d66bb4cd3577b652ea0be0e59f7f5a2"
     },
     {
       "path": "tests/test_initial_passwords.py",

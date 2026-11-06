@@ -40,7 +40,9 @@ const contrast=(a,b)=>{
   assert(await legal.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await audit(legal,'legal-mobile');
   await legal.screenshot({path:path.join(output,'legal-mobile.png'),fullPage:true});
-  await legal.close();checks.push('Current legal document contains all clauses and references and fits mobile');
+  await legal.close();
+  await page.bringToFront();
+  checks.push('Current legal document contains all clauses and references and fits mobile');
   const motion=page.getByLabel('Preferencia de movimiento',{exact:true});
   const canvas=page.locator('.scene-art canvas');
   const canvasFrame=()=>canvas.evaluate(element=>{

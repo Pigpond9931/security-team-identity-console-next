@@ -217,6 +217,13 @@ class Hardening(unittest.TestCase):
                 self.assertIn('max-age=31536000',headers['Strict-Transport-Security'])
                 status,_,headers=req(path,headers={'Host':'example.test','X-Forwarded-Proto':'http'})
                 self.assertEqual(status,308);self.assertEqual(headers['Location'],'https://example.test'+path)
+            with patch.object(sec,'authenticate',side_effect=AssertionError('HTTP procesó credenciales')) as authenticate:
+                status,_,headers=req('/api/auth/login',{'username':'test','password':'SoloParaPruebas'},
+                    headers={'Host':'example.test','Origin':'https://example.test','X-Forwarded-Proto':'http'})
+                authenticate.assert_not_called()
+            self.assertEqual(status,403)
+            self.assertNotIn('Location',headers)
+            self.assertNotIn('Set-Cookie',headers)
         finally:httpd.shutdown();httpd.server_close()
 
 if __name__=='__main__':unittest.main()

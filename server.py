@@ -123,6 +123,17 @@ def make_session():
     SESSIONS[sid]=state
     return sid,state
 
+def rotate_login_session(sid, state):
+    """Retira la sesión anónima antes de asociar el reto de autenticación."""
+    with SESSION_LOCK:
+        if SESSIONS.get(sid) is not state or time.time()>=state_deadline(state):
+            raise PermissionError('La sesión de inicio de sesión caducó.')
+        del SESSIONS[sid]
+        new_sid,new_state=make_session()
+        for key in ('activation','capability_until','cctv_until'):
+            if key in state:new_state[key]=state[key]
+        return new_sid,new_state
+
 class SessionCapacity(Exception):pass
 
 class SessionRateLimited(Exception):pass
@@ -147,8 +158,11 @@ class Handler(BaseHTTPRequestHandler):
             if not any(h.lower().startswith((name.lower()+':').encode()) for h in self._headers_buffer):self.send_header(name,value)
         super().end_headers()
 
-    def redirect_https(self):
+    def enforce_https(self):
         if self.public_request() and getattr(self.server,'trusted_proxy','') and self.headers.get('X-Forwarded-Proto','').lower()=='http':
+            if self.command=='POST':
+                self.response(403,{'error':'Abre la página HTTPS antes de enviar datos.'})
+                return True
             target=self.public_origin()+quote(urlsplit(self.path).path,safe='/:%@!$&()*+,;=-._~')
             query=urlsplit(self.path).query
             if query:target+='?'+quote(query,safe='=&%+/:@-._~')
@@ -254,7 +268,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if not self.allowed_host(): return self.response(403,{'error':'Origen no autorizado.'})
-        if self.redirect_https():return
+        if self.enforce_https():return
         path=urlsplit(self.path).path
         if path=='/api/health': return self.response(200,{'ok':True,'application':'SECURITY_TEAM_Studio','version':VERSION,'mode':'shared' if PUBLIC_ORIGIN else 'local'})
         q={k:v[0] for k,v in parse_qs(urlsplit(self.path).query).items()}
@@ -409,7 +423,7 @@ class Handler(BaseHTTPRequestHandler):
             return hardening.rate_check(FRAME_RATE if window==1 else RATE,checks,window)
 
     def do_POST(self):
-        if self.allowed_host() and self.redirect_https():return
+        if self.allowed_host() and self.enforce_https():return
         origin=self.headers.get('Origin','')
         expected=self.public_origin() if self.public_request() else 'http://'+self.headers.get('Host','')
         if not self.allowed_host() or origin!=expected:
@@ -483,6 +497,7 @@ class Handler(BaseHTTPRequestHandler):
                 result=secure.authenticate(body.get('username',''),body.get('password',''))
                 if result['status']!='ok': return self.response(401,{'error':'Credenciales inválidas.'},sid)
                 user=result['user']
+                sid,state=rotate_login_session(sid,state)
                 state.update(challenge=result['challenge'],username=user['username'])
                 with db.get_connection() as conn:protected=conn.execute('SELECT ever_enrolled FROM users WHERE id=?',(user['id'],)).fetchone()[0]
                 if not protected and not user['mfa_configured'] and not hardening.activation_valid(state,user):
