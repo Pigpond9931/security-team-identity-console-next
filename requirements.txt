@@ -1,5 +1,5 @@
 bcrypt>=4.1,<6
-pyotp>=2.9,<3
+pyotp>=2.11.2,<3
 qrcode>=7.4,<9
 pillow>=13,<14
 cryptography>=50.0.2,<51
